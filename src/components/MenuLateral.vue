@@ -1,62 +1,58 @@
 <template>
-<div class="d-flex flex-column flex-shrink-0 p-3 text-white menu-lateral" style="width: 280px;">
-  
-     <div class="dropdown">
+  <div class="d-flex flex-column flex-shrink-0 p-3 text-white menu-lateral">
+   
+    <div class="dropdown">
       <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
         <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
-        <strong>Login</strong>
+        <strong>Gabriel Rhoden</strong>
       </a>
       <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
         <li><a class="dropdown-item" href="#">Configurações</a></li>
         <li><a class="dropdown-item" href="#">Perfil</a></li>
         <li><hr class="dropdown-divider"></li>
-        <li><a class="dropdown-item" href="#">Sign out</a></li>
+        <li><router-link to="/login" class="dropdown-item" href="#">Sair</router-link></li>
       </ul>
     </div>
-    <!-- class="nav-link active" -->
-        <hr>
-        <ul class="nav nav-pills flex-column mb-auto">
+    <hr />
+
+    <ul class="nav nav-pills flex-column mb-auto">
       <li>
-        <a href="#" class="nav-link text-white">
-          <svg class="bi me-2" width="16" height="16"><use xlink:href="#speedometer2"/></svg>
-          Página inicial
-        </a>
+        <router-link to="/" class="nav-link text-white">
+          <i class="bi bi-house fs-5 me-2"></i> Página inicial
+        </router-link>
+      </li>
+         <li>
+        <router-link to="/cadastro" class="nav-link text-white">
+          <i class="bi bi-person-plus fs-5 me-2"></i> Cadastrar
+        </router-link>
       </li>
       <li>
-        <a href="#" class="nav-link text-white">
-          <svg class="bi me-2" width="16" height="16"><use xlink:href="#speedometer2"/></svg>
-          Dashboard
-        </a>
+        <router-link to="/perfil" class="nav-link text-white">
+          <i class="bi bi-person fs-5 me-2"></i> Editar Perfil
+        </router-link>
       </li>
       <li>
-        <a href="#" class="nav-link text-white">
-          <svg class="bi me-2" width="16" height="16"><use xlink:href="#table"/></svg>
-          Orders
-        </a>
-      </li>
-      <li>
-        <a href="#" class="nav-link text-white">
-          <svg class="bi me-2" width="16" height="16"><use xlink:href="#grid"/></svg>
-          Products
-        </a>
-      </li>
-      <li>
-        <a href="#" class="nav-link text-white">
-          <svg class="bi me-2" width="16" height="16"><use xlink:href="#people-circle"/></svg>
-          Customers
-        </a>
+        <router-link to="/usuarios" class="nav-link text-white">
+          <i class="bi bi-people fs-5 me-2"></i> Usuários
+        </router-link>
       </li>
     </ul>
-    <hr>
-   
+
+    <hr />
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, ref } from 'vue';
 export default defineComponent({
-  name: 'Sidebar',
+  name: 'MenuLateral',
 });
+
+const isMenuOpen = ref(true);
+
+const toggleMenu = () => {
+  isMenuOpen.value = !isMenuOpen.value;
+};
 </script>
 
 <style scoped>
@@ -64,14 +60,19 @@ export default defineComponent({
   background-color: #0d6efd;
 }
 .menu-lateral{
-  background-color: #0a67f1;
+  background-color: #0D6EFD;
 }
 .nav-link:hover {
-  background-color: #0c61e0; /* cinza escuro */
-  color: #fff;
+  color: #d1e1fc !important;
   border-radius: 4px;
 }
-*{
-  /* border:solid red 1px; */
+.dropdown-menu{
+  border-radius:3px;
+}
+.nav-link.router-link-active {
+  background-color: #0c61e0;
+  color: #fff !important;
+  border-radius: 4px;
+ 
 }
 </style>

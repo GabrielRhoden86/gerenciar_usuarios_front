@@ -43,16 +43,12 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
+import { defineComponent } from 'vue';
 export default defineComponent({
   name: 'MenuLateral',
 });
 
-const isMenuOpen = ref(true);
 
-const toggleMenu = () => {
-  isMenuOpen.value = !isMenuOpen.value;
-};
 </script>
 
 <style scoped>
@@ -63,16 +59,15 @@ const toggleMenu = () => {
   background-color: #0D6EFD;
 }
 .nav-link:hover {
-  color: #d1e1fc !important;
+  /* color: #d1e1fc !important; */
   border-radius: 4px;
 }
 .dropdown-menu{
   border-radius:3px;
 }
 .nav-link.router-link-active {
-  background-color: #0c61e0;
+  border-bottom:3px solid  #d1e1fc;
   color: #fff !important;
   border-radius: 4px;
- 
 }
 </style>

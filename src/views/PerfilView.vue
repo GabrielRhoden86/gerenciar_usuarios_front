@@ -2,13 +2,14 @@
  <main class="rounded-2 conteudo-principal col-md-12 bg-body-tertiary mt-1">
   <div class="p-4 rounded-1 p-3">
     <div class="container-fluid text-secondary">
-      <h4 class="text-secondary">Editar Perfil</h4>
+      <h4 class="text-primary">Editar Perfil</h4>
       <p>Editar perfil de usuários do sistema</p>
       <hr class='line'>
       <div class=" col-md-10 d-flex justify-content-center align-items-center">
       <FormularioGeral 
         titulo="Editar perfil usuários"
         name="Editar"
+        icone="bi bi-person text-primary me"
        class="col-md-10"/>
       </div>
     </div>

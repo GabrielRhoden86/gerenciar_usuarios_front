@@ -16,14 +16,15 @@ import { defineComponent } from "vue";
 export default defineComponent({
   name: "Cards",
   props: {
-    icone:{
-    type: String, 
-    required: true,
-  },
+    icone: {
+      type: String,
+    },
+    iconeEdit: {
+      type: String,
+    },
     titulo: {
       type: String,
-      required: true,
-    },
+      },
     subtitulo: {
       type: String,
       required: false,

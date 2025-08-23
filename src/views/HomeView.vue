@@ -2,7 +2,7 @@
  <main class="rounded-2 conteudo-principal bg-body-tertiary mt-1">
   <div class="flex-grow-1 p-4 rounded-1 p-3">
     <div class="container-fluid text-secondary">
-      <h4 class="text-secondary">Gerenciador de usuários</h4>
+      <h4 class="text-primary">Gerenciador de usuários</h4>
       <p>Lista de usários do sistema</p>
       <hr class='line'>
     <div class="row g-3"> 
@@ -19,7 +19,7 @@
         <Cards
          titulo="Editar Perfil"
          subtitulo="Visualizar e editar perfil de usuários"
-         icone="bi bi-person  text-primary"
+         icone="bi bi-person text-primary"
     />
     </div>
     </div>

@@ -2,14 +2,15 @@
  <main class="rounded-2 conteudo-principal col-md-12 bg-body-tertiary mt-1">
   <div class="p-4 rounded-1 p-3">
     <div class="container-fluid text-secondary">
-      <h4 class="text-secondary">Cadastro</h4>
+      <h4 class="text-primary">Cadastro</h4>
       <p>Cadastrar novos usuários do sistema</p>
       <hr class='line'>
       <div class=" col-md-10 d-flex justify-content-center align-items-center">
       <FormularioGeral 
         titulo="Cadastrar novos usuários"
         name="Cadastrar"
-       class="col-md-10"/>
+        icone="bi bi-person-plus fs-5 text-primary me-2"
+        class="col-md-10"/>
       </div>
     </div>
   </div>

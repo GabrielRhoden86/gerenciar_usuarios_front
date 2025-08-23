@@ -11,7 +11,7 @@ const routes: Array<RouteRecordRaw> = [
      {
     path: '/login',
     name: 'login',
-    component: () => import('@/views/loginView.vue'),
+    component: () => import('@/views/LoginView.vue'),
     meta: { title: 'Login' },
   },
   {
@@ -26,7 +26,7 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('@/views/CadastroView.vue'),
     meta: { title: 'Cadastro de Usuário' },
   },
-  ,
+  
   {
     path: '/perfil',
     name: 'perfil',

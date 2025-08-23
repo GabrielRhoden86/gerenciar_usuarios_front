@@ -1,9 +1,8 @@
 <template>
   <div class="col-md-11 col-lg-9 col-xl-7 offset-xl-1 mt-2">
     <form class="p-4 shadow-sm rounded bg-white">
-      <!-- Cabeçalho melhorado -->
     <header class="mb-4 d-flex align-items-center justify-content-center">
-        <i class="bi bi-person-plus fs-2 text-primary me-2"></i>
+        <i :class="icone" class="fs-3"></i>
         <p class="mb-0 fw-bold text-primary">{{titulo}}</p>
     </header>
 
@@ -57,6 +56,10 @@ export default defineComponent({
   name: 'Formulario',
     props: {
     titulo:{
+    type: String, 
+    required: true,
+    },
+    icone:{
     type: String, 
     required: true,
     },

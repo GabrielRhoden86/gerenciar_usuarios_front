@@ -1,4 +1,4 @@
-<template>
+'<template>
   <div id="app">
     <div v-if="$route.name !== 'login'" class="wrapper d-flex vh-100 principal-app">
       <MenuLateral />
@@ -8,6 +8,7 @@
         </div>
       </div>
     </div>
+
     <div v-else class="vh-100 d-flex justify-content-center align-items-center bg-light">
       <router-view />
     </div>
@@ -16,6 +17,7 @@
 
 <script setup lang="ts">
 import MenuLateral from "@/components/MenuLateral.vue";
+
 
 </script>
 
@@ -34,4 +36,4 @@ import MenuLateral from "@/components/MenuLateral.vue";
 .principal-app{
  background-color: #EEEEEE ;
 }
-</style>
+</style>'

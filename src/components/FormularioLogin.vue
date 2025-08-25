@@ -1,16 +1,16 @@
+
 <template>
   <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1 mt-5">
-    <form class="p-4 shadow-sm rounded bg-white">
-      <!-- Cabeçalho melhorado -->
+    <form @submit="handleLogin" class="p-4 shadow-sm rounded bg-white">
       <header class="text-center mb-4">
         <h4 class="fw-bold text-primary">Login</h4>
         <p class="text-muted small">Acesse sua conta para continuar</p>
       </header>
-
+    
       <div class="mb-3">
         <input 
+          v-model="email"
           type="email" 
-          id="formEmail" 
           class="form-control form-control-md rounded-1"
           placeholder="Email" 
         />
@@ -18,8 +18,8 @@
 
       <div class="mb-3">
         <input 
+          v-model="password"
           type="password" 
-          id="formPassword" 
           class="form-control form-control-md rounded-1" 
           placeholder="Senha"
         />
@@ -30,24 +30,44 @@
       </div>
 
       <div class="text-center text-lg-start mt-4 pt-2">
-        <button type="submit" class="btn btn-primary btn-sm px-5 rounded-1">
-          Entrar
-        </button>
+      <button type="submit" class="btn btn-primary btn-sm px-5 rounded-1 w-100" :disabled="authStore.loading">
+        <span v-if="authStore.loading">
+        <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+           Loading...
+        </span>
+        <span v-else>
+           Entrar
+       </span>
+      </button>
         <p class="small fw-bold mt-3 mb-0">
           Crie uma conta!
           <a href="#!" class="link-primary"> Registrar</a>
         </p>
       </div>
-    </form>
+    </form> 
   </div>
 </template>
 
+<script lang="ts" setup>
+  import { ref,onMounted } from 'vue';
+  import { useRouter } from 'vue-router'
+  import { useAuthStore } from '@/stores/authStore'
 
-<script lang="ts">
-import { defineComponent } from 'vue';
-export default defineComponent({
-  name: 'Formulario',
-});
+  const router = useRouter()
+  const email = ref('')
+  const password = ref('')
+  const authStore = useAuthStore()
+  const isLoading = ref<boolean>(false);
+
+  async function handleLogin(e: Event) {
+    e.preventDefault()
+    try {
+      await authStore.login(email.value, password.value)
+        router.push({ name: 'home' }) 
+    } catch (error) {
+      alert('Erro no login, verifique suas credenciais')
+    }
+  }
 </script>
 
 <style >

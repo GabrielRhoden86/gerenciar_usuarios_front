@@ -1,17 +1,30 @@
 import apiClient from './apiClient';
 
+interface AuthPayload {
+  email: string;
+  password: string;
+}
+interface AuthResponse {
+  access_token?: string; 
+  user: {
+    name?: string;
+    permissao?: number;
+  };
+}
 
 export const authService = {
-  async login(email: string, password: string) {
-    const response = await apiClient.post('/login', {
-      email,
-      password,
-    });
+  async login(email: string, password: string): Promise<AuthResponse> {
+    const payload: AuthPayload = { email, password };
+    const response = await apiClient.post<AuthResponse>('/login', payload);
     return response.data;
   },
 
-  async logout() {
-    const response = await apiClient.post('/logout');
-    return response.data;
+  async logout(): Promise<void> {
+    await apiClient.post('/logout');
+  },
+
+  async me(): Promise<AuthResponse['user']> {
+    const response = await apiClient.get<AuthResponse>('/me');
+    return response.data.user;
   },
 };

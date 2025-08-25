@@ -4,13 +4,13 @@
     <div class="dropdown">
       <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
         <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
-        <strong>Gabriel Rhoden</strong>
+        <strong>Logout</strong>
       </a>
       <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
-        <li><a class="dropdown-item" href="#">Configurações</a></li>
-        <li><a class="dropdown-item" href="#">Perfil</a></li>
+        <!-- <li><a class="dropdown-item" href="#">Configurações</a></li>
+        <li><a class="dropdown-item" href="#">Perfil</a></li> -->
         <li><hr class="dropdown-divider"></li>
-        <li><router-link to="/login" class="dropdown-item" href="#">Sair</router-link></li>
+          <a class="dropdown-item" href="#" @click.prevent="handleLogout">Sair</a>
       </ul>
     </div>
     <hr />
@@ -44,11 +44,25 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import { useAuthStore } from '@/stores/authStore';
+import { useRouter } from 'vue-router';
+
 export default defineComponent({
   name: 'MenuLateral',
+  setup() {
+    const authStore = useAuthStore();
+    const router = useRouter();
+
+    const handleLogout = () => {
+      authStore.logout();
+      router.push({ name: 'login' });
+    };
+
+    return {
+      handleLogout,
+    };
+  },
 });
-
-
 </script>
 
 <style scoped>

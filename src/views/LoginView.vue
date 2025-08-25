@@ -33,8 +33,6 @@ export default defineComponent({
   border:solid 1px;
  }
 
-
-
 .bg-body-tertiary{
   margin-bottom:10%;
 }

@@ -20,6 +20,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import FormularioGeral from "@/components/FormularioGeral.vue";
+import AlertComponente from "@/components/AlertComponente.vue";
 
 export default defineComponent({
   name: 'perfil',

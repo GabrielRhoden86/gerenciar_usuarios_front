@@ -29,7 +29,7 @@ const routes: Array<RouteRecordRaw> = [
   },
   
   {
-    path: '/perfil',
+    path: '/perfil/:id',
     name: 'perfil',
     component: () => import('@/views/PerfilView.vue'),
     meta: { title: 'Editar Perfil', requiresAuth: true },

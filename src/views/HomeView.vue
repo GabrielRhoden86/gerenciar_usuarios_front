@@ -7,17 +7,20 @@
       <hr class='line'>
     <div class="row g-3"> 
         <Cards
-          titulo="Lista de usuários"
+          titulo="Lista de usuários"    
+          @click="goUsuarios"
           subtitulo="Lista de todos os usuários do sistema"
           icone="bi bi-people  text-primary"
         />
           <Cards
           titulo="Cadastro"
+           @click="goCadastro"
           subtitulo="Cadastrar novos usuários no sistema"
           icone="bi bi-person-plus  text-primary"
         />
         <Cards
          titulo="Editar Perfil"
+         @click="goPerfil"
          subtitulo="Visualizar e editar perfil de usuários"
          icone="bi bi-person text-primary"
     />
@@ -27,17 +30,25 @@
  </main>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
+<script setup lang="ts">
+import { useRouter } from 'vue-router';
 import Cards from "@/components/Cards.vue";
 
-export default defineComponent({
-  name: 'Home',
-  components:{  
-    Cards
-  }
-});
+const router = useRouter();
+
+const goUsuarios = () => {
+  router.push({ name: 'usuarios' });
+};
+
+const goCadastro = () => {
+  router.push({ name: 'cadastro' });
+};
+
+const goPerfil = () => {
+  router.push({ name: 'perfil' });
+};
 </script>
+
 
  <style  >
  .card-title{

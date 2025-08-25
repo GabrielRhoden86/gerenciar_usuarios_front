@@ -2,21 +2,26 @@ import { defineStore } from 'pinia';
 import { ref } from 'vue';
 import { authService } from "@/services/authService";
 import type { AuthResponse } from '@/interfaces/AuthResponse';
+import { getJsonFromLocalStorage  } from '@/Utils/Geral';
+
 
 export const useAuthStore = defineStore('auth', () => {
   const token = ref<string | null>(localStorage.getItem('token') || null);
-  const user = ref<AuthResponse['user'] | null>(JSON.parse(localStorage.getItem('user') || 'null'));
-  const loading = ref(false);
+  const user = ref<AuthResponse['user'] | null>(getJsonFromLocalStorage('user'));
+  const loading = ref<boolean>(false) 
 
   async function login(email: string, password: string): Promise<AuthResponse> {
     loading.value = true;
     try {
       const response = await authService.login(email, password);
-      token.value = response.access_token ?? null;;
-      user.value = response.user;
+      const access_token = response.access_token ?? null;
+      const user_data = response.user;
 
-      localStorage.setItem('token', response.access_token ?? '');
-      localStorage.setItem('user', JSON.stringify(response.user));
+      token.value = access_token;
+      user.value = user_data;
+
+      localStorage.setItem('token', access_token ?? '');
+      localStorage.setItem('user', JSON.stringify(user_data));
 
       return response;
     } catch (err) {

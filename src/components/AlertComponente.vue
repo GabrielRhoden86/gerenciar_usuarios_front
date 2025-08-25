@@ -1,8 +1,8 @@
 <template>
     <div>
-        <div v-if="showAlert" :class="['alert', `alert-${type}`, 'alert-dismissible', 'fade', 'show', 'custom-alert']" role="alert">
+        <div v-if="props.showAlert" :class="['alert', `alert-${type}`, 'alert-dismissible', 'fade', 'show', 'custom-alert']" role="alert">
             <span v-if="type === 'success'">
-                Usuário cadastrado com sucesso! 
+                Usuário {{acao}} com sucesso! 
             </span>
             <span v-else>
                 Ocorreu um erro, verifique novamente. 
@@ -17,34 +17,20 @@
 import { defineProps } from 'vue';
 
 const props = defineProps({
-  showAlert: Boolean,
+  showAlert: {
+    type: Boolean,
+    default: false
+  },
   type: {
     type: String,
     default: 'success'
   },
+  acao: {
+    type: String,
+    required: false
+  }
 });
 </script>
-<style >alertErro
-.custom-alert {
-  position: fixed;
-  top: 5%;
-  right: 2%;
-  z-index: 9999;
-  min-width: 5%;
-  transition: opacity 0.5s ease-in-out; 
-}
+<style >
 
-.custom-alert.fade {
-  opacity: 0;
-  visibility: hidden; 
-}
-
-.custom-alert.show {
-  opacity: 1;
-  visibility: visible;
-}
-
-.btn-close {
-  transform: scale(0.7); 
-}
 </style>

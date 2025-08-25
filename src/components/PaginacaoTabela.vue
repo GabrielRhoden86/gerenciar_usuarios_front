@@ -28,14 +28,12 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed, PropType } from "vue";
-import type { PaginationType } from "@/interfaces/PaginationType"; // opcional, seu tipo
+import { defineComponent, computed } from "vue";
 
 export default defineComponent({
   name: "Pagination",
   props: {
     pagination: {
-      type: Object as PropType<PaginationType>,
       default: () => ({
         current_page: 1,
         per_page: 10,

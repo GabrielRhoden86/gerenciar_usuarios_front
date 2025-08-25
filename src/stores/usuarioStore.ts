@@ -34,7 +34,25 @@ export function useUsuariosStore() {
       return [];
     }
   };
-   const excluirUsuario  = async (id: number) => {
+
+  const atualizarUsuarios = async (
+    id: number,
+    name: string,
+    email: string,
+    role_id: number,
+  ) => {
+    error.value = null;
+    try {
+      const response = await useUsuarioService.atualizarUsuarioService(id, name, email, role_id);
+      return response;
+    } catch (err) {
+      console.error('Erro ao atualizar usuário:', err);
+      error.value = err;
+      return null;
+  }
+  };
+
+  const excluirUsuario  = async (id: number) => {
     error.value = null;
     try {
       const response = await useUsuarioService.excluirUsuarioService(id);
@@ -51,6 +69,7 @@ export function useUsuariosStore() {
     error,
     fetchUsuarios,
     cadastrarUsuarios,
-    excluirUsuario
+    atualizarUsuarios,
+    excluirUsuario,
   };
 }

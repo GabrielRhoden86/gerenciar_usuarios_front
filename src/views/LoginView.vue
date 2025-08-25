@@ -1,5 +1,5 @@
 <template>
- <main class="rounded-2 bg-body-tertiary mt-5">
+ <main class="rounded-2 bg-body-tertiary mt-5 p-5">
   <h4 class="text-primary p-2">Gerenciador de usuários</h4>
   <hr class="line"> 
   <div class="container-fluid h-custom">

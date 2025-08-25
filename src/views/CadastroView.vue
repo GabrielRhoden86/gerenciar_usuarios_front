@@ -6,12 +6,6 @@
         <p>Cadastrar novos usuários do sistema</p>
         <hr class="line">
         <div class="col-md-10 d-flex justify-content-center align-items-center">
-
-            <AlertComponente
-              :showAlert="showAlert"
-              :type="alertType"
-            />
-
           <FormularioGeral
             titulo="Cadastrar novos usuários"
             icone="bi bi-person-plus fs-5 text-primary me-2"
@@ -24,6 +18,13 @@
       </div>
     </div>
   </main>
+
+  <AlertComponente
+    :showAlert="showAlert"
+    :type="alertType"
+    acao="Cadastrado"
+    class="custom-alert"
+  />
 </template>
 
 <script setup lang="ts">
@@ -31,35 +32,28 @@ import { ref } from 'vue';
 import FormularioGeral from "@/components/FormularioGeral.vue";
 import AlertComponente from "@/components/AlertComponente.vue";
 import { useUsuariosStore } from '@/stores/usuarioStore';
-import type { UserItemPayload } from '@/interfaces/UserItemPayload';
+import { exibirAlerta } from '@/Utils/Geral';
 
 const usuariosStore = useUsuariosStore();
 const isLoading = ref<boolean>(false);
 const showAlert = ref(false);
 const alertType = ref('success'); 
-
-const exibirAlerta = (type = 'success', tempo = 4000) => {
-  alertType.value = type;
-  showAlert.value = true;
-  setTimeout(() => {
-    showAlert.value = false;
-  }, tempo);
-};
+let alertTimeoutId: number | null = null;
 
 const cadastrarUsuario = async (dadosDoFormulario:any) => {
- isLoading.value = true;
- showAlert.value = false; 
+  isLoading.value = true;
+  showAlert.value = false;
   try {
     const { name, email, role_id } = dadosDoFormulario;
     await usuariosStore.cadastrarUsuarios(name, email, role_id);
-    exibirAlerta('success');
+    alertTimeoutId = exibirAlerta(showAlert, alertType, 'success'); 
 
- } catch (error) {
-      exibirAlerta('danger');
-     console.error("Erro ao cadastrar o usuário:", error);
- } finally {
-  isLoading.value = false;
- }
+  } catch (error) {
+    alertTimeoutId = exibirAlerta(showAlert, alertType, 'danger');
+    console.error("Erro ao cadastrar o usuário:", error);
+  } finally {
+    isLoading.value = false;
+  }
 };
 
 </script>
@@ -68,7 +62,6 @@ const cadastrarUsuario = async (dadosDoFormulario:any) => {
 .card-title {
   color:#075bda !important;
 }
-
 
 .custom-card {
   cursor: pointer;
@@ -89,5 +82,27 @@ const cadastrarUsuario = async (dadosDoFormulario:any) => {
   color:#0A67F1;
   background-color:#0A67F1;
   border:solid 1px;
+}
+
+.custom-alert {
+  position: fixed; 
+  top: 5%; 
+  right: 2%; 
+  z-index: 9999;
+  min-width: 5%;
+  transition: opacity 0.5s ease-in-out; 
+}
+.custom-alert.fade {
+  opacity: 0;
+  visibility: hidden; 
+}
+
+.custom-alert.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+.btn-close {
+  transform: scale(0.7); 
 }
 </style>

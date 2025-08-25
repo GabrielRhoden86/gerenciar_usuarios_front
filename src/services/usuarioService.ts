@@ -23,6 +23,15 @@ async cadastrarUsuarioService(name:string, email:string, role_id: number, ) {
     return response.data;
   },  
 
+  async atualizarUsuarioService(id: number, name: string, email: string, role_id: number) {
+  const response = await apiClient.patch<UserItemPayload>(`/usuarios/editar/${id}`, {
+    name: name,
+    email: email,
+    role_id: role_id
+  });
+  return response.data;
+},
+
 async excluirUsuarioService(id: number) {
   const response = await apiClient.delete<UserItemPayload>(`/usuarios/excluir/${id}`);
   return response.data;

@@ -30,7 +30,6 @@
             @page-changed="fetchDadoUsuarios"
           />
         </div>
-        
         <ModalExclusao
           ref="modalExclusao"
           :itemSelecionado="itemSelecionado"
@@ -67,10 +66,7 @@ const usuariosStore = useUsuariosStore();
 const resultItems = ref<UserItem[]>([]);
 const itemSelecionado = ref<number | null>(null);
 const modalAberto = ref(false);
-
 const modalExclusao = ref<any>(null); 
-
-
 
 const pagination = ref({
   current_page: 1,
@@ -104,23 +100,33 @@ onMounted(async () => {
 });
 
 const fetchDadoUsuarios = async (page = 1) => {
-     isLoading.value = true;
+  isLoading.value = true;
   try {
-    const items = await usuariosStore.fetchUsuarios(page); 
-     pagination.value = {
-      current_page: items.data.current_page,
-      per_page: items.data.per_page,
-      last_page: items.data.last_page,
-      total: items.data.total,
-    };
-    resultItems.value = items.data.data;
-    
-    isLoading.value = false;
+    const items = await usuariosStore.fetchUsuarios(page);
+
+    if (items && 'data' in items && items.data) {
+      pagination.value = {
+        current_page: items.data.current_page,
+        per_page: items.data.per_page,
+        last_page: items.data.last_page,
+        total: items.data.total,
+      };
+      resultItems.value = items.data.data;
+    } else {
+      pagination.value = {
+        current_page: 1,
+        per_page: 0,
+        last_page: 1,
+        total: 0,
+      };
+      resultItems.value = [];
+    }
   } catch (error) {
     console.error("Erro ao buscar os usuários:", error);
+  } finally {
+    isLoading.value = false;
   }
 };
-
 
 const abrirModalExclusao = (id: number) => {
   itemSelecionado.value = id;
@@ -128,22 +134,21 @@ const abrirModalExclusao = (id: number) => {
     modalExclusao.value.abrirModal();
   }
 };
-const fecharModal = () => {
+const fecharModal = () => {   
   modalAberto.value = false;
 };
 
 const excluirUsuario = async (id: number) => { 
-  console.log('ID a ser excluído:', id); 
   if (!id) {
     console.error("ID não fornecido para exclusão.");
     return;
   }
   isLoading.value = true;
   try {
-    const response = await usuariosStore.excluirUsuario(id);
-    console.log(response.message);
+    await usuariosStore.excluirUsuario(id);
     await fetchDadoUsuarios(pagination.value.current_page);
-    modalExclusao.value.fecharModal();
+    
+    fecharModal(); 
   } catch (error) {
     console.error("Erro ao excluir o usuário:", error);
   } finally {

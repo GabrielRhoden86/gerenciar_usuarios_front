@@ -38,12 +38,15 @@
 
           <td class="text-center">
             <div class="d-flex justify-content-start gap-2">
-              <button type="button" class="btn btn-link btn-sm " title="Editar">
+               
+              <button type="button" class="btn btn-link btn-sm " title="Editar"
+               @click="goToPerfil(item.id)"
+              >
                 <i class="bi bi-pencil fs-5"></i>
               </button>
         
               <button type="button"      
-                @click="$emit('excluir', item.id)" 
+                @click="emit('excluir', item.id)" 
                    class="btn btn-link btn-sm text-danger" title="Excluir">
                 <i class="bi bi-trash fs-5"></i>
               </button>
@@ -52,8 +55,6 @@
         </tr>
       </tbody>
     </table>
-
-  
 </template>
 
 <script setup lang="ts">
@@ -62,11 +63,13 @@ import type { TableHeader } from "@/interfaces/TableHeader";
 import type { UserItem } from "@/interfaces/UserItem";
 import { formatarData } from '@/Utils/Geral';
 import { formatRole } from '@/Utils/Geral';
+import { useRouter } from 'vue-router';
 
 const emit = defineEmits<{
+  (e: "excluir", id: number): void;
   (e: "page-changed", page: number): void;
 }>();
-
+const router = useRouter();
 const props = defineProps({
   headers: {
     type: Array as PropType<TableHeader[]>,
@@ -77,6 +80,13 @@ const props = defineProps({
     default: () => [],
   },
 });
+
+const goToPerfil = (id: number) => {
+  router.push({
+    name: 'perfil',
+    params: { id: id }
+  });
+};
 
 </script>
 
@@ -91,6 +101,5 @@ const props = defineProps({
   }
   .table{
     font-size:13.5px;
-    /* border: solid 10px white; */
   }
 </style>

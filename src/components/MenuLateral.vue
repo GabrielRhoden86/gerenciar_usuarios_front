@@ -1,18 +1,11 @@
 <template>
   <div class="d-flex flex-column flex-shrink-0 p-3 text-white menu-lateral">
    
-    <div class="dropdown">
-      <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-        <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
-        <strong>Logout</strong>
-      </a>
-      <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
-        <!-- <li><a class="dropdown-item" href="#">Configurações</a></li>
-        <li><a class="dropdown-item" href="#">Perfil</a></li> -->
-        <li><hr class="dropdown-divider"></li>
-          <a class="dropdown-item" href="#" @click.prevent="handleLogout">Sair</a>
-      </ul>
-    </div>
+      <span  class="d-flex align-items-center text-white text-decoration-none logout">
+         <i class="bi bi-person fs-4 me-2"></i>
+        <strong><a class="dropdown-item"  @click.prevent="handleLogout">Sair</a></strong>
+      </span>
+      
     <hr />
 
     <ul class="nav nav-pills flex-column mb-auto">
@@ -42,27 +35,16 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
+<script setup lang="ts">
 import { useAuthStore } from '@/stores/authStore';
 import { useRouter } from 'vue-router';
+const authStore = useAuthStore();
+const router = useRouter();
+const handleLogout = () => {
+  authStore.logout();
+  router.push({ name: 'login' });
+};
 
-export default defineComponent({
-  name: 'MenuLateral',
-  setup() {
-    const authStore = useAuthStore();
-    const router = useRouter();
-
-    const handleLogout = () => {
-      authStore.logout();
-      router.push({ name: 'login' });
-    };
-
-    return {
-      handleLogout,
-    };
-  },
-});
 </script>
 
 <style scoped>
@@ -73,7 +55,7 @@ export default defineComponent({
   background-color: #0D6EFD;
 }
 .nav-link:hover {
-  /* color: #d1e1fc !important; */
+
   border-radius: 4px;
 }
 .dropdown-menu{
@@ -83,5 +65,9 @@ export default defineComponent({
   border-bottom:3px solid  #d1e1fc;
   color: #fff !important;
   border-radius: 4px;
+}
+.logout{
+  cursor: pointer;
+  margin-left:15px;
 }
 </style>

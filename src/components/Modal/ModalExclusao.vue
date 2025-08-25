@@ -29,11 +29,15 @@ import { Modal } from 'bootstrap';
 
 export default defineComponent({
   props: {
-    itemSelecionado: Number
+    itemSelecionado: {
+      type: [Number, null], 
+      required: true 
+    }
   },
   emits: ['fechar', 'confirmar'],
   setup(props, { emit }) {
-    const modalRef = ref<HTMLElement | null>(null);
+    const modalRef = ref(null);
+
     let modalInstance: Modal | null = null;
 
     onMounted(() => {
@@ -52,7 +56,7 @@ export default defineComponent({
     };
 
     const confirmarExclusao = () => {
-      emit('confirmar', props.itemSelecionado);
+      emit('confirmar', props.itemSelecionado); 
       fecharModal();
     };
 

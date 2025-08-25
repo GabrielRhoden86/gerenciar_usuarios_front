@@ -6,10 +6,7 @@
         <h4 class="fw-bold text-primary">Login</h4>
         <p class="text-muted small">Acesse sua conta para continuar</p>
       </header>
-           <AlertComponente
-              :showAlert="showAlert"
-              :type="alertType"
-            />
+  
           <div class="mb-3">
             <input 
               v-model="email"
@@ -33,15 +30,15 @@
       </div>
 
       <div class="text-center text-lg-start mt-4 pt-2">
-      <button type="submit" class="btn btn-primary btn-sm px-5 rounded-1 w-100" :disabled="authStore.loading">
-        <span v-if="authStore.loading">
-        <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
-           Loading...
+        <button type="submit" class="btn btn-primary btn-sm px-5 rounded-1 w-100" :disabled="isLoading">
+          <span v-if="isLoading">
+          <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+            Loading...
+          </span>
+          <span v-else>
+            Entrar
         </span>
-        <span v-else>
-           Entrar
-       </span>
-      </button>
+        </button>
         <p class="small fw-bold mt-3 mb-0">
           Crie uma conta!
           <a href="#!" class="link-primary"> Registrar</a>
@@ -52,10 +49,10 @@
 </template>
 
 <script lang="ts" setup>
-  import { ref,onMounted } from 'vue';
+  import { ref } from 'vue';
   import { useRouter } from 'vue-router'
   import { useAuthStore } from '@/stores/authStore'
-  import AlertComponente from "@/components/AlertComponente.vue";
+  // import AlertComponente from "@/components/AlertComponente.vue";
 
 
   const router = useRouter()
@@ -64,27 +61,19 @@
   const authStore = useAuthStore()
   const isLoading = ref<boolean>(false);
 
-  const showAlert = ref(false);
-  const alertType = ref('danger'); 
 
-const exibirAlerta = (type = 'danger', tempo = 4000) => {
-  alertType.value = type;
-  showAlert.value = true;
-  setTimeout(() => {
-    showAlert.value = false;
-  }, tempo);
-};
-
-  async function handleLogin(e: Event) {
-    e.preventDefault()
-    try {
+ async function handleLogin(e: Event) {
+  e.preventDefault()
+  isLoading.value = true;
+  try {
+      isLoading.value = false; 
       await authStore.login(email.value, password.value)
-        router.push({ name: 'home' }) 
-    } catch (error) {
-      exibirAlerta('danger');
-      // alert('Erro no login, verifique suas credenciais')
-    }
+      router.push({ name: 'home' }) 
+  } catch (error) {
+    alert('Erro no login, verifique suas credenciais');
+    console.error('Erro no login, verifique suas credenciais')
   }
+}
 </script>
 
 <style >

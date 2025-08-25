@@ -61,7 +61,6 @@ const form = reactive({
   role_id: null as number | null
 });
 
-//permite somente letras
 watch(() => form.name, (newValue) => {
   form.name = newValue.replace(/[^a-zA-Z\s]/g, '');
 });

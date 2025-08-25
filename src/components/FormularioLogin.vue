@@ -24,11 +24,6 @@
           placeholder="Senha"
         />
       </div>
-
-      <div class="d-flex justify-content-between align-items-center mb-3">
-        <a href="#!" class="text-primary small">Esqueceu sua senha?</a>
-      </div>
-
       <div class="text-center text-lg-start mt-4 pt-2">
         <button type="submit" class="btn btn-primary btn-sm px-5 rounded-1 w-100" :disabled="isLoading">
           <span v-if="isLoading">
@@ -39,10 +34,6 @@
             Entrar
         </span>
         </button>
-        <p class="small fw-bold mt-3 mb-0">
-          Crie uma conta!
-          <a href="#!" class="link-primary"> Registrar</a>
-        </p>
       </div>
     </form> 
   </div>

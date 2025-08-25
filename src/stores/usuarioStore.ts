@@ -1,21 +1,22 @@
 import { ref } from 'vue';
 import { useUsuarioService } from '@/services/usuarioService';
 import type { UserItem } from '@/interfaces/UserItem';
+import type { PaginationResponse } from '@/interfaces/PaginationResponse';
 
 
 export function useUsuariosStore() {
   const usuarios = ref<UserItem[]>([]);
   const error = ref<any>(null);
 
-  const fetchUsuarios = async (page = 1) => {
+const fetchUsuarios = async (page = 1, filtros = {}) => {
     error.value = null;
     try {
-      const response = await useUsuarioService.usuarioService(page);
+      const response: PaginationResponse<UserItem> = await useUsuarioService.usuarioService(page, filtros);
       return response;
     } catch (err) {
       console.error('Erro ao buscar usuários:', err);
       error.value = err;
-      return [];
+      return null;
     }
   };
 
@@ -63,6 +64,18 @@ export function useUsuariosStore() {
       throw err; 
     }
   };
+
+    const buscaUsuarioId  = async (id: number) => {
+    error.value = null;
+    try {
+      const response = await useUsuarioService.buscaUsuarioService(id);
+      return response;
+    } catch (err) {
+      console.error('Erro ao deletar usuário:', err);
+      error.value = err;
+      throw err; 
+    }
+  };
   
   return {
     usuarios,
@@ -71,5 +84,6 @@ export function useUsuariosStore() {
     cadastrarUsuarios,
     atualizarUsuarios,
     excluirUsuario,
+    buscaUsuarioId
   };
 }

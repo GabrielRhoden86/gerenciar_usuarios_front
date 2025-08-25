@@ -5,14 +5,18 @@ import type { PaginationResponse } from '@/interfaces/PaginationResponse';
 
 
 export const useUsuarioService = {
-  async usuarioService(page: number) {
+
+  async usuarioService(page: number, filtros: any = {}) {
     const response = await apiClient.get<PaginationResponse<UserItem>>('/usuarios/listar', {
-          params: {
-            page: page,
-          }
-        });
+      params: {
+        page: page,
+        ...filtros 
+      }
+    });
     return response.data;
-  },  
+  },
+  
+
 
 async cadastrarUsuarioService(name:string, email:string, role_id: number, ) {
     const response = await apiClient.post<UserItemPayload>('/usuarios/cadastrar', {
@@ -34,6 +38,11 @@ async cadastrarUsuarioService(name:string, email:string, role_id: number, ) {
 
 async excluirUsuarioService(id: number) {
   const response = await apiClient.delete<UserItemPayload>(`/usuarios/excluir/${id}`);
+  return response.data;
+},
+
+async buscaUsuarioService(id: number) {
+  const response = await apiClient.get<UserItemPayload>(`/usuarios/buscar/${id}`);
   return response.data;
 }
 };

@@ -7,15 +7,35 @@
       </header>
 
       <div class="mb-3">
-        <input v-model="form.name" type="text" class="form-control rounded-1" placeholder="Nome" required />
+        <input 
+          v-model="form.name" 
+          type="text" 
+          class="form-control rounded-1" 
+          placeholder="Nome" 
+          :required="props.acao !== 'editar'" 
+        />
       </div>
 
       <div class="mb-3">
-        <input v-model="form.email" type="email" class="form-control rounded-1" placeholder="Email" required />
+        <input 
+          v-model="form.email" 
+          type="email" 
+          class="form-control rounded-1" 
+          placeholder="Email" 
+          :required="props.acao !== 'editar'" 
+        />
       </div>
 
       <div class="form-check mb-3">
-        <input class="form-check-input" type="radio" name="tipo-conta" id="admin" value="1" v-model.number="form.role_id" required />
+        <input 
+          class="form-check-input" 
+          type="radio" 
+          name="tipo-conta" 
+          id="admin" 
+          value="1" 
+          v-model.number="form.role_id" 
+          :required="props.acao !== 'editar'" 
+        />
         <label class="form-check-label" for="admin">
           <span class="fw-semibold">🔑 Administrador</span><br />
           <small class="text-muted">Acesso total ao sistema.</small>
@@ -23,7 +43,15 @@
       </div>
 
       <div class="form-check mb-3">
-        <input class="form-check-input" type="radio" name="tipo-conta" id="usuario" value="2" v-model.number="form.role_id" required />
+        <input 
+          class="form-check-input" 
+          type="radio" 
+          name="tipo-conta" 
+          id="usuario" 
+          value="2" 
+          v-model.number="form.role_id" 
+          :required="props.acao !== 'editar'" 
+        />
         <label class="form-check-label" for="usuario">
           <span class="fw-semibold">👤 Usuário Padrão</span><br />
           <small class="text-muted">Acesso restrito.</small>
@@ -50,6 +78,7 @@ const props = defineProps({
   titulo: String,
   name: String,
   icone: String,
+  acao: String,
   isLoading: Boolean
 });
 

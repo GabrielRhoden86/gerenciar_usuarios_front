@@ -19,11 +19,11 @@
           <i class="bi bi-person-plus fs-5 me-2"></i> Cadastrar
         </router-link>
       </li>
-      <li>
+      <!-- <li>
         <router-link to="/perfil" class="nav-link text-white">
           <i class="bi bi-person fs-5 me-2"></i> Editar Perfil
         </router-link>
-      </li>
+      </li> -->
       <li>
         <router-link to="/usuarios" class="nav-link text-white">
           <i class="bi bi-people fs-5 me-2"></i> Usuários

@@ -22,7 +22,7 @@
   <AlertComponente
     :showAlert="showAlert"
     :type="alertType"
-    acao="Cadastrado"
+    acao="cadastrado"
     class="custom-alert"
   />
 </template>

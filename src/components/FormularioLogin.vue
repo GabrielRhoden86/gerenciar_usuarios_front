@@ -49,29 +49,27 @@
 </template>
 
 <script lang="ts" setup>
-  import { ref } from 'vue';
-  import { useRouter } from 'vue-router'
-  import { useAuthStore } from '@/stores/authStore'
-  // import AlertComponente from "@/components/AlertComponente.vue";
+import { ref } from 'vue';
+import { useRouter } from 'vue-router'
+import { useAuthStore } from '@/stores/authStore'
 
+const router = useRouter()
+const email = ref('')
+const password = ref('')
+const authStore = useAuthStore()
+const isLoading = ref<boolean>(false);
 
-  const router = useRouter()
-  const email = ref('')
-  const password = ref('')
-  const authStore = useAuthStore()
-  const isLoading = ref<boolean>(false);
-
-
- async function handleLogin(e: Event) {
-  e.preventDefault()
+async function handleLogin(e: Event) {
+  e.preventDefault();
   isLoading.value = true;
   try {
-      isLoading.value = false; 
-      await authStore.login(email.value, password.value)
-      router.push({ name: 'home' }) 
+    await authStore.login(email.value, password.value);
+    router.push({ name: 'home' });
   } catch (error) {
     alert('Erro no login, verifique suas credenciais');
-    console.error('Erro no login, verifique suas credenciais')
+    console.error('Erro no login, verifique suas credenciais');
+  } finally {
+    isLoading.value = false;
   }
 }
 </script>

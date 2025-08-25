@@ -1,14 +1,16 @@
 <template>
-
  <main class="rounded-2 conteudo-principal bg-body-tertiary mt-1">
   <div class="flex-grow-1 p-4 rounded-1 p-3">
     <div class="container-fluid text-secondary">
       <h4 class="text-primary">Usuários</h4>
       <p>Sistema de gerenciador de usuários</p>
       <hr class='line'>
-     <div class="mb-3 d-flex align-items-center d-flex justify-content-md-end">
-        <b class="text-primary">Filtrar</b><i class="bi bi-funnel fs-5 me-2 text-primary"></i>
+
+      <div class="mb-3 d-flex align-items-center d-flex justify-content-md-end filtros">
+        <b class="text-primary" @click="toggleFiltroModal">Filtrar</b>
+        <i class="bi bi-funnel fs-5 me-2 text-primary" @click="toggleFiltroModal"></i>
       </div>
+
       <div class="table-responsive">
       <div class="d-flex justify-content-center w-100">
         <template v-if="isLoading">
@@ -40,16 +42,14 @@
       </div>
     </div>
   </div>
-
-      <div class="toast align-items-center text-white bg-primary border-0" role="alert" aria-live="assertive" aria-atomic="true">
-        <div class="d-flex">
-          <div class="toast-body">
-            Hello, world! This is a toast message.
-          </div>
-          <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
-        </div>
-      </div>
-
+     <ModalLateral
+      :isVisible="isFiltroModalOpen"
+      :filtros="filtros"
+      @close="toggleFiltroModal"
+      @apply-filters="handleApplyFilters"
+      @clear-filters="handleClearFilters"
+   />
+    
  </main>
 </template>
 
@@ -61,6 +61,7 @@ import type { TableHeader } from "@/interfaces/TableHeader";
 import type { UserItem } from "@/interfaces/UserItem";
 import { useUsuariosStore } from '@/stores/usuarioStore';
 import ModalExclusao from "@/components/Modal/ModalExclusao.vue";
+import ModalLateral from "@/components/Modal/ModalLateral.vue";
 
 const usuariosStore = useUsuariosStore();
 const resultItems = ref<UserItem[]>([]);
@@ -76,13 +77,25 @@ const pagination = ref({
 });
 
 const cabecalho = ref<TableHeader[]>([
-  { key: 'name',    label: 'Nome' },
-  { key: 'email',   label: 'Email' },
+  { key: 'name', label: 'Nome' },
+  { key: 'email', label: 'Email' },
   { key: 'role_id', label: 'Perfil' },
   { key: 'created_at', label: 'Criado' },
   { key: 'updated_at', label: 'Atualizado' },
-  { key: 'acoes',   label: 'Ações' },
+  { key: 'acoes', label: 'Ações' },
 ]);
+
+const filtros = ref({
+  name: '',
+  email: '',
+  role_id: null
+});
+
+const isFiltroModalOpen = ref(false);
+
+const toggleFiltroModal = () => {
+  isFiltroModalOpen.value = !isFiltroModalOpen.value;
+};
 
 const headers = computed(() =>
   cabecalho.value.map(col => {
@@ -93,17 +106,13 @@ const headers = computed(() =>
     };
   })
 );
-const isLoading = ref<boolean>(false);
 
-onMounted(async () => {
-  await fetchDadoUsuarios(1);
-});
+const isLoading = ref<boolean>(false);
 
 const fetchDadoUsuarios = async (page = 1) => {
   isLoading.value = true;
   try {
-    const items = await usuariosStore.fetchUsuarios(page);
-
+    const items = await usuariosStore.fetchUsuarios(page, filtros.value);
     if (items && 'data' in items && items.data) {
       pagination.value = {
         current_page: items.data.current_page,
@@ -134,9 +143,27 @@ const abrirModalExclusao = (id: number) => {
     modalExclusao.value.abrirModal();
   }
 };
-const fecharModal = () => {   
+
+const fecharModal = () => {   
   modalAberto.value = false;
 };
+
+const handleApplyFilters = (novosFiltros: { name: string, email: string, role_id: number | null }) => {
+    filtros.value = novosFiltros;
+    fetchDadoUsuarios(1); 
+    toggleFiltroModal(); 
+};
+
+const handleClearFilters = () => {
+    filtros.value = {
+        name: '',
+        email: '',
+        role_id: null
+    };
+    fetchDadoUsuarios(1); 
+    toggleFiltroModal(); 
+};
+
 
 const excluirUsuario = async (id: number) => { 
   if (!id) {
@@ -156,9 +183,21 @@ const excluirUsuario = async (id: number) => {
   }
 };
 
-
+onMounted(() => {
+  fetchDadoUsuarios();
+});
 </script>
+
  <style  scoped>
+ .filtros{
+  cursor:pointer;
+ }
+ .btn-close-sm {
+  width: 0.75rem;   
+  height: 0.75rem;  
+  font-size: 0.6rem;
+  border-radius: 2px; 
+}
  .card-title{
   color:#075bda !important;
  }

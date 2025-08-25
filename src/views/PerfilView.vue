@@ -2,6 +2,10 @@
  <main class="rounded-2 conteudo-principal col-md-12 bg-body-tertiary mt-1">
   <div class="p-4 rounded-1 p-3">
     <div class="container-fluid text-secondary">
+         <AlertComponente
+              :showAlert="showAlert"
+              :type="alertType"
+            />
       <h4 class="text-primary">Editar Perfil</h4>
       <p>Editar perfil de usuários do sistema</p>
       <hr class='line'>

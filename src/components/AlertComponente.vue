@@ -5,7 +5,7 @@
                 Usuário cadastrado com sucesso! 
             </span>
             <span v-else>
-                Ocorreu um erro ao cadastrar o usuário. 
+                Ocorreu um erro, verifique novamente. 
             </span>
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
@@ -21,10 +21,10 @@ const props = defineProps({
   type: {
     type: String,
     default: 'success'
-  }
+  },
 });
 </script>
-<style >
+<style >alertErro
 .custom-alert {
   position: fixed;
   top: 5%;

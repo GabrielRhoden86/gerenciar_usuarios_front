@@ -6,14 +6,17 @@
         <h4 class="fw-bold text-primary">Login</h4>
         <p class="text-muted small">Acesse sua conta para continuar</p>
       </header>
-    
-      <div class="mb-3">
-        <input 
-          v-model="email"
-          type="email" 
-          class="form-control form-control-md rounded-1"
-          placeholder="Email" 
-        />
+           <AlertComponente
+              :showAlert="showAlert"
+              :type="alertType"
+            />
+          <div class="mb-3">
+            <input 
+              v-model="email"
+              type="email" 
+              class="form-control form-control-md rounded-1"
+              placeholder="Email" 
+            />
       </div>
 
       <div class="mb-3">
@@ -52,6 +55,8 @@
   import { ref,onMounted } from 'vue';
   import { useRouter } from 'vue-router'
   import { useAuthStore } from '@/stores/authStore'
+  import AlertComponente from "@/components/AlertComponente.vue";
+
 
   const router = useRouter()
   const email = ref('')
@@ -59,13 +64,25 @@
   const authStore = useAuthStore()
   const isLoading = ref<boolean>(false);
 
+  const showAlert = ref(false);
+  const alertType = ref('danger'); 
+
+const exibirAlerta = (type = 'danger', tempo = 4000) => {
+  alertType.value = type;
+  showAlert.value = true;
+  setTimeout(() => {
+    showAlert.value = false;
+  }, tempo);
+};
+
   async function handleLogin(e: Event) {
     e.preventDefault()
     try {
       await authStore.login(email.value, password.value)
         router.push({ name: 'home' }) 
     } catch (error) {
-      alert('Erro no login, verifique suas credenciais')
+      exibirAlerta('danger');
+      // alert('Erro no login, verifique suas credenciais')
     }
   }
 </script>

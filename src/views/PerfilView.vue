@@ -35,7 +35,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, watch } from 'vue';
+import { ref, onMounted } from 'vue';
 import FormularioGeral from "@/components/FormularioGeral.vue";
 import { useUsuariosStore } from '@/stores/usuarioStore';
 import AlertComponente from "@/components/AlertComponente.vue";
@@ -78,13 +78,11 @@ onMounted(async () => {
   }
 });
 
-
 const atualizarUsuario = async (dadosDoFormulario: any) => {
   isLoading.value = true;
   showAlert.value = false;
 
   try {
-
     if (userId.value === null) {
       exibirAlerta(showAlert, alertType, 'danger');
       return;
@@ -97,12 +95,11 @@ const atualizarUsuario = async (dadosDoFormulario: any) => {
     if (dadosDoFormulario.role_id !== null) payload.role_id = dadosDoFormulario.role_id;
 
     await usuariosStore.atualizarUsuarios(userId.value, payload);
-    await usuariosStore.verificaPermissao();
     
     const usuarioAtualizadoData = await usuariosStore.buscaUsuarioId(userId.value);
     usuario.value = usuarioAtualizadoData.data;
     alertTimeoutId = exibirAlerta(showAlert, alertType, 'success');
-     usuariosStore.sinalizarRecarregamentoDados();
+    
   } catch (error) {
     alertTimeoutId = exibirAlerta(showAlert, alertType, 'danger');
     menssagemAlerta.value = "Você não tem permissão para acessar esta área!";

@@ -33,6 +33,7 @@
           placeholder="Nova Senha"
         />
       </div>
+    <div v-if="permissao === 1">
       <div class="form-check mb-3">
         <input 
           class="form-check-input" 
@@ -64,7 +65,7 @@
           <small class="text-muted">Acesso restrito.</small>
         </label>
       </div>
-
+     </div>
       <button type="submit" class="btn btn-primary w-100 btn-sm px-5 rounded-1" :disabled="props.isLoading">
         <span v-if="props.isLoading">
           <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
@@ -79,8 +80,9 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, defineEmits, defineProps, watch } from 'vue';
-
+import { reactive, defineEmits, defineProps, watch, onMounted, ref } from 'vue';
+import { useUsuariosStore } from '@/stores/usuarioStore';
+const usuariosStore = useUsuariosStore();
 const props = defineProps({
   titulo: String,
   name: String,
@@ -89,9 +91,9 @@ const props = defineProps({
   isLoading: Boolean
 });
 
+const permissao = ref<number | null>(null);
+
 const emits = defineEmits(['submit-form']);
-
-
 const form = reactive({
   name: '',
   email: '',
@@ -103,6 +105,10 @@ watch(() => form.name, (newValue) => {
   form.name = newValue.replace(/[^a-zA-Z\s]/g, '');
 });
 
+onMounted(async () => {
+  permissao.value = await usuariosStore.verificaPermissao();
+  console.log( permissao.value);
+});
 const submitForm = () => {
     if (!form.name && !form.email && !form.role_id && !form.password) return; 
 

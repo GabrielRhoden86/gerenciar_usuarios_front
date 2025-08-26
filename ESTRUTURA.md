@@ -1,27 +1,18 @@
----
-📦 Dependências Principais
+# 📦 Dependências Principais
 
-axios (^1.11.0): biblioteca para realizar requisições HTTP, usada nos Services para consumir a API.
-
-bootstrap (^5.3.7): framework CSS para estilização rápida e responsiva.
-
-bootstrap-icons (^1.13.1): conjunto de ícones compatível com Bootstrap.
-
-vue-router (^4.5.x): gerenciador de rotas do Vue 3, permitindo navegação entre páginas da aplicação.
-
+- **axios (^1.11.0)**: biblioteca para realizar requisições HTTP, usada nos Services para consumir a API.
+- **bootstrap (^5.3.7)**: framework CSS para estilização rápida e responsiva.
+- **bootstrap-icons (^1.13.1)**: conjunto de ícones compatível com Bootstrap.
+- **vue-router (^4.5.x)**: gerenciador de rotas do Vue 3, permitindo navegação entre páginas da aplicação.
 
 # 📦 Pinia + Service + Store
 
 Este projeto demonstra como usar **Pinia** no Vue 3 para gerenciar estado reativo, consumindo uma API através de **Services**.
 
-
 ## ⚙️ Estrutura
 
-- **Service**: responsável por consumir a API e retornar dados.
+- **Service**: responsável por consumir a API e retornar dados.  
 - **Store**: responsável pela reatividade e gerenciamento de estado no frontend.
-
----
-
 ## 🛠️ Service
 
 O Service encapsula as chamadas à API.  
@@ -73,7 +64,7 @@ const fetchUsuarios = async (page = 1, filtros = {}) => {
 - Cria o roteamento da aplicação com `createRouter` e `createWebHistory`.
 - Define as rotas principais:
 
-| Rota        | Componente             | Meta                         |
+| Rota        | Componente           | Meta                         |
 |------------|----------------------|-----------------------------|
 | `/`        | HomeView.vue          | `requiresAuth: true`        |
 | `/login`   | LoginView.vue         | -                           |

@@ -1,8 +1,19 @@
+---
+📦 Dependências Principais
+
+axios (^1.11.0): biblioteca para realizar requisições HTTP, usada nos Services para consumir a API.
+
+bootstrap (^5.3.7): framework CSS para estilização rápida e responsiva.
+
+bootstrap-icons (^1.13.1): conjunto de ícones compatível com Bootstrap.
+
+vue-router (^4.5.x): gerenciador de rotas do Vue 3, permitindo navegação entre páginas da aplicação.
+
+
 # 📦 Pinia + Service + Store
 
 Este projeto demonstra como usar **Pinia** no Vue 3 para gerenciar estado reativo, consumindo uma API através de **Services**.
 
----
 
 ## ⚙️ Estrutura
 

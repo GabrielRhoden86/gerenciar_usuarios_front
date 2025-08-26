@@ -1,91 +1,46 @@
-⚙️ Configuração do Ambiente Local
-1️⃣ Clone o repositório
+# Instruções de Utilização da Aplicação
 
-git clone https://github.com/GabrielRhoden86/gerenciador-usuarios
-2️⃣ Instale as dependências
+O primeiro acesso deve ser feito com as credenciais abaixo:
 
-composer install
-3️⃣ Copie o arquivo .env de exemplo
+**Login:** [https://d60b4f01eac0.ngrok-free.app/login](https://d60b4f01eac0.ngrok-free.app/login)  
+**Email:** admin@exemplo.com  
+**Senha:** senha123  
 
-cp .env.example .env
-4️⃣ Gere a chave da aplicação
+> **Observação:** Como administrador, você poderá cadastrar outros usuários em:  
+> [https://d60b4f01eac0.ngrok-free.app/cadastro](https://d60b4f01eac0.ngrok-free.app/cadastro)
 
-php artisan key:generate
+---
 
-5️⃣ Crie o banco de dados
+## Tipos de Usuário
 
-CREATE DATABASE gerenciador_usuarios;
-📦 Configuração do .env
+- **Administrador:**  
+  Acesso total ao sistema, incluindo definição de permissões, cadastro de usuários e acesso a todas as áreas.
 
-🔧 Banco de Dados
-env
-DB_CONNECTION=mysql
-DB_HOST=127.0.0.1
-DB_PORT=3306
-DB_DATABASE=gestao_alunos
-DB_USERNAME=root
-DB_PASSWORD=
+- **Usuário Padrão:**  
+  Pode listar usuários e editar suas próprias informações.
 
-📧 Servidor de Email (Gmail para testes)
-env
-MAIL_MAILER=smtp
-MAIL_HOST=smtp.gmail.com
-MAIL_PORT=587
-MAIL_USERNAME=gabrielrhodden@gmail.com
-MAIL_PASSWORD=sua_senha
-MAIL_ENCRYPTION=tls
-MAIL_FROM_ADDRESS=gabrielrhodden@gmail.com
-MAIL_FROM_NAME="${APP_NAME}"
+---
 
-🚀 Inicialização da Aplicação
+## Funcionalidades Principais
 
-✅ Execute as migrações
-php artisan migrate
+1️⃣ **Página Inicial**  
+Acesso às principais funcionalidades do sistema.  
+[https://d60b4f01eac0.ngrok-free.app/](https://d60b4f01eac0.ngrok-free.app/)
 
-✅ Inicie o servidor
-php artisan serve
+2️⃣ **Listagem de Usuários**  
+Visualize todos os usuários. É possível editar ou excluir, respeitando as regras de permissão.  
+[https://d60b4f01eac0.ngrok-free.app/usuarios](https://d60b4f01eac0.ngrok-free.app/usuarios)
 
-✅ Gere a chave JWT
-php artisan jwt:secret
+3️⃣ **Cadastro de Usuários**  
+O administrador pode cadastrar novos usuários, sejam eles padrão ou administradores. Novos usuários também terão acesso ao cadastro de outros usuários.  
+[https://d60b4f01eac0.ngrok-free.app/cadastro](https://d60b4f01eac0.ngrok-free.app/cadastro)
 
-Copie a chave gerada e insira no .env:
-env
-JWT_SECRET=chave_gerada_aqui
+4️⃣ **Senha Provisória**  
+Ao cadastrar um novo usuário, uma senha provisória será enviada por email.
 
-✅ Otimize a aplicação
+5️⃣ **Edição de Usuários**  
+Ao clicar em "Editar" na tabela de usuários, o registro correspondente é aberto, permitindo alterações.  
+Exemplo: [https://d60b4f01eac0.ngrok-free.app/perfil/60](https://d60b4f01eac0.ngrok-free.app/perfil/60)
 
-php artisan optimize
-
-✅ Criar usuarios teste:
-php artisan tinker 
-for ($i = 1; $i <= 30; $i++) {
-    User::create([
-        'name' => "Usuario$i",
-        'email' => "usuario$i@exemplo.com",
-        'password' => Hash::make('senha123'), // Senha padrão
-        'role_id' => 2,
-    ]);
-}
-
-
-http://localhost:8000/api/login
-👤 A
-json
-{
-  "email": "admin@exemplo.com",
-  "password": "senha123"
-}
-
-🔐 Autorização com JWT
-Após o login, insira o token JWT no cabeçalho das requisições:
-
-Authorization
-
-✅ Requisitos
-PHP >= 8.2
-
-Laravel 12.x
-
-MySQL 10.4.32-MariaDB
-
-Composer 2.8.4
+6️⃣ **Logout**  
+Ao clicar em "Sair", o usuário será deslogado do sistema.

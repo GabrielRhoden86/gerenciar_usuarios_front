@@ -30,6 +30,7 @@
     :type="alertType"
     acao="editar"
     class="custom-alert"
+    :menssagem="menssagemAlerta"
   />
 </template>
 
@@ -60,6 +61,8 @@ let alertTimeoutId: number | null = null;
 const usuario = ref<Usuario | null>(null);
 const route = useRoute();
 const userId = ref<number | null>(null);
+const menssagemAlerta = ref<string>('')
+
 
 onMounted(async () => {
    try {
@@ -78,20 +81,29 @@ onMounted(async () => {
 const atualizarUsuario = async (dadosDoFormulario: any) => {
   isLoading.value = true;
   showAlert.value = false;
-  try {
-    const { name, email, role_id } = dadosDoFormulario;
 
+  try {
     if (userId.value === null) {
       exibirAlerta(showAlert, alertType, 'danger');
       return;
     }
-    await usuariosStore.atualizarUsuarios(userId.value, name, email, role_id);
+
+    const payload: any = {};
+    if (dadosDoFormulario.name) payload.name = dadosDoFormulario.name;
+    if (dadosDoFormulario.email) payload.email = dadosDoFormulario.email;
+    if (dadosDoFormulario.password) payload.password = dadosDoFormulario.password;
+    if (dadosDoFormulario.role_id !== null) payload.role_id = dadosDoFormulario.role_id;
+
+    await usuariosStore.atualizarUsuarios(userId.value, payload);
+    
     const usuarioAtualizadoData = await usuariosStore.buscaUsuarioId(userId.value);
     usuario.value = usuarioAtualizadoData.data;
-
     alertTimeoutId = exibirAlerta(showAlert, alertType, 'success');
+    
   } catch (error) {
     alertTimeoutId = exibirAlerta(showAlert, alertType, 'danger');
+    menssagemAlerta.value = "Você não tem permissão para acessar esta área!";
+
     console.error("Erro ao atualizar o usuário:", error);
   } finally {
     isLoading.value = false;

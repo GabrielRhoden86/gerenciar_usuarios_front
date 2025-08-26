@@ -4,5 +4,5 @@ export interface UserItemPayload {
   email: string;
   role_id: number;
   createad_at:string,
-  updated_at:string
+  updated_at:string,
 }

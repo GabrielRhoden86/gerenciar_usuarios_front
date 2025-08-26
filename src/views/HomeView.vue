@@ -20,23 +20,52 @@
           />
         </div>
       </div>
+      <AlertComponente
+        :showAlert="showAlert"
+        :type="alertType"
+         acao="editar"
+         class="custom-alert"
+        :menssagem="menssagemAlerta"
+      />
     </div>
   </main>
+  
 </template>
 <script setup lang="ts">
 import { useRouter } from 'vue-router';
 import Cards from "@/components/Cards.vue";
+import { useUsuariosStore } from '@/stores/usuarioStore';
+import { onMounted, ref } from 'vue';
+import AlertComponente from "@/components/AlertComponente.vue";
+import { exibirAlerta } from '@/Utils/Geral';
 
+const permissao = ref<number>(0);
+const usuariosStore = useUsuariosStore();
 const router = useRouter();
+const showAlert = ref(false);
+const menssagemAlerta = ref<string>('')
+const alertType = ref('success'); 
+let alertTimeoutId: number | null = null;
+
+
+onMounted(async () => {
+  permissao.value = await usuariosStore.verificaPermissao();
+  console.log(permissao.value);
+});
+
 const goUsuarios = () => {
   router.push({ name: 'usuarios' });
 };
 
 const goCadastro = () => {
-  router.push({ name: 'cadastro' });
+  if (permissao.value === 1) {
+    router.push("/cadastro");
+  } else {
+    menssagemAlerta.value = "Você não tem permissão para acessar esta área!";
+    alertTimeoutId = exibirAlerta(showAlert, alertType, 'danger');
+  }
 };
 </script>
-
 
  <style  >
  .card-title{
@@ -56,8 +85,26 @@ const goCadastro = () => {
 }
  .conteudo-principal{
   width:97% !important;
-  height:85vh;
+  min-height:85vh;
  }
+
+ .custom-alert {
+  position: fixed; 
+  top: 2%; 
+  right: 2%; 
+  z-index: 9999;
+  min-width: 5%;
+  transition: opacity 0.5s ease-in-out; 
+}
+.custom-alert.fade {
+  opacity: 0;
+  visibility: hidden; 
+}
+
+.custom-alert.show {
+  opacity: 1;
+  visibility: visible;
+}
 
  .line{
   color:#0A67F1;

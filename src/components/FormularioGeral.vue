@@ -25,7 +25,14 @@
           :required="props.acao !== 'editar'" 
         />
       </div>
-
+       <div v-if="props.acao === 'editar'" class="mb-3">
+        <input
+          v-model="form.password"
+          type="password"
+          class="form-control rounded-1"
+          placeholder="Nova Senha"
+        />
+      </div>
       <div class="form-check mb-3">
         <input 
           class="form-check-input" 
@@ -84,9 +91,11 @@ const props = defineProps({
 
 const emits = defineEmits(['submit-form']);
 
+
 const form = reactive({
   name: '',
   email: '',
+  password: '', 
   role_id: null as number | null
 });
 
@@ -95,10 +104,12 @@ watch(() => form.name, (newValue) => {
 });
 
 const submitForm = () => {
-  if (!form.name || !form.email || !form.role_id) return;
+    if (!form.name && !form.email && !form.role_id && !form.password) return; 
+
   emits('submit-form', { ...form });
   form.name = '';
   form.email = '';
+  form.password = '';
   form.role_id = null;
 };
 </script>

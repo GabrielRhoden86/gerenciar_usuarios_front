@@ -15,11 +15,10 @@
       <div class="d-flex justify-content-center w-100">
         <template v-if="isLoading">
           <span class="text-center">
-            <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+         <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
             Carregando... 
           </span>
         </template>
-
       <template v-else>
       <div class="w-100">
         <Tabela
@@ -49,6 +48,12 @@
       @apply-filters="handleApplyFilters"
       @clear-filters="handleClearFilters"
    />
+      <AlertComponente
+        :showAlert="showAlert"
+        :type="alertType"
+         class="custom-alert"
+        :menssagem="menssagemAlerta"
+      />
     
  </main>
 </template>
@@ -62,12 +67,21 @@ import type { UserItem } from "@/interfaces/UserItem";
 import { useUsuariosStore } from '@/stores/usuarioStore';
 import ModalExclusao from "@/components/Modal/ModalExclusao.vue";
 import ModalLateral from "@/components/Modal/ModalLateral.vue";
+import AlertComponente from "@/components/AlertComponente.vue";
+import { exibirAlerta } from '@/Utils/Geral';
 
 const usuariosStore = useUsuariosStore();
 const resultItems = ref<UserItem[]>([]);
 const itemSelecionado = ref<number | null>(null);
 const modalAberto = ref(false);
 const modalExclusao = ref<any>(null); 
+const permissao = ref<number>(0);
+
+
+const showAlert = ref(false);
+const menssagemAlerta = ref<string>('')
+const alertType = ref('success'); 
+let alertTimeoutId: number | null = null;
 
 const pagination = ref({
   current_page: 1,
@@ -138,10 +152,16 @@ const fetchDadoUsuarios = async (page = 1) => {
 };
 
 const abrirModalExclusao = (id: number) => {
-  itemSelecionado.value = id;
+
+if(permissao.value ===1 ){
+   itemSelecionado.value = id;
   if (modalExclusao.value) {
     modalExclusao.value.abrirModal();
   }
+}else{
+  menssagemAlerta.value = "Você não tem permissão para acessar esta área!";
+  alertTimeoutId = exibirAlerta(showAlert, alertType, 'danger');
+}
 };
 
 const fecharModal = () => {   
@@ -163,7 +183,6 @@ const handleClearFilters = () => {
     fetchDadoUsuarios(1); 
     toggleFiltroModal(); 
 };
-
 
 const excluirUsuario = async (id: number) => { 
   if (!id) {

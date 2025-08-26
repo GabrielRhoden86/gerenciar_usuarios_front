@@ -38,7 +38,6 @@
 
           <td class="text-center">
             <div class="d-flex justify-content-start gap-2">
-               
               <button type="button" class="btn btn-link btn-sm " title="Editar"
                @click="goToPerfil(item.id)"
               >
@@ -54,22 +53,42 @@
           </td>
         </tr>
       </tbody>
+        <AlertComponente
+        :showAlert="showAlert"
+        :type="alertType"
+         class="custom-alert"
+        :menssagem="menssagemAlerta"
+      />
     </table>
 </template>
 
 <script setup lang="ts">
 import type { PropType } from "vue";
+import  { onMounted, ref} from "vue";
 import type { TableHeader } from "@/interfaces/TableHeader";
 import type { UserItem } from "@/interfaces/UserItem";
 import { formatarData } from '@/Utils/Geral';
 import { formatRole } from '@/Utils/Geral';
 import { useRouter } from 'vue-router';
+import { useUsuariosStore } from '@/stores/usuarioStore';
+import { exibirAlerta } from '@/Utils/Geral';
+import AlertComponente from "@/components/AlertComponente.vue";
 
 const emit = defineEmits<{
   (e: "excluir", id: number): void;
   (e: "page-changed", page: number): void;
 }>();
 const router = useRouter();
+const permissao = ref<number>(0);
+const usuariosStore = useUsuariosStore();
+const itemSelecionado = ref<number | null>(null);
+const showAlert = ref(false);
+const menssagemAlerta = ref<string>('')
+const alertType = ref('success'); 
+const idUser = ref<number | null>(null);
+let alertTimeoutId: number | null = null;
+
+
 const props = defineProps({
   headers: {
     type: Array as PropType<TableHeader[]>,
@@ -81,17 +100,27 @@ const props = defineProps({
   },
 });
 
-const goToPerfil = (id: number) => {
+onMounted(async () => {
+  permissao.value = await usuariosStore.verificaPermissao();
+  idUser.value = await usuariosStore.verificaId();
+});
+
+const goToPerfil = (id: number)  => {
+
+  if (permissao.value === 1 || idUser.value === id) {
   router.push({
     name: 'perfil',
     params: { id: id }
   });
+  } else {
+    menssagemAlerta.value = "Você não tem permissão para acessar esta área!";
+    alertTimeoutId = exibirAlerta(showAlert, alertType, 'danger');
+  }
 };
 
 </script>
 
 <style lang="css" scoped>
-
   .img-padrao{
     width: 45px; 
     height: 45px

@@ -4,7 +4,8 @@ export interface UserItem {
   email: string;
   role_id: number;
   title: string;
+  password:string;
   created_at: string; 
   updated_at: string; 
-  
+
 }

@@ -5,7 +5,7 @@
                 Usuário {{acao}} com sucesso! 
             </span>
             <span v-else>
-                Ocorreu um erro, verifique novamente. 
+               {{menssagem}} 
             </span>
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
@@ -17,6 +17,10 @@
 import { defineProps } from 'vue';
 
 const props = defineProps({
+  menssagem:{
+    type: String,
+    default: 'success'
+  },
   showAlert: {
     type: Boolean,
     default: false

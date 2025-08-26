@@ -47,10 +47,8 @@ const menssagemAlerta = ref<string>('')
 const alertType = ref('success'); 
 let alertTimeoutId: number | null = null;
 
-
 onMounted(async () => {
   permissao.value = await usuariosStore.verificaPermissao();
-  console.log(permissao.value);
 });
 
 const goUsuarios = () => {

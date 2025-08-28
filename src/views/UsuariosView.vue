@@ -127,8 +127,14 @@ const headers = computed(() =>
     };
   })
 );
+onMounted(async () => {
+  permissao.value = await usuariosStore.verificaPermissao();
+});
+
 
 const isLoading = ref<boolean>(false);
+
+
 
 const fetchDadoUsuarios = async (page = 1) => {
   isLoading.value = true;
@@ -160,7 +166,7 @@ const fetchDadoUsuarios = async (page = 1) => {
 
 const abrirModalExclusao = (id: number) => {
 
-if(permissao.value ===1 ){
+if(permissao.value === 1 ){
    itemSelecionado.value = id;
   if (modalExclusao.value) {
     modalExclusao.value.abrirModal();

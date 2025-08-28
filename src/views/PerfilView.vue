@@ -97,7 +97,7 @@ const atualizarUsuario = async (dadosDoFormulario: any) => {
     if (dadosDoFormulario.password) payload.password = dadosDoFormulario.password;
     if (dadosDoFormulario.role_id !== null) payload.role_id = dadosDoFormulario.role_id;
 
-    await usuariosStore.atualizarUsuarios(userId.value, payload);
+  await usuariosStore.atualizarUsuarios(userId.value, payload);
     
     const usuarioAtualizadoData = await usuariosStore.buscaUsuarioId(userId.value);
     usuario.value = usuarioAtualizadoData;

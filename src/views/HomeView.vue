@@ -48,6 +48,7 @@ const alertType = ref('success');
 
 onMounted(async () => {
   permissao.value = await usuariosStore.verificaPermissao();
+
 });
 
 const goUsuarios = () => {
@@ -55,6 +56,7 @@ const goUsuarios = () => {
 };
 
 const goCadastro = () => {
+    console.log('Home', permissao.value );
   if (permissao.value === 1) {
     router.push("/cadastro");
   } else {

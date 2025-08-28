@@ -32,6 +32,7 @@
           type="password"
           class="form-control rounded-1"
           placeholder="Nova Senha"
+          autocomplete="new-password"
         />
       </div>
 
@@ -74,7 +75,7 @@
       <div v-if="roleAlterada" class="mt-2 text-danger small p-2">
         ⚠️ Após atualizar o perfil o usuário precisará realizar um novo login para atualizar as permissões de acesso.
       </div>
-
+     
       <button type="submit" class="btn btn-primary w-100 btn-sm px-5 rounded-1" :disabled="props.isLoading">
         <span v-if="props.isLoading">
           <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
@@ -121,6 +122,9 @@ onMounted(async () => {
   permissao.value = await usuariosStore.verificaPermissao();
 });
 
+onMounted(async () => {
+  permissao.value = await usuariosStore.verificaPermissao();
+});
 const submitForm = () => {
   if (!form.name && !form.email && !form.role_id && !form.password) return;
 
@@ -129,6 +133,6 @@ const submitForm = () => {
   form.email = '';
   form.password = '';
   form.role_id = null;
-  roleAlterada.value = false; // reseta aviso após envio
+  roleAlterada.value = false; 
 };
 </script>

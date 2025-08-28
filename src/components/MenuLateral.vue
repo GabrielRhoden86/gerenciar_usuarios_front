@@ -5,9 +5,7 @@
          <i class="bi bi-person fs-4 me-2"></i>
         <strong><a class="dropdown-item"  @click.prevent="handleLogout">Sair</a></strong>
       </span>
-      
     <hr />
-
     <ul class="nav nav-pills flex-column mb-auto">
       <li>
         <router-link to="/" class="nav-link text-white">
@@ -38,7 +36,6 @@ import { onMounted, ref } from 'vue';
 import { useUsuariosStore } from '@/stores/usuarioStore';
 
 const authStore = useAuthStore();
-const permissao = ref<number | null>(0);
 const usuariosStore = useUsuariosStore();
 const router = useRouter();
 const idUser =  ref<number>(0);
@@ -49,7 +46,6 @@ const handleLogout = () => {
 };
 
 onMounted(async () => {
-  permissao.value = await usuariosStore.verificaPermissao();
   idUser.value = await usuariosStore.verificaId();
 });
 

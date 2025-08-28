@@ -6,19 +6,30 @@
         <p>Lista de usários do sistema</p>
         <hr class='line'>
         <div class="row g-3 justify-content-center"> 
-          <Cards
+      
+      <div class="d-flex justify-content-around" >
+            <Cards
+              class="col-md-5"
             titulo="Lista de usuários" 
             @click="goUsuarios"
             subtitulo="Lista de todos os usuários do sistema"
             icone="bi bi-people text-primary"
           />
         <Cards
+          class="col-md-5"
           titulo="Cadastro"
           @click="goCadastro"
-          :disabled="!permissaoCarregada"
+          :disabled="loadingCadastro || !permissaoCarregada"
           subtitulo="Cadastrar novos usuários no sistema"
           icone="bi bi-person-plus text-primary"
-        />
+          />
+
+        <div v-if="loadingCadastro" class="position-absolute top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center" style="background: rgba(255,255,255,0.6);">
+          <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Carregando...</span>
+          </div>
+        </div>
+      </div>
         </div>
       </div>
       <AlertComponente
@@ -49,7 +60,7 @@ const loadingCadastro = ref(false);
 const permissao = ref<number | null>(null);
 const permissaoCarregada = ref(false);
 
-onBeforeMount(async () => {
+onMounted(async () => {
   permissao.value = await usuariosStore.verificaPermissao();
   permissaoCarregada.value = true;
 });
@@ -61,11 +72,11 @@ const goUsuarios = () => {
 const goCadastro = async () => {
   loadingCadastro.value = true;
   try {
+        // await new Promise((resolve) => setTimeout(resolve, 2000));
     if (permissao.value === null) {
       permissao.value = await usuariosStore.verificaPermissao();
+      permissaoCarregada.value = true;
     }
-
-    console.log('home:', permissao.value);
 
     if (permissao.value === 1) {
       router.push("/cadastro");
@@ -77,6 +88,7 @@ const goCadastro = async () => {
     loadingCadastro.value = false;
   }
 };
+
 </script>
 
  <style  >

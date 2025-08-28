@@ -61,8 +61,3 @@ defineProps({
   },
 });
 </script>
-<style scoped>
-  .card-perfil{
-    min-height:74.4vh;
-  }
-</style>

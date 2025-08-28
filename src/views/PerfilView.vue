@@ -20,7 +20,11 @@
             />
           </div>
             <div class="col-md-5 ms-md-2 mb-4 mt-2 me-5">
-               <CardPerfil v-if="usuario" :usuario="usuario" />
+            <CardPerfil v-if="!isLoading && usuario" :usuario="usuario" />
+            <div v-else class="text-center mt-5">
+              <div class="spinner-border text-primary" role="status"></div>
+              <p class="mt-2">Carregando dados do usuário...</p>
+            </div>
           </div>
         </div>
       </div>
@@ -79,7 +83,20 @@ onMounted(async () => {
   if (id && typeof id === 'string') {
     userId.value = Number(id);
   }
+
+  const carregarUsuario = async () => {
+    isLoading.value = true;
+    try {
+      const id = Number(route.params.id);
+      usuario.value = await usuariosStore.buscaUsuarioId(id);
+    } finally {
+      isLoading.value = false;
+    }
+  };
+  carregarUsuario();
 });
+
+
 
 const atualizarUsuario = async (dadosDoFormulario: any) => {
   isLoading.value = true;
@@ -132,7 +149,7 @@ const atualizarUsuario = async (dadosDoFormulario: any) => {
 
 .conteudo-principal {
   width:97% !important;
-  height:100vh;
+
 }
 .custom-alert {
   position: fixed; 
@@ -156,4 +173,7 @@ const atualizarUsuario = async (dadosDoFormulario: any) => {
   background-color:#0A67F1;
   border:solid 1px;
 }
+.card-perfil{
+    min-height:48.2vh;
+  }
 </style>

@@ -84,7 +84,6 @@ export function useUsuariosStore() {
           const user = JSON.parse(userString);
           const permissaoUser = await useUsuarioService.buscaUsuarioService(user.id);
           permissao.value = permissaoUser.role_id; 
-          console.log("store:",permissao.value);
           return permissaoUser.role_id;
         } catch (error) {
           console.error("Erro ao parsear user:", error);

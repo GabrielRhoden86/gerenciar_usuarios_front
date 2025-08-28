@@ -12,17 +12,13 @@
             subtitulo="Lista de todos os usuários do sistema"
             icone="bi bi-people text-primary"
           />
-       <Cards
-        titulo="Cadastro"
-        @click="goCadastro"
-        :disabled="!permissaoCarregada || loadingCadastro"
-        subtitulo="Cadastrar novos usuários no sistema"
-        icone="bi bi-person-plus text-primary"
-      >
-        <template #extra>
-          <span v-if="loadingCadastro" class="spinner-border spinner-border-sm ms-2" role="status" aria-hidden="true"></span>
-        </template>
-      </Cards>
+        <Cards
+          titulo="Cadastro"
+          @click="goCadastro"
+          :disabled="!permissaoCarregada"
+          subtitulo="Cadastrar novos usuários no sistema"
+          icone="bi bi-person-plus text-primary"
+        />
         </div>
       </div>
       <AlertComponente
@@ -40,20 +36,20 @@
 import { useRouter } from 'vue-router';
 import Cards from "@/components/Cards.vue";
 import { useUsuariosStore } from '@/stores/usuarioStore';
-import { onMounted, ref  } from 'vue';
+import { onMounted, ref, onBeforeMount } from 'vue';
 import AlertComponente from "@/components/AlertComponente.vue";
 import { exibirAlerta } from '@/Utils/Geral';
 
-const loadingCadastro = ref(false);
-const permissao = ref<number | null>(0);
 const usuariosStore = useUsuariosStore();
 const router = useRouter();
 const showAlert = ref(false);
 const menssagemAlerta = ref<string>('')
 const alertType = ref('success'); 
+const loadingCadastro = ref(false);
+const permissao = ref<number | null>(null);
 const permissaoCarregada = ref(false);
 
-onMounted(async () => {
+onBeforeMount(async () => {
   permissao.value = await usuariosStore.verificaPermissao();
   permissaoCarregada.value = true;
 });
@@ -64,11 +60,12 @@ const goUsuarios = () => {
 
 const goCadastro = async () => {
   loadingCadastro.value = true;
-  console.log('home:',permissao.value);
   try {
     if (permissao.value === null) {
       permissao.value = await usuariosStore.verificaPermissao();
     }
+
+    console.log('home:', permissao.value);
 
     if (permissao.value === 1) {
       router.push("/cadastro");
@@ -80,8 +77,6 @@ const goCadastro = async () => {
     loadingCadastro.value = false;
   }
 };
-
-
 </script>
 
  <style  >

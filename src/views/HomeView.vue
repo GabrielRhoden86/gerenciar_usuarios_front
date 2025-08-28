@@ -12,12 +12,13 @@
             subtitulo="Lista de todos os usuários do sistema"
             icone="bi bi-people text-primary"
           />
-          <Cards
-            titulo="Cadastro"
-            @click="goCadastro"
-            subtitulo="Cadastrar novos usuários no sistema"
-            icone="bi bi-person-plus text-primary"
-          />
+        <Cards
+          titulo="Cadastro"
+          @click="goCadastro"
+          :disabled="!permissaoCarregada"
+          subtitulo="Cadastrar novos usuários no sistema"
+          icone="bi bi-person-plus text-primary"
+        />
         </div>
       </div>
       <AlertComponente
@@ -35,7 +36,7 @@
 import { useRouter } from 'vue-router';
 import Cards from "@/components/Cards.vue";
 import { useUsuariosStore } from '@/stores/usuarioStore';
-import { onMounted, ref } from 'vue';
+import { onMounted, ref  } from 'vue';
 import AlertComponente from "@/components/AlertComponente.vue";
 import { exibirAlerta } from '@/Utils/Geral';
 
@@ -45,18 +46,22 @@ const router = useRouter();
 const showAlert = ref(false);
 const menssagemAlerta = ref<string>('')
 const alertType = ref('success'); 
+const permissaoCarregada = ref(false);
 
 onMounted(async () => {
   permissao.value = await usuariosStore.verificaPermissao();
-
+  permissaoCarregada.value = true;
 });
 
 const goUsuarios = () => {
   router.push({ name: 'usuarios' });
 };
 
-const goCadastro = () => {
-    console.log('Home', permissao.value );
+const goCadastro = async () => {
+  if (permissao.value === null) {
+    permissao.value = await usuariosStore.verificaPermissao();
+  }
+
   if (permissao.value === 1) {
     router.push("/cadastro");
   } else {
@@ -64,6 +69,7 @@ const goCadastro = () => {
     exibirAlerta(showAlert, alertType, 'danger');
   }
 };
+
 </script>
 
  <style  >

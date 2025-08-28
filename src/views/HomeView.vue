@@ -12,13 +12,17 @@
             subtitulo="Lista de todos os usuários do sistema"
             icone="bi bi-people text-primary"
           />
-        <Cards
-          titulo="Cadastro"
-          @click="goCadastro"
-          :disabled="!permissaoCarregada"
-          subtitulo="Cadastrar novos usuários no sistema"
-          icone="bi bi-person-plus text-primary"
-        />
+       <Cards
+        titulo="Cadastro"
+        @click="goCadastro"
+        :disabled="!permissaoCarregada || loadingCadastro"
+        subtitulo="Cadastrar novos usuários no sistema"
+        icone="bi bi-person-plus text-primary"
+      >
+        <template #extra>
+          <span v-if="loadingCadastro" class="spinner-border spinner-border-sm ms-2" role="status" aria-hidden="true"></span>
+        </template>
+      </Cards>
         </div>
       </div>
       <AlertComponente
@@ -40,6 +44,7 @@ import { onMounted, ref  } from 'vue';
 import AlertComponente from "@/components/AlertComponente.vue";
 import { exibirAlerta } from '@/Utils/Geral';
 
+const loadingCadastro = ref(false);
 const permissao = ref<number | null>(0);
 const usuariosStore = useUsuariosStore();
 const router = useRouter();
@@ -58,18 +63,24 @@ const goUsuarios = () => {
 };
 
 const goCadastro = async () => {
-     console.log('home:',permissao.value)
-  if (permissao.value === null) {
-    permissao.value = await usuariosStore.verificaPermissao();
-  }
+  loadingCadastro.value = true;
+  console.log('home:',permissao.value);
+  try {
+    if (permissao.value === null) {
+      permissao.value = await usuariosStore.verificaPermissao();
+    }
 
-  if (permissao.value === 1) {
-    router.push("/cadastro");
-  } else {
-    menssagemAlerta.value = "Você não tem permissão para acessar esta área!";
-    exibirAlerta(showAlert, alertType, 'danger');
+    if (permissao.value === 1) {
+      router.push("/cadastro");
+    } else {
+      menssagemAlerta.value = "Você não tem permissão para acessar esta área!";
+      exibirAlerta(showAlert, alertType, 'danger');
+    }
+  } finally {
+    loadingCadastro.value = false;
   }
 };
+
 
 </script>
 

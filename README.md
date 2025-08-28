@@ -41,6 +41,8 @@ Ao cadastrar um novo usuário, uma senha provisória será enviada por email.
 5️⃣ **Edição de Usuários**  
 Ao clicar em "Editar" na tabela de usuários, o registro correspondente é aberto, permitindo alterações.  
 
+6️⃣ **Exclusão de Usuários**  
+Ao clicar em "Excluir", o usuário selecionado será removido do sistema.  
 
-6️⃣ **Logout**  
-Ao clicar em "Sair", o usuário será deslogado do sistema.
+7️⃣ **Logout**  
+Ao clicar em "Sair", o usuário será deslogado do sistema.  

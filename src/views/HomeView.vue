@@ -58,6 +58,7 @@ const goUsuarios = () => {
 };
 
 const goCadastro = async () => {
+     console.log('home:',permissao.value)
   if (permissao.value === null) {
     permissao.value = await usuariosStore.verificaPermissao();
   }

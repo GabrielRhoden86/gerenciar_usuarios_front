@@ -1,5 +1,5 @@
 <template>
-    <div v-if="usuario" class="card shadow-sm border-0">
+    <div v-if="usuario" class="card shadow-sm border-0 card-perfil">
       <div class="card-body p-4">
         <div class="d-flex align-items-center mb-4">
           <i class="bi bi-person-circle text-primary fs-1 me-3"></i>
@@ -61,3 +61,8 @@ defineProps({
   },
 });
 </script>
+<style scoped>
+  .card-perfil{
+    min-height:74.4vh;
+  }
+</style>

@@ -1,9 +1,9 @@
 <template>
-  <div class="col-md-11 col-lg-9 col-xl-7 offset-xl-1 mt-2">
+  <div class="col-md-11 col-lg-9 col-xl-7 offset-xl-1 mt-2 form-geral min-vh-100">
     <form class="p-4 shadow-sm rounded bg-white" @submit.prevent="submitForm">
       <header class="mb-4 d-flex align-items-center justify-content-center">
-        <i :class="icone" class="fs-3"></i>
-        <p class="mb-0 fw-bold text-primary">{{ titulo }}</p>
+        <i :class="icone" class="fs-2"></i>
+        <p class="mb-0 fw-bold fs-5 text-primary">{{ titulo }}</p>
       </header>
 
       <div class="mb-3">
@@ -25,7 +25,8 @@
           :required="props.acao !== 'editar'" 
         />
       </div>
-       <div v-if="props.acao === 'editar'" class="mb-3">
+
+      <div v-if="props.acao === 'editar'" class="mb-3">
         <input
           v-model="form.password"
           type="password"
@@ -33,36 +34,45 @@
           placeholder="Nova Senha"
         />
       </div>
-      <div class="form-check mb-3">
-        <input 
-          class="form-check-input" 
-          type="radio" 
-          name="tipo-conta" 
-          id="admin" 
-          value="1" 
-          v-model.number="form.role_id" 
-          :required="props.acao !== 'editar'" 
-        />
-        <label class="form-check-label" for="admin">
-          <span class="fw-semibold">🔑 Administrador</span><br />
-          <small class="text-muted">Acesso total ao sistema.</small>
-        </label>
+
+      <div v-if="permissao === 1">
+        <div class="form-check mb-3">
+          <input 
+            class="form-check-input" 
+            type="radio" 
+            name="tipo-conta" 
+            id="admin" 
+            value="1" 
+            v-model.number="form.role_id" 
+            @change="roleAlterada = true"
+            :required="props.acao !== 'editar'" 
+          />
+          <label class="form-check-label" for="admin">
+            <span class="fw-semibold">🔑 Administrador</span><br />
+            <small class="text-muted">Acesso total ao sistema.</small>
+          </label>
+        </div>
+
+        <div class="form-check mb-3">
+          <input 
+            class="form-check-input" 
+            type="radio" 
+            name="tipo-conta" 
+            id="usuario" 
+            value="2" 
+            v-model.number="form.role_id" 
+            @change="roleAlterada = true"
+            :required="props.acao !== 'editar'" 
+          />
+          <label class="form-check-label" for="usuario">
+            <span class="fw-semibold">👤 Usuário Padrão</span><br />
+            <small class="text-muted">Acesso restrito.</small>
+          </label>
+        </div>
       </div>
 
-      <div class="form-check mb-3">
-        <input 
-          class="form-check-input" 
-          type="radio" 
-          name="tipo-conta" 
-          id="usuario" 
-          value="2" 
-          v-model.number="form.role_id" 
-          :required="props.acao !== 'editar'" 
-        />
-        <label class="form-check-label" for="usuario">
-          <span class="fw-semibold">👤 Usuário Padrão</span><br />
-          <small class="text-muted">Acesso restrito.</small>
-        </label>
+      <div v-if="roleAlterada" class="mt-2 text-danger small p-2">
+        ⚠️ Após atualizar o perfil o usuário precisará realizar um novo login para atualizar as permissões de acesso.
       </div>
 
       <button type="submit" class="btn btn-primary w-100 btn-sm px-5 rounded-1" :disabled="props.isLoading">
@@ -79,7 +89,10 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, defineEmits, defineProps, watch } from 'vue';
+import { reactive, defineEmits, defineProps, watch, onMounted, ref } from 'vue';
+import { useUsuariosStore } from '@/stores/usuarioStore';
+
+const usuariosStore = useUsuariosStore();
 
 const props = defineProps({
   titulo: String,
@@ -89,9 +102,10 @@ const props = defineProps({
   isLoading: Boolean
 });
 
+const permissao = ref<number | null>(null);
+const roleAlterada = ref(false); 
+
 const emits = defineEmits(['submit-form']);
-
-
 const form = reactive({
   name: '',
   email: '',
@@ -100,16 +114,21 @@ const form = reactive({
 });
 
 watch(() => form.name, (newValue) => {
-  form.name = newValue.replace(/[^a-zA-Z\s]/g, '');
+  form.name = newValue.replace(/[^a-zA-ZÀ-ÿ\s]/g, '');
+});
+
+onMounted(async () => {
+  permissao.value = await usuariosStore.verificaPermissao();
 });
 
 const submitForm = () => {
-    if (!form.name && !form.email && !form.role_id && !form.password) return; 
+  if (!form.name && !form.email && !form.role_id && !form.password) return;
 
   emits('submit-form', { ...form });
   form.name = '';
   form.email = '';
   form.password = '';
   form.role_id = null;
+  roleAlterada.value = false; // reseta aviso após envio
 };
 </script>

@@ -8,7 +8,7 @@ export function useUsuariosStore() {
   const usuarios = ref<UserItem[]>([]);
   const error = ref<any>(null);
 
-const fetchUsuarios = async (page = 1, filtros = {}) => {
+  const fetchUsuarios = async (page = 1, filtros = {}) => {
     error.value = null;
     try {
       const response: PaginationResponse<UserItem> = await useUsuarioService.usuarioService(page, filtros);
@@ -59,47 +59,39 @@ const fetchUsuarios = async (page = 1, filtros = {}) => {
       throw err; 
     }
   };
-
-    const buscaUsuarioId  = async (id: number) => {
-    error.value = null;
-    try {
-      const response = await useUsuarioService.buscaUsuarioService(id);
-      return response;
-    } catch (err) {
-      console.error('Erro ao deletar usuário:', err);
-      error.value = err;
-      throw err; 
-    }
-  };
+  
+  const buscaUsuarioId = async (id: number) => {
+    return await useUsuarioService.buscaUsuarioService(id);
+  }
 
   const verificaPermissao = async () => {
-  const userString = localStorage.getItem("user"); 
-  if (userString) {
-    try {
-      const user = JSON.parse(userString);
-      const permissaoUser = await useUsuarioService.buscaUsuarioService(user.id);
-      return permissaoUser.data.role_id
-    } catch (error) {
-      console.error("Erro ao parsear user:", error);
-      return null;
+    const userString = localStorage.getItem("user"); 
+    if (userString) {
+      try {
+        const user = JSON.parse(userString);
+        const permissaoUser = await useUsuarioService.buscaUsuarioService(user.id);
+        return permissaoUser.role_id
+      } catch (error) {
+        console.error("Erro ao parsear user:", error);
+        return null;
+      }
     }
-  }
-  return null;
-};
+    return null;
+  };
 
- const verificaId = async () => {
-  const userString = localStorage.getItem("user");
-  if (userString) {
-    try {
-      const user = JSON.parse(userString);
-      return user.id; 
-    } catch (error) {
-      console.error("Erro ao parsear user:", error);
-      return null;
+  const verificaId = async () => {
+    const userString = localStorage.getItem("user");
+    if (userString) {
+      try {
+        const user = JSON.parse(userString);
+        return user.id; 
+      } catch (error) {
+        console.error("Erro ao parsear user:", error);
+        return null;
+      }
     }
-  }
-  return null;
-};
+    return null;
+  };
 
   return {
     usuarios,

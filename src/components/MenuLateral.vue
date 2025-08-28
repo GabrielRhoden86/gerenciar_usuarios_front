@@ -14,18 +14,11 @@
           <i class="bi bi-house fs-5 me-2"></i> Página inicial
         </router-link>
       </li>
-         <li>
-        <div  
-          @click="goCadastro()"
-          class="nav-link text-white cadastro">
-          <i class="bi bi-person-plus fs-5 me-2 "></i> Cadastrar
-        </div>
-      </li>
        <li>
         <div  
           @click="goToPerfil()"
           class="nav-link text-white cadastro">
-          <i class="bi bi-person fs-5 me-2 "></i> Perfil
+          <i class="bi bi-person fs-5 me-2 "></i> Meu Perfil
         </div>
       </li>
       <li>
@@ -35,12 +28,6 @@
       </li>
     </ul>
     <hr />
-    <AlertComponente
-        :showAlert="showAlert"
-        :type="alertType"
-         class="custom-alert"
-        :menssagem="menssagemAlerta"
-      />
   </div>
 </template>
 
@@ -49,17 +36,9 @@ import { useAuthStore } from '@/stores/authStore';
 import { useRouter } from 'vue-router';
 import { onMounted, ref } from 'vue';
 import { useUsuariosStore } from '@/stores/usuarioStore';
-import { exibirAlerta } from '@/Utils/Geral';
-import AlertComponente from "@/components/AlertComponente.vue";
-
-let alertTimeoutId: number | null = null;
-
 
 const authStore = useAuthStore();
-const permissao = ref<number>(0);
-const showAlert = ref(false);
-const menssagemAlerta = ref<string>('')
-const alertType = ref('success'); 
+const permissao = ref<number | null>(0);
 const usuariosStore = useUsuariosStore();
 const router = useRouter();
 const idUser =  ref<number>(0);
@@ -74,14 +53,6 @@ onMounted(async () => {
   idUser.value = await usuariosStore.verificaId();
 });
 
-const goCadastro = () => {
-  if (permissao.value === 1) {
-    router.push("/cadastro");
-  } else {
-    menssagemAlerta.value = "Você não tem permissão para acessar esta área!";
-    exibirAlerta(showAlert, alertType, 'danger');
-  }
-};
 const goToPerfil = () => {
   router.push({
     name: 'perfil',

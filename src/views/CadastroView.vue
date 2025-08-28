@@ -12,8 +12,9 @@
             name="Cadastrar"
             @submit-form="cadastrarUsuario"
             :isLoading="isLoading"
+            :permissao="permissao"
             class="col-md-10"
-          />
+          />  
         </div>
       </div>
     </div>
@@ -28,7 +29,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import FormularioGeral from "@/components/FormularioGeral.vue";
 import AlertComponente from "@/components/AlertComponente.vue";
 import { useUsuariosStore } from '@/stores/usuarioStore';
@@ -38,18 +39,21 @@ const usuariosStore = useUsuariosStore();
 const isLoading = ref<boolean>(false);
 const showAlert = ref(false);
 const alertType = ref('success'); 
-let alertTimeoutId: number | null = null;
+const permissao = ref<number | null>(0);
 
+
+onMounted(async () => {
+  permissao.value = await usuariosStore.verificaPermissao();
+});
 const cadastrarUsuario = async (dadosDoFormulario:any) => {
   isLoading.value = true;
   showAlert.value = false;
   try {
     const { name, email, role_id } = dadosDoFormulario;
     await usuariosStore.cadastrarUsuarios(name, email, role_id);
-    alertTimeoutId = exibirAlerta(showAlert, alertType, 'success'); 
-
+    exibirAlerta(showAlert, alertType, 'success'); 
   } catch (error) {
-    alertTimeoutId = exibirAlerta(showAlert, alertType, 'danger');
+    exibirAlerta(showAlert, alertType, 'danger');
     console.error("Erro ao cadastrar o usuário:", error);
   } finally {
     isLoading.value = false;

@@ -79,15 +79,12 @@ const emit = defineEmits<{
   (e: "page-changed", page: number): void;
 }>();
 const router = useRouter();
-const permissao = ref<number>(0);
+const permissao = ref<number | null>(0);
 const usuariosStore = useUsuariosStore();
-const itemSelecionado = ref<number | null>(null);
 const showAlert = ref(false);
 const menssagemAlerta = ref<string>('')
 const alertType = ref('success'); 
 const idUser = ref<number | null>(null);
-let alertTimeoutId: number | null = null;
-
 
 const props = defineProps({
   headers: {
@@ -107,14 +104,14 @@ onMounted(async () => {
 
 const goToPerfil = (id: number)  => {
 
-  if (permissao.value === 1 || idUser.value === id) {
+if (permissao.value === 1 || idUser.value === id) {
   router.push({
     name: 'perfil',
     params: { id: id }
   });
   } else {
     menssagemAlerta.value = "Você não tem permissão para acessar esta área!";
-    alertTimeoutId = exibirAlerta(showAlert, alertType, 'danger');
+    exibirAlerta(showAlert, alertType, 'danger');
   }
 };
 

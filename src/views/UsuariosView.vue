@@ -75,13 +75,11 @@ const resultItems = ref<UserItem[]>([]);
 const itemSelecionado = ref<number | null>(null);
 const modalAberto = ref(false);
 const modalExclusao = ref<any>(null); 
-const permissao = ref<number>(0);
-
-
+const permissao = ref<number | null>(0);
 const showAlert = ref(false);
 const menssagemAlerta = ref<string>('')
 const alertType = ref('success'); 
-let alertTimeoutId: number | null = null;
+
 
 const pagination = ref({
   current_page: 1,
@@ -99,10 +97,19 @@ const cabecalho = ref<TableHeader[]>([
   { key: 'acoes', label: 'Ações' },
 ]);
 
-const filtros = ref({
+
+const filtros = ref<{
+  name: string;
+  email: string;
+  role_id: number | null;
+}>({
   name: '',
   email: '',
-  role_id: null
+  role_id: null,
+});
+
+onMounted(async () => {
+  permissao.value = await usuariosStore.verificaPermissao();
 });
 
 const isFiltroModalOpen = ref(false);
@@ -160,7 +167,7 @@ if(permissao.value ===1 ){
   }
 }else{
   menssagemAlerta.value = "Você não tem permissão para acessar esta área!";
-  alertTimeoutId = exibirAlerta(showAlert, alertType, 'danger');
+   exibirAlerta(showAlert, alertType, 'danger');
 }
 };
 
@@ -168,7 +175,7 @@ const fecharModal = () => {  
   modalAberto.value = false;
 };
 
-const handleApplyFilters = (novosFiltros: { name: string, email: string, role_id: number | null }) => {
+const handleApplyFilters = (novosFiltros: { name: string, email: string, role_id: number }) => {
     filtros.value = novosFiltros;
     fetchDadoUsuarios(1); 
     toggleFiltroModal(); 

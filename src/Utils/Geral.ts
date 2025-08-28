@@ -4,7 +4,7 @@ export const exibirAlerta = (
   showAlert: Ref<boolean>,
   alertType: Ref<string>,
   type = 'success',
-  tempo = 4000
+  tempo = 13000
 ) => {
   alertType.value = type;
   showAlert.value = true;

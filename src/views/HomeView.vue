@@ -39,18 +39,15 @@ import { onMounted, ref } from 'vue';
 import AlertComponente from "@/components/AlertComponente.vue";
 import { exibirAlerta } from '@/Utils/Geral';
 
-const permissao = ref<number>(0);
+const permissao = ref<number | null>(0);
 const usuariosStore = useUsuariosStore();
 const router = useRouter();
 const showAlert = ref(false);
 const menssagemAlerta = ref<string>('')
 const alertType = ref('success'); 
-let alertTimeoutId: number | null = null;
-
 
 onMounted(async () => {
   permissao.value = await usuariosStore.verificaPermissao();
-  console.log(permissao.value);
 });
 
 const goUsuarios = () => {
@@ -62,7 +59,7 @@ const goCadastro = () => {
     router.push("/cadastro");
   } else {
     menssagemAlerta.value = "Você não tem permissão para acessar esta área!";
-    alertTimeoutId = exibirAlerta(showAlert, alertType, 'danger');
+    exibirAlerta(showAlert, alertType, 'danger');
   }
 };
 </script>

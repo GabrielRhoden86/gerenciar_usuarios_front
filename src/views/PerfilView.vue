@@ -12,14 +12,15 @@
               class="w-100"
               @submit-form="atualizarUsuario"
               :isLoading="isLoading"
-              titulo="Editar perfil usuários"
+              titulo="Editar Perfil do Usuário"
               name="Atualizar Perfil"
               icone="bi bi-person text-primary me"
               acao="editar"
+              :permissao="permissao"
             />
           </div>
             <div class="col-md-5 ms-md-2 mb-4 mt-2 me-5">
-             <CardPerfil :usuario="usuario" />
+               <CardPerfil v-if="usuario" :usuario="usuario" />
           </div>
         </div>
       </div>
@@ -41,9 +42,8 @@ import { useUsuariosStore } from '@/stores/usuarioStore';
 import AlertComponente from "@/components/AlertComponente.vue";
 import { exibirAlerta } from '@/Utils/Geral';
 import { useRoute } from 'vue-router';
-import type { UserItem } from '@/interfaces/UserItem';
 import CardPerfil from "@/components/CardPerfil.vue";
-import { formatarData, formatRole } from '@/Utils/Geral';
+import type { UserItemPayload } from '@/interfaces/UserItemPayload';
 
 interface Usuario {
   name: string;
@@ -57,18 +57,21 @@ const isLoading = ref<boolean>(false);
 const usuariosStore = useUsuariosStore();
 const showAlert = ref(false);
 const alertType = ref('success'); 
-let alertTimeoutId: number | null = null;
+const permissao = ref<number | null>(0);
 const usuario = ref<Usuario | null>(null);
 const route = useRoute();
 const userId = ref<number | null>(null);
 const menssagemAlerta = ref<string>('')
 
+onMounted(async () => {
+  permissao.value = await usuariosStore.verificaPermissao();
+});
 
 onMounted(async () => {
-   try {
-    const id = route.params.id;
-    const usuarioData = await usuariosStore.buscaUsuarioId(id);
-    usuario.value = usuarioData.data;
+  try {
+    const id = Number(route.params.id); 
+    const usuarioData: UserItemPayload = await usuariosStore.buscaUsuarioId(id);
+    usuario.value = usuarioData; 
   } catch (error) {
     console.error("Erro ao buscar o usuário:", error);
   }
@@ -97,11 +100,11 @@ const atualizarUsuario = async (dadosDoFormulario: any) => {
     await usuariosStore.atualizarUsuarios(userId.value, payload);
     
     const usuarioAtualizadoData = await usuariosStore.buscaUsuarioId(userId.value);
-    usuario.value = usuarioAtualizadoData.data;
-    alertTimeoutId = exibirAlerta(showAlert, alertType, 'success');
+    usuario.value = usuarioAtualizadoData;
+    exibirAlerta(showAlert, alertType, 'success');
     
   } catch (error) {
-    alertTimeoutId = exibirAlerta(showAlert, alertType, 'danger');
+    exibirAlerta(showAlert, alertType, 'danger');
     menssagemAlerta.value = "Você não tem permissão para acessar esta área!";
 
     console.error("Erro ao atualizar o usuário:", error);

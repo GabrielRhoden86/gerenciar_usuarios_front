@@ -2,7 +2,11 @@
     <div>
         <div v-if="props.showAlert" :class="['alert', `alert-${type}`, 'alert-dismissible', 'fade', 'show', 'custom-alert']" role="alert">
             <span v-if="type === 'success'">
-                Usuário {{acao}} com sucesso! 
+                Usuário {{acao}} com sucesso!
+                 <span v-if="props.acao === 'cadastrado'">
+                <br>
+                Senha provisória enviada para o email cadastrado.
+             </span>
             </span>
             <span v-else>
                {{menssagem}} 
@@ -35,6 +39,3 @@ const props = defineProps({
   }
 });
 </script>
-<style >
-
-</style>

@@ -3,6 +3,6 @@ export interface UserItemPayload {
   name: string;
   email: string;
   role_id: number;
-  createad_at:string,
+  created_at:string,
   updated_at:string,
 }

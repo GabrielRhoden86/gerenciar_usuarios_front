@@ -57,7 +57,7 @@ async function handleLogin(e: Event) {
     await authStore.login(email.value, password.value);
     router.push({ name: 'home' });
   } catch (error) {
-    alert('Erro no login, verifique suas credenciais');
+    console.log('Erro no login, verifique suas credenciais');
     console.error('Erro no login, verifique suas credenciais');
   } finally {
     isLoading.value = false;

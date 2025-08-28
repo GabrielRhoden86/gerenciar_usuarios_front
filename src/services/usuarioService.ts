@@ -3,7 +3,9 @@ import type { UserItem } from '@/interfaces/UserItem';
 import type { UserItemPayload } from '@/interfaces/UserItemPayload';
 import type { PaginationResponse } from '@/interfaces/PaginationResponse';
 
-
+interface ApiResponse<T> {
+  data: T;
+}
 export const useUsuarioService = {
 
   async usuarioService(page: number, filtros: any = {}) {
@@ -38,7 +40,7 @@ async excluirUsuarioService(id: number) {
 },
 
 async buscaUsuarioService(id: number) {
-  const response = await apiClient.get<UserItemPayload>(`/usuarios/buscar/${id}`);
-  return response.data;
+  const response = await apiClient.get<ApiResponse<UserItemPayload>>(`/usuarios/buscar/${id}`);
+  return response.data.data;
 }
 };

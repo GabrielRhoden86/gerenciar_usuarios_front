@@ -47,7 +47,7 @@
 import { useRouter } from 'vue-router';
 import Cards from "@/components/Cards.vue";
 import { useUsuariosStore } from '@/stores/usuarioStore';
-import { onMounted, ref, onBeforeMount } from 'vue';
+import { onMounted, ref } from 'vue';
 import AlertComponente from "@/components/AlertComponente.vue";
 import { exibirAlerta } from '@/Utils/Geral';
 

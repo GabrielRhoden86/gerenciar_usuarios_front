@@ -7,6 +7,7 @@
 
 # 📦 Pinia + Service + Store
 
+Separação de responsábilidade:
 Este projeto demonstra como usar **Pinia** no Vue 3 para gerenciar estado reativo, consumindo uma API através de **Services**.
 
 ## ⚙️ Estrutura

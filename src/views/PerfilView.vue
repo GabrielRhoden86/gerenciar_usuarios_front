@@ -97,7 +97,6 @@ onMounted(async () => {
 });
 
 
-
 const atualizarUsuario = async (dadosDoFormulario: any) => {
   isLoading.value = true;
   showAlert.value = false;

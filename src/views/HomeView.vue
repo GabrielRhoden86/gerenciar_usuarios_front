@@ -72,8 +72,8 @@ const goUsuarios = () => {
 const goCadastro = async () => {
   loadingCadastro.value = true;
   try {
-        // await new Promise((resolve) => setTimeout(resolve, 2000));
-    if (permissao.value === null) {
+
+if (permissao.value === null) {
       permissao.value = await usuariosStore.verificaPermissao();
       permissaoCarregada.value = true;
     }

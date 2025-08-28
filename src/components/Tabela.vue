@@ -36,21 +36,40 @@
             <p class="text-muted mb-0">{{ formatarData(item.updated_at) }}</p>
           </td> 
 
-          <td class="text-center">
+          <td class="text-center position-relative">
             <div class="d-flex justify-content-start gap-2">
-              <button type="button" class="btn btn-link btn-sm " title="Editar"
-               @click="goToPerfil(item.id)"
+              <button 
+                type="button" 
+                class="btn btn-link btn-sm position-relative" 
+                title="Editar"
+                @click="goToPerfil(item.id)"
+                :disabled="loadingPerfil"
               >
                 <i class="bi bi-pencil fs-5"></i>
+                <div v-if="loadingPerfil" class="position-absolute top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center" style="background: rgba(255,255,255,0.3);">
+                  <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Carregando...</span>
+                  </div>
+                </div>
               </button>
-        
-              <button type="button"      
-                @click="emit('excluir', item.id)" 
-                   class="btn btn-link btn-sm text-danger" title="Excluir">
-                <i class="bi bi-trash fs-5"></i>
-              </button>
+
+            <button 
+              type="button"      
+              @click="handleExcluir(item.id)" 
+              class="btn btn-link btn-sm text-danger" 
+              title="Excluir"
+              :disabled="loadingExcluirId === item.id"
+            >
+              <i class="bi bi-trash fs-5"></i>
+              <div v-if="loadingExcluirId === item.id" class="position-absolute top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center" style="background: rgba(255,255,255,0.3);">
+                <div class="spinner-border text-danger" role="status">
+                  <span class="visually-hidden">Carregando...</span>
+                </div>
+              </div>
+            </button>
             </div>
           </td>
+
         </tr>
       </tbody>
         <AlertComponente
@@ -74,6 +93,9 @@ import { useUsuariosStore } from '@/stores/usuarioStore';
 import { exibirAlerta } from '@/Utils/Geral';
 import AlertComponente from "@/components/AlertComponente.vue";
 
+const loadingPerfil = ref(false);
+const loadingExcluirId = ref<number | null>(null);
+const permissaoCarregada  = ref(false);
 const emit = defineEmits<{
   (e: "excluir", id: number): void;
   (e: "page-changed", page: number): void;
@@ -102,19 +124,38 @@ onMounted(async () => {
   idUser.value = await usuariosStore.verificaId();
 });
 
-const goToPerfil = (id: number)  => {
-
-if (permissao.value === 1 || idUser.value === id) {
-  router.push({
-    name: 'perfil',
-    params: { id: id }
-  });
-  } else {
-    menssagemAlerta.value = "Você não tem permissão para acessar esta área!";
-    exibirAlerta(showAlert, alertType, 'danger');
+const handleExcluir = async (id: number) => {
+  loadingExcluirId.value = id; 
+  try {
+    emit('excluir', id); 
+  } finally {
+    loadingExcluirId.value = null; 
   }
 };
 
+
+const goToPerfil = async (id: number) => {
+  loadingPerfil.value = true;
+  try {
+
+    if (permissao.value === null) {
+      permissao.value = await usuariosStore.verificaPermissao();
+      permissaoCarregada.value = true;
+    }
+
+    if (permissao.value === 1 || idUser.value === id) {
+      router.push({
+        name: 'perfil',
+        params: { id: id }
+      });
+    } else {
+      menssagemAlerta.value = "Você não tem permissão para acessar esta área!";
+      exibirAlerta(showAlert, alertType, 'danger');
+    }
+  } finally {
+    loadingPerfil.value = false;
+  }
+};
 </script>
 
 <style lang="css" scoped>

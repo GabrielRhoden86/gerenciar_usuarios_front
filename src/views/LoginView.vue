@@ -1,5 +1,5 @@
 <template>
- <main class="rounded-2 bg-body-tertiary mt-5 p-5">
+ <main class="rounded-2 bg-body-tertiary mt-2 p-5">
   <h4 class="text-primary p-2">Gerenciador de usuários</h4>
   <hr class="line"> 
   <div class="container-fluid h-custom">
@@ -8,7 +8,7 @@
        <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
         class="img-fluid" alt="Sample image">
       </div>
-      <Formulario/>
+      <Formulario />
     </div>
   </div>
  </main>

@@ -1,5 +1,5 @@
 <template>
-  <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1 mt-5">
+  <div class="col-md-9 col-lg-7 col-xl-5 offset-xl-1 mt-5">
     <form @submit="handleLogin" class="p-4 shadow-sm rounded bg-white">
       <header class="text-center mb-4">
         <h4 class="fw-bold text-primary">Login</h4>
@@ -16,18 +16,23 @@
           required
         />
       </div>
-
-      <div class="mb-3">
-        <input 
-          v-model="password"
-          type="password" 
-          class="form-control form-control-md rounded-1" 
-          placeholder="Senha"
-          autocomplete="current-password"
-          required
-        />
-      </div>
-
+        <div class="mb-3 position-relative">
+            <input
+              :type="showPassword ? 'text' : 'password'"
+              v-model="password"
+              class="form-control form-control-md rounded-1 pe-5"
+              placeholder="Senha"
+              autocomplete="current-password"
+              required
+            />
+            <button
+              type="button"
+              class="btn btn-sm btn-outline-secondary position-absolute top-50 end-0 translate-middle-y me-2"
+              @click="togglePassword"
+            >
+              <i :class="showPassword ? 'bi bi-eye' : 'bi bi-eye-slash'"></i>
+            </button>
+          </div>
       <div v-if="loginError" class="text-danger small mb-3">
         {{ loginError }}
       </div>
@@ -58,6 +63,11 @@ const password = ref('')
 const authStore = useAuthStore()
 const isLoading = ref<boolean>(false)
 const loginError = ref<string>('') 
+const showPassword = ref(false)
+
+function togglePassword() {
+  showPassword.value = !showPassword.value
+}
 
 async function handleLogin(e: Event) {
   e.preventDefault();

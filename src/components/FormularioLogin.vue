@@ -1,11 +1,10 @@
 <template>
-  <div class="col-md-9 col-lg-7 col-xl-5 offset-xl-1 mt-5">
-    <form @submit="handleLogin" class="p-4 shadow-sm rounded bg-white">
+  <div class="col-md-10 col-lg-7 col-xl- offset-xl-1 mt-5">
+    <form @submit="handleLogin" class5="p-4 shadow-sm rounded bg-white">
       <header class="text-center mb-4">
         <h4 class="fw-bold text-primary">Login</h4>
         <p class="text-muted small">Acesse sua conta para continuar</p>
       </header>
-
       <div class="mb-3">
         <input 
           v-model="email"
@@ -33,10 +32,9 @@
               <i :class="showPassword ? 'bi bi-eye' : 'bi bi-eye-slash'"></i>
             </button>
           </div>
-      <div v-if="loginError" class="text-danger small mb-3">
-        {{ loginError }}
-      </div>
-
+        <div v-if="loginError" class="text-danger small mb-3">
+          {{ loginError }}
+        </div>
       <div class="text-center text-lg-start mt-4 pt-2">
         <button type="submit" class="btn btn-primary btn-sm px-5 rounded-1 w-100" :disabled="isLoading">
           <span v-if="isLoading">
@@ -70,12 +68,12 @@ function togglePassword() {
 }
 
 async function handleLogin(e: Event) {
-  e.preventDefault();
-  loginError.value = '' 
-  isLoading.value = true;
+    e.preventDefault();
+    loginError.value = '' 
+    isLoading.value = true;
   try {
     await authStore.login(email.value, password.value);
-    router.push({ name: 'home' });
+     router.push({ name: 'home' });
   } catch (error) {
     loginError.value = '⚠️ Email ou senha incorretos.';
     console.error('Erro no login, verifique suas credenciais');
@@ -85,10 +83,12 @@ async function handleLogin(e: Event) {
 }
 </script>
 
-<style>
+<style scoped>
+
 input:focus {
   outline: none; 
   border: 1px solid #99ccff !important; 
   box-shadow: 0 0 5px rgba(153, 204, 255, 0.5) !important;
 }
+
 </style>

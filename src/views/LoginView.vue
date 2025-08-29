@@ -8,7 +8,7 @@
        <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
         class="img-fluid" alt="Sample image">
       </div>
-      <Formulario />
+      <Formulario class="bg-white p-4 form-login" />
     </div>
   </div>
  </main>
@@ -27,6 +27,14 @@ export default defineComponent({
 </script>
 
  <style  scoped>
+ @media (min-width: 1500px) and (max-width: 2850px) {
+  .form-login {
+    width: 30%;
+  }
+}
+.form-login{
+ width: 40% !important;
+}
  .line{
   color:#0A67F1;
   background-color:#0A67F1 ;

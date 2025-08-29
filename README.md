@@ -49,10 +49,10 @@ Ao clicar em "Sair", o usuário será deslogado do sistema.
 
 # Leia Também: Estrutura
 
-[C:\Users\Gabriel\Desktop\projetos\gerenciar_usuarios_front\INSTALAÇÃO.md](file:///C:/Users/Gabriel/Desktop/projetos/gerenciar_usuarios_front/INSTALA%C3%87%C3%83O.md)
+[Leia Também: Estrutura](ESTRUTURA.md)
 
 # Instalação do App
 
 Para instalar o aplicativo, siga as instruções detalhadas no arquivo:
 
-[C:\Users\Gabriel\Desktop\projetos\gerenciar_usuarios_front\INSTALAÇÃO.md](file:///C:/Users/Gabriel/Desktop/projetos/gerenciar_usuarios_front/INSTALA%C3%87%C3%83O.md)
+[Guia de Instalação](docs/INSTALAÇÃO.md)

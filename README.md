@@ -2,7 +2,7 @@
 
 O primeiro acesso deve ser feito com as credenciais abaixo:
 
-**Login:** [https://gestaousuarios-phi.vercel.app/](https://gestaousuarios-phi.vercel.app/)  
+**Login:** [gerenciado-app.netlify.app/](gerenciado-app.netlify.app/)  
 **Email:** admin@exemplo.com  
 **Senha:** senha123  
 

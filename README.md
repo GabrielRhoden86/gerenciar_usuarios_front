@@ -2,7 +2,7 @@
 
 O primeiro acesso deve ser feito com as credenciais abaixo:
 
-**Login:** [https://gerenciado-app.netlify.app](https://gerenciado-app.netlify.app)  
+**Login:** [https://gestaousuarios-phi.vercel.app/](https://gestaousuarios-phi.vercel.app/)  
 **Email:** admin@exemplo.com  
 **Senha:** senha123  
 
@@ -46,3 +46,13 @@ Ao clicar em "Excluir", o usuário selecionado será removido do sistema.
 
 7️⃣ **Logout**  
 Ao clicar em "Sair", o usuário será deslogado do sistema.  
+
+# Leia Também: Estrutura
+
+[C:\Users\Gabriel\Desktop\projetos\gerenciar_usuarios_front\INSTALAÇÃO.md](file:///C:/Users/Gabriel/Desktop/projetos/gerenciar_usuarios_front/INSTALA%C3%87%C3%83O.md)
+
+# Instalação do App
+
+Para instalar o aplicativo, siga as instruções detalhadas no arquivo:
+
+[C:\Users\Gabriel\Desktop\projetos\gerenciar_usuarios_front\INSTALAÇÃO.md](file:///C:/Users/Gabriel/Desktop/projetos/gerenciar_usuarios_front/INSTALA%C3%87%C3%83O.md)

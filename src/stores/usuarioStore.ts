@@ -36,21 +36,15 @@ export function useUsuariosStore() {
     }
   };
 
-   const cadastrarUsuarios = async (
-      name:string,
-      email:string,
-      role_id:number,
-    ) => {
-    error.value = null;
-    try {
-      const response = await useUsuarioService.cadastrarUsuarioService(name,email,role_id);
-      return response;
-    } catch (err) {
-      console.error('Erro ao cadastrar usuários:', err);
-      error.value = err;
-      return [];
-    }
-  };
+ const cadastrarUsuarios = async (name: string, email: string, role_id: number) => {
+  // Limpa qualquer erro anterior
+  error.value = null;
+
+  // Chama o serviço diretamente e deixa qualquer erro subir
+  const response = await useUsuarioService.cadastrarUsuarioService(name, email, role_id);
+
+  return response;
+};
 
 
   const excluirUsuario  = async (id: number) => {

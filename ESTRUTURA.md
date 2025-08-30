@@ -1,5 +1,6 @@
 # 📦 Dependências Principais
 
+- **typescript (~5.8.3)**: linguagem que adiciona tipagem ao JavaScript, oferecendo maior segurança.
 - **axios (^1.11.0)**: biblioteca para realizar requisições HTTP, usada nos Services para consumir a API.
 - **bootstrap (^5.3.7)**: framework CSS para estilização rápida e responsiva.
 - **bootstrap-icons (^1.13.1)**: conjunto de ícones compatível com Bootstrap.
@@ -20,7 +21,6 @@ O Service encapsula as chamadas à API.
 Exemplo de `useUsuarioService.ts`:
 
 ```ts
-import { apiClient } from '@/api/client'; // seu cliente axios
 import type { PaginationResponse, UserItem } from '@/types';
 
 export const useUsuarioService = {

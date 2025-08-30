@@ -21,11 +21,12 @@
   </main>
 
   <AlertComponente
-    :showAlert="showAlert"
-    :type="alertType"
-    acao="cadastrado"
-    class="custom-alert"
-  />
+  :showAlert="showAlert"
+  :type="alertType"
+  :mensagem="mensagemAlerta"
+  acao="cadastrado"
+/>  
+ 
 </template>
 
 <script setup lang="ts">
@@ -35,6 +36,7 @@ import AlertComponente from "@/components/AlertComponente.vue";
 import { useUsuariosStore } from '@/stores/usuarioStore';
 import { exibirAlerta } from '@/Utils/Geral';
 
+const mensagemAlerta = ref<string>('');
 const usuariosStore = useUsuariosStore();
 const isLoading = ref<boolean>(false);
 const showAlert = ref(false);
@@ -45,21 +47,26 @@ const permissao = ref<number | null>(0);
 onMounted(async () => {
   permissao.value = await usuariosStore.verificaPermissao();
 });
-const cadastrarUsuario = async (dadosDoFormulario:any) => {
+
+
+const cadastrarUsuario = async (dadosDoFormulario: any) => {
   isLoading.value = true;
   showAlert.value = false;
+
   try {
     const { name, email, role_id } = dadosDoFormulario;
     await usuariosStore.cadastrarUsuarios(name, email, role_id);
-    exibirAlerta(showAlert, alertType, 'success'); 
-  } catch (error) {
-    exibirAlerta(showAlert, alertType, 'danger');
-    console.error("Erro ao cadastrar o usuário:", error);
+    exibirAlerta(showAlert, alertType, 'success', 'Usuário cadastrado com sucesso! Senha enviada para o email.');
+
+  } catch (error: any) {
+    const errosValidacao = error.response?.data?.errors || {};
+    const mensagens = Object.values(errosValidacao).flat();
+    const mensagem = mensagens.join(" | ") || error.message || "Erro desconhecido";
+    exibirAlerta(showAlert, alertType, mensagemAlerta, 'danger', mensagem);
   } finally {
     isLoading.value = false;
   }
 };
-
 </script>
 
 <style scoped>
@@ -79,7 +86,6 @@ const cadastrarUsuario = async (dadosDoFormulario:any) => {
 
 .conteudo-principal {
   width:97% !important;
-  height:100vh;
 }
 
 .line {

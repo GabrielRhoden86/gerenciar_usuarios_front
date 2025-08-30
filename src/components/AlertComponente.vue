@@ -1,41 +1,38 @@
 <template>
-    <div>
-        <div v-if="props.showAlert" :class="['alert', `alert-${type}`, 'alert-dismissible', 'fade', 'show', 'custom-alert']" role="alert">
-            <span v-if="type === 'success'">
-                Usuário {{acao}} com sucesso!
-                 <span v-if="props.acao === 'cadastrado'">
-                <br>
-                Senha provisória enviada para o email cadastrado.
-             </span>
-            </span>
-            <span v-else>
-               {{menssagem}} 
-            </span>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    </div>
+  <div v-if="showAlert" :class="['alert', `alert-${type}`, 'alert-dismissible', 'fade', 'show', 'custom-alert']" role="alert">
+    <span v-if="type === 'success'">
+      Usuário {{ acao }} com sucesso!
+      <span v-if="acao === 'cadastrado'">
+        <br>
+        Senha provisória enviada para o email cadastrado.
+      </span>
+    </span>
+    <span v-else>
+      {{ mensagem }} 
+    </span>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
 </template>
-
 
 <script setup lang="ts">
 import { defineProps } from 'vue';
 
 const props = defineProps({
-  menssagem:{
+  mensagem: {
     type: String,
-    default: 'success'
+    default: '',
   },
   showAlert: {
     type: Boolean,
-    default: false
+    default: false,
   },
   type: {
     type: String,
-    default: 'success'
+    default: 'success',
   },
   acao: {
     type: String,
-    required: false
-  }
+    required: false,
+  },
 });
 </script>

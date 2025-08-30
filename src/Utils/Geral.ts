@@ -1,17 +1,24 @@
 import type { Ref } from 'vue';
 
+
 export const exibirAlerta = (
   showAlert: Ref<boolean>,
   alertType: Ref<string>,
-  type = 'success',
-  tempo = 13000
+  mensagemAlerta: Ref<string>, 
+  type: 'success' | 'danger' = 'success',
+  mensagem: string = '',
+  tempo: number = 13000
 ) => {
   alertType.value = type;
+  mensagemAlerta.value = mensagem; 
   showAlert.value = true;
+
   const timeoutId = setTimeout(() => {
     showAlert.value = false;
+    mensagemAlerta.value = ''; 
   }, tempo);
-  return timeoutId; 
+
+  return timeoutId;
 };
 
 export function formatarData(dateString: string): string {

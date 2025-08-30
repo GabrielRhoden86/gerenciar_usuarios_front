@@ -19,15 +19,18 @@ export const useUsuarioService = {
   },
   
 
-
-async cadastrarUsuarioService(name:string, email:string, role_id: number, ) {
-    const response = await apiClient.post<UserItemPayload>('/usuarios/cadastrar', {
-          name: name,
-          email:email,
-          role_id:role_id
-        });
-    return response.data;
-  },  
+  async cadastrarUsuarioService(name: string, email: string, role_id: number) {
+    try {
+      const response = await apiClient.post<UserItemPayload>('/usuarios/cadastrar', {
+        name,
+        email,
+        role_id
+      });
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  },
 
 async atualizarUsuarioService(id: number, payload: any) {
   const response = await apiClient.patch<UserItemPayload>(`/usuarios/editar/${id}`, payload);

@@ -1,5 +1,5 @@
 <template>
-  <div class="col-md-11 col-lg-9 col-xl-7 offset-xl-1 mt-2 form-geral min-vh-100">
+  <div  v-if="permissao !== null" class="col-md-11 col-lg-9 col-xl-7 offset-xl-1 mt-2 form-geral min-vh-100" >
     <form class="p-4 shadow-sm rounded bg-white" @submit.prevent="submitForm">
       <header class="mb-4 d-flex align-items-center justify-content-center">
         <i :class="icone" class="fs-2"></i>
@@ -26,7 +26,7 @@
         />
       </div>
 
-      <div v-if="props.acao === 'editar'" class="mb-3">
+      <div v-show="props.acao === 'editar'" class="mb-3">
         <input
           v-model="form.password"
           type="password"
@@ -36,7 +36,7 @@
         />
       </div>
 
-      <div v-if="permissao === 1">
+      <div v-show="permissao === 1">
         <div class="form-check mb-3">
           <input 
             class="form-check-input" 
@@ -79,13 +79,17 @@
       <button type="submit" class="btn btn-primary w-100 btn-sm px-5 rounded-1" :disabled="props.isLoading">
         <span v-if="props.isLoading">
           <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
-          Loading...
+          Atualizando...
         </span>
         <span v-else>
           {{ name }}
         </span>
       </button>
     </form>
+  </div>
+  <div v-else class="text-center mt-5">
+    <span class="spinner-border text-primary" role="status"></span>
+    <p class="mt-2">Carregando dados do usuário...</p>
   </div>
 </template>
 
@@ -116,10 +120,6 @@ const form = reactive({
 
 watch(() => form.name, (newValue) => {
   form.name = newValue.replace(/[^a-zA-ZÀ-ÿ\s]/g, '');
-});
-
-onMounted(async () => {
-  permissao.value = await usuariosStore.verificaPermissao();
 });
 
 onMounted(async () => {

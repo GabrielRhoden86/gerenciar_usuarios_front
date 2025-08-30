@@ -6,7 +6,7 @@
       <p>Sistema de gerenciador de usuários</p>
       <hr class='line'>
 
-      <div class="mb-3 d-flex align-items-center d-flex justify-content-md-end filtros">
+      <div class="mb-3 d-flex align-items-center d-flex justify-content-md-end filtros bg-white p-2">
         <b class="text-primary" @click="toggleFiltroModal">Filtrar</b>
         <i class="bi bi-funnel fs-5 me-2 text-primary" @click="toggleFiltroModal"></i>
       </div>
@@ -54,21 +54,21 @@
          class="custom-alert"
         :menssagem="menssagemAlerta"
       />
-    
  </main>
 </template>
+
 
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue';
 import Tabela from "@/components/Tabela.vue";
 import PaginacaoTabela from "@/components/PaginacaoTabela.vue";
-import type { TableHeader } from "@/interfaces/TableHeader";
-import type { UserItem } from "@/interfaces/UserItem";
-import { useUsuariosStore } from '@/stores/usuarioStore';
 import ModalExclusao from "@/components/Modal/ModalExclusao.vue";
 import ModalLateral from "@/components/Modal/ModalLateral.vue";
 import AlertComponente from "@/components/AlertComponente.vue";
+import { useUsuariosStore } from '@/stores/usuarioStore';
 import { exibirAlerta } from '@/Utils/Geral';
+import type { TableHeader } from "@/interfaces/TableHeader";
+import type { UserItem } from "@/interfaces/UserItem";
 
 const usuariosStore = useUsuariosStore();
 const resultItems = ref<UserItem[]>([]);
@@ -77,8 +77,9 @@ const modalAberto = ref(false);
 const modalExclusao = ref<any>(null); 
 const permissao = ref<number | null>(0);
 const showAlert = ref(false);
-const menssagemAlerta = ref<string>('')
+const menssagemAlerta = ref<string>('');
 const alertType = ref('success'); 
+const isLoading = ref(true);
 
 
 const pagination = ref({
@@ -97,44 +98,26 @@ const cabecalho = ref<TableHeader[]>([
   { key: 'acoes', label: 'Ações' },
 ]);
 
-
-const filtros = ref<{
-  name: string;
-  email: string;
-  role_id: number | null;
-}>({
+const filtros = ref<{ name: string; email: string; role_id: number | null }>({
   name: '',
   email: '',
   role_id: null,
 });
 
-onMounted(async () => {
-  permissao.value = await usuariosStore.verificaPermissao();
-});
-
 const isFiltroModalOpen = ref(false);
-
-const toggleFiltroModal = () => {
-  isFiltroModalOpen.value = !isFiltroModalOpen.value;
-};
+const toggleFiltroModal = () => (isFiltroModalOpen.value = !isFiltroModalOpen.value);
 
 const headers = computed(() =>
-  cabecalho.value.map(col => {
-    return {
-      label: col.label,
-      key: col.key,
-      ...( { align: 'center' as const })
-    };
-  })
+  cabecalho.value.map(col => ({
+    label: col.label,
+    key: col.key,
+    align: 'center' as const,
+  }))
 );
-onMounted(async () => {
+
+const carregarPermissao = async () => {
   permissao.value = await usuariosStore.verificaPermissao();
-});
-
-
-const isLoading = ref<boolean>(false);
-
-
+};
 
 const fetchDadoUsuarios = async (page = 1) => {
   isLoading.value = true;
@@ -149,12 +132,7 @@ const fetchDadoUsuarios = async (page = 1) => {
       };
       resultItems.value = items.data.data;
     } else {
-      pagination.value = {
-        current_page: 1,
-        per_page: 0,
-        last_page: 1,
-        total: 0,
-      };
+      pagination.value = { current_page: 1, per_page: 0, last_page: 1, total: 0 };
       resultItems.value = [];
     }
   } catch (error) {
@@ -164,40 +142,33 @@ const fetchDadoUsuarios = async (page = 1) => {
   }
 };
 
-const abrirModalExclusao = (id: number) => {
-
-if(permissao.value === 1 ){
-   itemSelecionado.value = id;
-  if (modalExclusao.value) {
-    modalExclusao.value.abrirModal();
-  }
-}else{
-  menssagemAlerta.value = "Você não tem permissão para acessar esta área!";
-   exibirAlerta(showAlert, alertType, 'danger');
-}
-};
-
-const fecharModal = () => {   
-  modalAberto.value = false;
-};
-
-const handleApplyFilters = (novosFiltros: { name: string, email: string, role_id: number }) => {
-    filtros.value = novosFiltros;
-    fetchDadoUsuarios(1); 
-    toggleFiltroModal(); 
+const handleApplyFilters = (novosFiltros: { name: string; email: string; role_id: number }) => {
+  filtros.value = novosFiltros;
+  fetchDadoUsuarios(1);
+  toggleFiltroModal();
 };
 
 const handleClearFilters = () => {
-    filtros.value = {
-        name: '',
-        email: '',
-        role_id: null
-    };
-    fetchDadoUsuarios(1); 
-    toggleFiltroModal(); 
+  filtros.value = { name: '', email: '', role_id: null };
+  fetchDadoUsuarios(1);
+  toggleFiltroModal();
 };
 
-const excluirUsuario = async (id: number) => { 
+const abrirModalExclusao = (id: number) => {
+  if (permissao.value === 1) {
+    itemSelecionado.value = id;
+    modalExclusao.value?.abrirModal();
+  } else {
+    menssagemAlerta.value = "Você não tem permissão para acessar esta área!";
+    exibirAlerta(showAlert, alertType, 'danger');
+  }
+};
+
+const fecharModal = () => {
+  modalAberto.value = false;
+};
+
+const excluirUsuario = async (id: number) => {
   if (!id) {
     console.error("ID não fornecido para exclusão.");
     return;
@@ -206,8 +177,7 @@ const excluirUsuario = async (id: number) => {
   try {
     await usuariosStore.excluirUsuario(id);
     await fetchDadoUsuarios(pagination.value.current_page);
-    
-    fecharModal(); 
+    fecharModal();
   } catch (error) {
     console.error("Erro ao excluir o usuário:", error);
   } finally {
@@ -215,10 +185,12 @@ const excluirUsuario = async (id: number) => {
   }
 };
 
-onMounted(() => {
-  fetchDadoUsuarios();
+onMounted(async () => {
+  await carregarPermissao();
+  await fetchDadoUsuarios();
 });
 </script>
+
 
  <style  scoped>
  .filtros{

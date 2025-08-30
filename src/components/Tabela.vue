@@ -1,5 +1,5 @@
 <template>
-    <table class="table table-hover align-middle mb-0 bg-white ">
+    <table class="table table-hover align-middle mb-0 bg-white">
       <thead class="bg-light">
         <tr>
           <th v-for="header in props.headers" :key="header.key" class="title-table pt-3">
@@ -36,37 +36,46 @@
             <p class="text-muted mb-0">{{ formatarData(item.updated_at) }}</p>
           </td> 
 
-          <td class="text-center position-relative">
-            <div class="d-flex justify-content-start gap-2">
-              <button 
-                type="button" 
-                class="btn btn-link btn-sm position-relative" 
-                title="Editar"
-                @click="goToPerfil(item.id)"
-                :disabled="loadingPerfil"
-              >
-                <i class="bi bi-pencil fs-5"></i>
-                <div v-if="loadingPerfil" class="position-absolute top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center" style="background: rgba(255,255,255,0.3);">
-                  <div class="spinner-border text-primary" role="status">
-                    <span class="visually-hidden">Carregando...</span>
-                  </div>
-                </div>
-              </button>
-
+        <td class="text-center position-relative">
+         <div class="d-flex justify-content-start gap-2">
+          <button 
+            type="button" 
+            class="btn btn-link btn-sm position-relative" 
+            title="Editar"
+            @click="goToPerfil(item.id)"
+            :disabled="loadingPerfilId === item.id"
+          >
+            <i class="bi bi-pencil fs-5"></i>
+            <div 
+              v-if="loadingPerfilId === item.id" 
+              class="position-absolute top-50 start-50 translate-middle d-flex justify-content-center align-items-center"
+              style="pointer-events: none;"
+            >
+              <div class="spinner-border text-primary" role="status" style="width: 2.2rem; height: 2.2rem;">
+                <span class="visually-hidden"></span>
+              </div>
+            </div>
+          </button>
             <button 
               type="button"      
               @click="handleExcluir(item.id)" 
-              class="btn btn-link btn-sm text-danger" 
+              class="btn btn-link btn-sm text-danger position-relative" 
               title="Excluir"
               :disabled="loadingExcluirId === item.id"
             >
               <i class="bi bi-trash fs-5"></i>
-              <div v-if="loadingExcluirId === item.id" class="position-absolute top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center" style="background: rgba(255,255,255,0.3);">
-                <div class="spinner-border text-danger" role="status">
-                  <span class="visually-hidden">Carregando...</span>
+
+              <div 
+                v-if="loadingExcluirId === item.id" 
+                class="position-absolute top-50 start-50 translate-middle d-flex justify-content-center align-items-center"
+                style="pointer-events: none;"
+              >
+                <div class="spinner-border spinner-border-sm  text-danger" role="status" style="width: 2rem; height: 2rem;">
+                  <span class="visually-hidden"></span>
                 </div>
               </div>
             </button>
+
             </div>
           </td>
 
@@ -93,7 +102,7 @@ import { useUsuariosStore } from '@/stores/usuarioStore';
 import { exibirAlerta } from '@/Utils/Geral';
 import AlertComponente from "@/components/AlertComponente.vue";
 
-const loadingPerfil = ref(false);
+const loadingPerfilId = ref<number | null>(null);
 const loadingExcluirId = ref<number | null>(null);
 const permissaoCarregada  = ref(false);
 const emit = defineEmits<{
@@ -124,8 +133,10 @@ onMounted(async () => {
   idUser.value = await usuariosStore.verificaId();
 });
 
-const handleExcluir = async (id: number) => {
-  loadingExcluirId.value = id; 
+const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+
+const handleExcluir = async (id: number) => { 
+ loadingExcluirId.value = id; 
   try {
     emit('excluir', id); 
   } finally {
@@ -133,14 +144,13 @@ const handleExcluir = async (id: number) => {
   }
 };
 
-
 const goToPerfil = async (id: number) => {
-  loadingPerfil.value = true;
+  loadingPerfilId.value = id;
+  await delay(1);
   try {
-
     if (permissao.value === null) {
-      permissao.value = await usuariosStore.verificaPermissao();
-      permissaoCarregada.value = true;
+        permissao.value = await usuariosStore.verificaPermissao();
+        permissaoCarregada.value = true;
     }
 
     if (permissao.value === 1 || idUser.value === id) {
@@ -153,9 +163,10 @@ const goToPerfil = async (id: number) => {
       exibirAlerta(showAlert, alertType, 'danger');
     }
   } finally {
-    loadingPerfil.value = false;
+    loadingPerfilId.value = null;
   }
 };
+
 </script>
 
 <style lang="css" scoped>

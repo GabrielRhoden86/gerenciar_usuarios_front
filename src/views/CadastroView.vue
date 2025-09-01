@@ -23,7 +23,7 @@
   <AlertComponente
   :showAlert="showAlert"
   :type="alertType"
-  :mensagem="mensagemAlerta"
+  :menssagem="mensagemAlerta"
   acao="cadastrado"
 />  
  
@@ -43,26 +43,26 @@ const showAlert = ref(false);
 const alertType = ref('success'); 
 const permissao = ref<number | null>(0);
 
-
 onMounted(async () => {
   permissao.value = await usuariosStore.verificaPermissao();
 });
 
-
 const cadastrarUsuario = async (dadosDoFormulario: any) => {
   isLoading.value = true;
   showAlert.value = false;
-
   try {
     const { name, email, role_id } = dadosDoFormulario;
     await usuariosStore.cadastrarUsuarios(name, email, role_id);
-    exibirAlerta(showAlert, alertType, 'success', 'Usuário cadastrado com sucesso! Senha enviada para o email.');
-
+    mensagemAlerta.value = 'Usuário cadastrado com sucesso! Senha enviada para o email.';
+    exibirAlerta(showAlert, alertType, mensagemAlerta, 'success');
+    
   } catch (error: any) {
     const errosValidacao = error.response?.data?.errors || {};
     const mensagens = Object.values(errosValidacao).flat();
     const mensagem = mensagens.join(" | ") || error.message || "Erro desconhecido";
-    exibirAlerta(showAlert, alertType, mensagemAlerta, 'danger', mensagem);
+
+    mensagemAlerta.value = mensagem;
+    exibirAlerta(showAlert, alertType, mensagemAlerta, 'danger');
   } finally {
     isLoading.value = false;
   }

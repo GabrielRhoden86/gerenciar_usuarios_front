@@ -77,10 +77,9 @@ const modalAberto = ref(false);
 const modalExclusao = ref<any>(null); 
 const permissao = ref<number | null>(0);
 const showAlert = ref(false);
-const menssagemAlerta = ref<string>('');
 const alertType = ref('success'); 
 const isLoading = ref(true);
-
+const menssagemAlerta = ref<string>('');
 
 const pagination = ref({
   current_page: 1,
@@ -159,8 +158,13 @@ const abrirModalExclusao = (id: number) => {
     itemSelecionado.value = id;
     modalExclusao.value?.abrirModal();
   } else {
-    menssagemAlerta.value = "Você não tem permissão para acessar esta área!";
-    exibirAlerta(showAlert, alertType, 'danger');
+    menssagemAlerta.value = 'Você não tem permissão para acessar esta área!';
+    exibirAlerta(
+      showAlert,
+      alertType,
+      menssagemAlerta,
+      'danger',
+    );
   }
 };
 

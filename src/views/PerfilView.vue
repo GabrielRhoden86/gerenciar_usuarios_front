@@ -100,7 +100,8 @@ onMounted(async () => {
 
 const atualizarUsuario = async (dadosDoFormulario: any) => {
   if (userId.value === null) {
-    exibirAlerta(showAlert, alertType, 'danger');
+        menssagemAlerta.value = "Falha ao atualizar dados!";
+        exibirAlerta(showAlert, alertType, menssagemAlerta,'danger');
     return;
   }
 
@@ -116,11 +117,14 @@ const atualizarUsuario = async (dadosDoFormulario: any) => {
 
     await usuariosStore.atualizarUsuarios(userId.value, payload);
     await carregarUsuarioPorId(userId.value); 
-    exibirAlerta(showAlert, alertType, 'success');
+    menssagemAlerta.value = "Dados atualizados com sucesso!";
+    console.log('Exibindo alerta:', menssagemAlerta.value);
+
+    exibirAlerta(showAlert, alertType, menssagemAlerta,'success');
     
   } catch (error) {
-    exibirAlerta(showAlert, alertType, 'danger');
     menssagemAlerta.value = "Você não tem permissão para acessar esta área!";
+    exibirAlerta(showAlert, alertType, menssagemAlerta, 'danger');
     console.error("Erro ao atualizar o usuário:", error);
   } finally {
     isLoading.value = false;
@@ -141,16 +145,27 @@ const atualizarUsuario = async (dadosDoFormulario: any) => {
   flex-direction: column;
 }
 
-.card-perfil-container {
-  flex: 1 1 auto; 
+.custom-alert {
+  position: fixed;   
+  top: 1rem;     
+  right: 1rem;       
+  z-index: 9999;    
+  max-width: 400px; 
+  padding: 0.75rem 1.25rem;
+  word-wrap: break-word;  
+  word-break: break-word; 
+  white-space: normal;    
+  transition: opacity 0.5s ease-in-out;
 }
 
-.card-perfil {
-  min-height: 400px; 
-  padding: 1.5rem;   
-  box-shadow: 0 0.125rem 0.25rem rgba(0,0,0,0.075); 
-  border-radius: 0.5rem; 
-  background-color: #fff;
+.custom-alert.fade {
+  opacity: 0;
+  visibility: hidden; 
+}
+
+.custom-alert.show {
+  opacity: 1;
+  visibility: visible;
 }
 
 @media (max-width: 767px) {

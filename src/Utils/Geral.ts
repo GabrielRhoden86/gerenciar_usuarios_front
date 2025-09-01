@@ -1,25 +1,30 @@
 import type { Ref } from 'vue';
 
-
 export const exibirAlerta = (
   showAlert: Ref<boolean>,
   alertType: Ref<string>,
-  mensagemAlerta: Ref<string>, 
+  mensagemAlerta: Ref<string>,
   type: 'success' | 'danger' = 'success',
-  mensagem: string = '',
-  tempo: number = 13000
+  tempo: number = 13000,
+  mensagemPersonalizada?: string
 ) => {
   alertType.value = type;
-  mensagemAlerta.value = mensagem; 
   showAlert.value = true;
 
-  const timeoutId = setTimeout(() => {
-    showAlert.value = false;
-    mensagemAlerta.value = ''; 
-  }, tempo);
+  if (!mensagemAlerta.value) {
+    mensagemAlerta.value = mensagemPersonalizada
+      ? mensagemPersonalizada
+      : type === 'success'
+      ? 'Operação realizada com sucesso!'
+      : 'Ocorreu um erro.';
+  }
 
-  return timeoutId;
+  setTimeout(() => {
+    showAlert.value = false;
+    mensagemAlerta.value = '';
+  }, tempo);
 };
+
 
 export function formatarData(dateString: string): string {
   const date = new Date(dateString);

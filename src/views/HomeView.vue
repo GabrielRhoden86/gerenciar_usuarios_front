@@ -81,7 +81,7 @@ if (permissao.value === null) {
       router.push("/cadastro");
     } else {
       menssagemAlerta.value = "Você não tem permissão para acessar esta área!";
-      exibirAlerta(showAlert, alertType, 'danger');
+      exibirAlerta(showAlert, alertType, menssagemAlerta, 'danger');
     }
   } finally {
     loadingCadastro.value = false;

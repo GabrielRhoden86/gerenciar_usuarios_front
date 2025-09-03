@@ -5,40 +5,41 @@
         <h4 class="text-primary">Gerenciador de usuários</h4>
         <p>Lista de usários do sistema</p>
         <hr class='line'>
-    <div class="justify-content-center"> 
       
-      <div class="d-flex justify-content-around row g-3" >
-        <Cards
-         class="col-md-4"
-         titulo="Lista de usuários" 
-         @click="goUsuarios"
-         subtitulo="Lista de todos os usuários do sistema"  
-         icone="bi bi-people text-primary"
-          />
-        <Cards
-          class="col-md-4"
-          titulo="Meu Perfil"
-          @click="goToPerfil"
-          subtitulo="Editar meus dados  "
-          icone="bi bi-person text-primary"
-          />
-        <Cards
-          class="col-md-4"
-          titulo="Cadastro"
-          @click="goCadastro"
-          :disabled="loadingCadastro || !permissaoCarregada"
-          subtitulo="Cadastrar novos usuários no sistema"
-          icone="bi bi-person-plus text-primary"
-          />
+      <div class="d-flex justify-content-center" >
+        <div class="d-flex col-lg-11 col-md-12 justify-content-around row g-3">      
+          <Cards
+          class="col-md-4 col-lg-3"
+          titulo="Lista de usuários" 
+          @click="goUsuarios"
+          subtitulo="Lista de todos os usuários do sistema"  
+          icone="bi bi-people text-primary"
+            />
+          <Cards
+            class="col-md-4 col-lg-3"
+            titulo="Meu Perfil"
+            @click="goToPerfil"
+            subtitulo="Editar meus dados  "
+            icone="bi bi-person text-primary"
+            />
+          <Cards
+            class="col-md-4 col-lg-3"
+            titulo="Cadastro"
+            @click="goCadastro"
+            :disabled="loadingCadastro || !permissaoCarregada"
+            subtitulo="Cadastrar novos usuários no sistema"
+            icone="bi bi-person-plus text-primary"
+            />
 
-        <div v-if="loadingCadastro" class="position-absolute top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center" style="background: rgba(255,255,255,0.6);">
-          <div class="spinner-border text-primary" role="status">
-            <span class="visually-hidden">Carregando...</span>
+          <div v-if="loadingCadastro" class="position-absolute top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center" style="background: rgba(255,255,255,0.6);">
+            <div class="spinner-border text-primary" role="status">
+              <span class="visually-hidden">Carregando...</span>
+            </div>
           </div>
+         </div>
         </div>
-      </div>
-        </div>
-      </div>
+       </div>
+     
       <AlertComponente
         :showAlert="showAlert"
         :type="alertType"
@@ -93,20 +94,17 @@ const goCadastro = async () => {
         permissaoCarregada.value = true;
       }
 
-      // return se não tem permissão
       if (permissao.value !== 1) {
         menssagemAlerta.value = "Você não tem permissão para acessar esta área!";
         exibirAlerta(showAlert, alertType, menssagemAlerta, 'danger');
         return;
       }
 
-      // Se passou na permissão redireciona
       router.push("/cadastro");
     } finally {
       loadingCadastro.value = false;
     }
 };
-
 
 </script>
 
@@ -154,6 +152,6 @@ const goCadastro = async () => {
   background-color:#0A67F1 ;
   border:solid 1px;
  }
-
+ 
 </style>
     

@@ -8,8 +8,8 @@
      <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
           class="img-fluid" alt="Sample image">
       </div>
-      <div class="col-12 col-md-6 col-lg-4 mx-auto"  >
-        <Formulario class="bg-white p-4 rounded form-login" />
+      <div class="col-12 col-md-6 col-lg-6 mx-auto"  >
+        <Formulario class="bg-white p-4 rounded col-lg-10" />
       </div>
     </div>
   </div>

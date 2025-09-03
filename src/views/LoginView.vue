@@ -3,17 +3,14 @@
   <h4 class="text-primary p-2">Gerenciador de usuários</h4>
   <hr class="line"> 
   <div class="container-fluid h-custom">
-    <div class="row d-flex justify-content-center align-items-center h-100">
-
-      <div class="col-12 col-md-6 col-lg-5 mb-4 mb-md-0 d-flex justify-content-center">
-        <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
-             class="img-fluid" alt="Sample image">
+   <div class="row d-flex justify-content-center align-items-center h-100">
+    <div class="col-12 col-md-6 col-lg-5 mb-4 mb-md-0 d-flex justify-content-center">
+     <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
+          class="img-fluid" alt="Sample image">
       </div>
-
       <div class="col-12 col-md-6 col-lg-4 mx-auto"  >
         <Formulario class="bg-white p-4 rounded form-login" />
       </div>
-
     </div>
   </div>
  </main>

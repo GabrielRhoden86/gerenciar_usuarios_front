@@ -5,18 +5,25 @@
         <h4 class="text-primary">Gerenciador de usuários</h4>
         <p>Lista de usários do sistema</p>
         <hr class='line'>
-        <div class="row g-3 justify-content-center"> 
+    <div class="justify-content-center"> 
       
-      <div class="d-flex justify-content-around" >
-            <Cards
-              class="col-md-5"
-            titulo="Lista de usuários" 
-            @click="goUsuarios"
-            subtitulo="Lista de todos os usuários do sistema"
-            icone="bi bi-people text-primary"
+      <div class="d-flex justify-content-around row g-3" >
+        <Cards
+         class="col-md-4"
+         titulo="Lista de usuários" 
+         @click="goUsuarios"
+         subtitulo="Lista de todos os usuários do sistema"  
+         icone="bi bi-people text-primary"
           />
         <Cards
-          class="col-md-5"
+          class="col-md-4"
+          titulo="Meu Perfil"
+          @click="goToPerfil"
+          subtitulo="Editar meus dados  "
+          icone="bi bi-person text-primary"
+          />
+        <Cards
+          class="col-md-4"
           titulo="Cadastro"
           @click="goCadastro"
           :disabled="loadingCadastro || !permissaoCarregada"
@@ -58,8 +65,10 @@ const alertType = ref('success');
 const loadingCadastro = ref(false);
 const permissao = ref<number | null>(null);
 const permissaoCarregada = ref(false);
+const idUser =  ref<number>(0);
 
 onMounted(async () => {
+  idUser.value = await usuariosStore.verificaId();
   permissao.value = await usuariosStore.verificaPermissao();
   permissaoCarregada.value = true;
 });
@@ -68,25 +77,36 @@ const goUsuarios = () => {
   router.push({ name: 'usuarios' });
 };
 
+const goToPerfil = () => {
+  router.push({
+    name: 'perfil',
+    params: { id: idUser.value}
+  });
+};
+
 const goCadastro = async () => {
   loadingCadastro.value = true;
-  try {
 
-if (permissao.value === null) {
-      permissao.value = await usuariosStore.verificaPermissao();
-      permissaoCarregada.value = true;
-    }
+    try {
+      if (permissao.value === null) {
+        permissao.value = await usuariosStore.verificaPermissao();
+        permissaoCarregada.value = true;
+      }
 
-    if (permissao.value === 1) {
+      // return se não tem permissão
+      if (permissao.value !== 1) {
+        menssagemAlerta.value = "Você não tem permissão para acessar esta área!";
+        exibirAlerta(showAlert, alertType, menssagemAlerta, 'danger');
+        return;
+      }
+
+      // Se passou na permissão redireciona
       router.push("/cadastro");
-    } else {
-      menssagemAlerta.value = "Você não tem permissão para acessar esta área!";
-      exibirAlerta(showAlert, alertType, menssagemAlerta, 'danger');
+    } finally {
+      loadingCadastro.value = false;
     }
-  } finally {
-    loadingCadastro.value = false;
-  }
 };
+
 
 </script>
 
@@ -107,7 +127,7 @@ if (permissao.value === null) {
   transform: translateY(-3px);
 }
  .conteudo-principal{
-  width:97% !important;
+  width:100% !important;
   min-height:85vh;
  }
 

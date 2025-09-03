@@ -45,11 +45,11 @@
       :isVisible="isFiltroModalOpen"
       :filtros="filtros"
       @close="toggleFiltroModal"
-      @apply-filters="handleApplyFilters"
-      @clear-filters="handleClearFilters"
+      @apply-filters="aplicarFiltros"
+      @clear-filters="limparFiltros"
    />
       <AlertComponente
-        :showAlert="showAlert"
+       :showAlert="showAlert"
         :type="alertType"
          class="custom-alert"
         :menssagem="menssagemAlerta"
@@ -141,13 +141,13 @@ const fetchDadoUsuarios = async (page = 1) => {
   }
 };
 
-const handleApplyFilters = (novosFiltros: { name: string; email: string; role_id: number }) => {
+const aplicarFiltros = (novosFiltros: { name: string; email: string; role_id: number }) => {
   filtros.value = novosFiltros;
   fetchDadoUsuarios(1);
   toggleFiltroModal();
 };
 
-const handleClearFilters = () => {
+const limparFiltros = () => {
   filtros.value = { name: '', email: '', role_id: null };
   fetchDadoUsuarios(1);
   toggleFiltroModal();
@@ -221,7 +221,7 @@ onMounted(async () => {
   transform: translateY(-3px);
 }
  .conteudo-principal {
-  width: 97% !important;
+  width:100% !important;
   min-height: 100vh;
 }
 

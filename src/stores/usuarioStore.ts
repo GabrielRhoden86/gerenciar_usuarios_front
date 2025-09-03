@@ -3,14 +3,10 @@ import { useUsuarioService } from '@/services/usuarioService';
 import type { UserItem } from '@/interfaces/UserItem';
 import type { PaginationResponse } from '@/interfaces/PaginationResponse';
 
-
 export function useUsuariosStore() {
   const usuarios = ref<UserItem[]>([]);
   const error = ref<any>(null);
-  
-
   const permissao = ref<number | null>(null); 
-
 
   const atualizarUsuarios = async (id: number, payload: any) => {
    error.value = null;
@@ -36,16 +32,11 @@ export function useUsuariosStore() {
     }
   };
 
- const cadastrarUsuarios = async (name: string, email: string, role_id: number) => {
-  // Limpa qualquer erro anterior
-  error.value = null;
-
-  // Chama o serviço diretamente e deixa qualquer erro subir
-  const response = await useUsuarioService.cadastrarUsuarioService(name, email, role_id);
-
-  return response;
-};
-
+  const cadastrarUsuarios = async (name: string, email: string, role_id: number) => {
+    error.value = null;
+    const response = await useUsuarioService.cadastrarUsuarioService(name, email, role_id);
+    return response;
+  };
 
   const excluirUsuario  = async (id: number) => {
     error.value = null;
@@ -87,9 +78,9 @@ export function useUsuariosStore() {
       }
       permissao.value = null;
       return null;
-    };
+  };
 
- const verificaId = async () => {
+  const verificaId = async () => {
     const userString = localStorage.getItem("user");
     if (!userString) return null;
     const user = JSON.parse(userString);

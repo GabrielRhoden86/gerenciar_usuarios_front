@@ -5,15 +5,14 @@ export const exibirAlerta = (
   alertType: Ref<string>,
   mensagemAlerta: Ref<string>,
   type: 'success' | 'danger' = 'success',
-  tempo: number = 13000,
+  tempo: number = 3000,
   mensagemPersonalizada?: string
 ) => {
   alertType.value = type;
   showAlert.value = true;
 
   if (!mensagemAlerta.value) {
-    mensagemAlerta.value = mensagemPersonalizada
-      ? mensagemPersonalizada
+    mensagemAlerta.value = mensagemPersonalizada ? mensagemPersonalizada
       : type === 'success'
       ? 'Operação realizada com sucesso!'
       : 'Ocorreu um erro.';
@@ -24,7 +23,6 @@ export const exibirAlerta = (
     mensagemAlerta.value = '';
   }, tempo);
 };
-
 
 export function formatarData(dateString: string): string {
   const date = new Date(dateString);
@@ -40,7 +38,6 @@ export function formatarData(dateString: string): string {
 
   return `${day}-${month}-${year} ${hours}:${minutes}`;
 }
-
 
 export function formatRole(roleId: number): { name: string; color: string } {
   switch (roleId) {

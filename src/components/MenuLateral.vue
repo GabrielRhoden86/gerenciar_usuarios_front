@@ -1,5 +1,5 @@
 <template>
-  <div class="d-flex flex-column flex-shrink-0 p-3 text-white menu-lateral">
+  <div class="d-flex flex-column flex-shrink-0 p-4 text-white menu-lateral">
    
       <span  class="d-flex align-items-center text-white text-decoration-none logout">
          <i class="bi bi-person fs-4 me-2"></i>
@@ -10,7 +10,7 @@
       <li>
         <router-link to="/" class="nav-link text-white">
           <i class="bi bi-house fs-5 me-2"></i> Página inicial
-        </router-link>
+        </router-link>  
       </li>
        <li>
         <div  
@@ -69,16 +69,16 @@ const goToPerfil = () => {
   background-color: #0D6EFD;
 }
 .nav-link:hover {
-
+  background-color: #639df5;
   border-radius: 4px;
 }
 .dropdown-menu{
   border-radius:3px;
 }
 .nav-link.router-link-active {
-  border-bottom:3px solid  #d1e1fc;
+  /* border-bottom:3px solid  #d1e1fc;
   color: #fff !important;
-  border-radius: 4px;
+  border-radius: 4px; */
 }
 .logout{
   cursor: pointer;

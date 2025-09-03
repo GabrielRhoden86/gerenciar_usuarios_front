@@ -85,7 +85,7 @@ const cadastrarUsuario = async (dadosDoFormulario: any) => {
 }
 
 .conteudo-principal {
-  width:97% !important;
+  width:100% !important;
 }
 
 .line {

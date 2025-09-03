@@ -139,7 +139,6 @@ const atualizarUsuario = async (dadosDoFormulario: any) => {
   border: solid 1px;
 }
 
-/* Mantém o formulário do mesmo tamanho */
 .row > .d-flex {
   display: flex;
   flex-direction: column;

@@ -221,8 +221,8 @@ onMounted(async () => {
   transform: translateY(-3px);
 }
  .conteudo-principal {
-  width:100% !important;
-  min-height: 100vh;
+  width:99% !important;
+  height: 150vh !important;
 }
 
  .line{

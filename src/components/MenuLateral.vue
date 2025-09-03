@@ -2,8 +2,10 @@
   <div class="d-flex flex-column flex-shrink-0 p-4 text-white menu-lateral">
    
       <span  class="d-flex align-items-center text-white text-decoration-none logout">
-         <i class="bi bi-person fs-4 me-2"></i>
-        <strong><a class="dropdown-item"  @click.prevent="handleLogout">Sair</a></strong>
+        <strong><a class="dropdown-item w-25"  @click.prevent="handleLogout">
+          <i class="bi bi-box-arrow-right fs-4 me-2"></i>
+          Sair
+          </a></strong>
       </span>
     <hr />
     <ul class="nav nav-pills flex-column mb-auto">

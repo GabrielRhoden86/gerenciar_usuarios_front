@@ -80,12 +80,12 @@ const cadastrarUsuario = async (dadosDoFormulario: any) => {
 }
 .custom-card:hover {
   border:solid 1px #1b68db;
-  box-shadow: 0 4px 12px rgba(10, 103, 241, 0.3);
+  box-shadow: 0 4px 12px rgba(172, 184, 202, 0.3);
   transform: translateY(-3px);
 }
 
 .conteudo-principal {
-  width:100% !important;
+  width:99% !important;
 }
 
 .line {

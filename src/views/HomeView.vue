@@ -127,8 +127,8 @@ const goCadastro = async () => {
   transform: translateY(-3px);
 }
  .conteudo-principal{
-  width:100% !important;
-  min-height:85vh;
+  width:99% !important;
+  height: 100vh !important;
  }
 
  .custom-alert {

@@ -69,6 +69,3 @@ const cadastrarUsuario = async (dadosDoFormulario: any) => {
 };
 </script>
 
-<style scoped>
-
-</style>

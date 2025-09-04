@@ -4,29 +4,29 @@
         <div class="d-flex align-items-center mb-4">
           <i class="bi bi-person-circle text-primary fs-2 me-3"></i>
           <div>
-            <h5 class="card-title fw-bold mb-0 text-primary">Perfil do Usuário</h5>
+            <h5 class="card-title fw-bold mb-0 text-primary">Informações   do Usuário</h5>
             <p class="text-muted small mb-0">Informações Detalhadas</p>
           </div>
         </div>
 
-        <ul class="list-group list-group-flush">
+        <ul class="list-group list-group-flush ">
           <li class="list-group-item d-flex justify-content-between align-items-center">
-            <span class="fw-bold">Nome:</span>
+            <span class="fw-bold text-secondary">Nome:</span>
             <span>{{ usuario.name }}</span>
           </li>
-          <li class="list-group-item d-flex justify-content-between align-items-center">
+          <li class="list-group-item d-flex text-secondary  justify-content-between align-items-center">
             <span class="fw-bold">Email:</span>
             <span>{{ usuario.email }}</span>
           </li>
-          <li class="list-group-item d-flex justify-content-between align-items-center">
+          <li class="list-group-item d-flex text-secondary  justify-content-between align-items-center">
             <span class="fw-bold">Perfil:</span>
             <span>{{ formatRole(usuario.role_id).name }}</span>
           </li>
-          <li class="list-group-item d-flex justify-content-between align-items-center">
+          <li class="list-group-item d-flex  text-secondary  justify-content-between align-items-center">
             <span class="fw-bold">Cadastrado em:</span>
             <span>{{ formatarData(usuario.created_at) }}</span>
           </li>
-          <li class="list-group-item d-flex justify-content-between align-items-center">
+          <li class="list-group-item d-flex text-secondary  justify-content-between align-items-center">
             <span class="fw-bold">Última Atualização:</span>
             <span>{{ formatarData(usuario.updated_at) }}</span>
           </li>

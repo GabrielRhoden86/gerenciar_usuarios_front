@@ -39,7 +39,7 @@
         <button type="submit" class="btn btn-primary btn-sm px-5 rounded-1 w-100" :disabled="isLoading">
           <span v-if="isLoading">
             <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
-            Loading...
+            Aguarde...
           </span>
           <span v-else>
             Entrar
@@ -84,11 +84,9 @@ async function handleLogin(e: Event) {
 </script>
 
 <style scoped>
-
 input:focus {
   outline: none; 
   border: 1px solid #99ccff !important; 
   box-shadow: 0 0 5px rgba(153, 204, 255, 0.5) !important;
 }
-
 </style>

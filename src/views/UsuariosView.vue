@@ -196,7 +196,7 @@ onMounted(async () => {
 </script>
 
 
- <style  scoped>
+<style  scoped>
  .filtros{
   cursor:pointer;
  }
@@ -206,30 +206,6 @@ onMounted(async () => {
   font-size: 0.6rem;
   border-radius: 2px; 
 }
- .card-title{
-  color:#075bda !important;
- }
- .custom-card {
-  cursor: pointer;
-  transition: box-shadow 0.3s ease, transform 0.2s ease;
-}
- .custom-card:hover {
-   border:solid 1px #1b68db;
-}
-.custom-card:hover {
-  box-shadow: 0 4px 12px rgba(10, 103, 241, 0.3);
-  transform: translateY(-3px);
-}
- .conteudo-principal {
-  width:99% !important;
-  height: 150vh !important;
-}
-
- .line{
-  color:#0A67F1;
-  background-color:#0A67F1 ;
-  border:solid 1px;
- }
-
+ 
 </style>
     

@@ -6,12 +6,12 @@
         <p>Editar perfil de usuários do sistema</p>
         <hr class="line">
 
-        <div class="row g-1 justify-content-center align-items-start">
-          <div class="col-12 col-md-10 col-lg-7 d-flex">
+        <div class="row g-2  justify-content-around bg-white mt-1 rounded-2 container-perfil">
+          <div class="col-md-7 col-lg-5 mt-2 d-flex">
             <FormularioGeral
-              class="flex-fill"
+              class="flex-fill border-0"
               @submit-form="atualizarUsuario"
-              :isLoading="isLoading"
+              :isLoading="isLoading"  
               titulo="Editar Perfil do Usuário"
               name="Atualizar Perfil"
               icone="bi bi-person text-primary me"
@@ -20,7 +20,7 @@
             />
           </div>
 
-          <div class="col-12 col-md-10 col-lg-5 d-flex mt-5 mt-lg-0 card-perfil-container">
+          <div class="col-md-10 col-lg-6 d-flex mt-2 mt-lg-0 card-perfil-container">
             <div class="flex-fill">
               <CardPerfil v-if="!isLoading && usuario" :usuario="usuario" class="card-perfil mt-3" />
               <div v-else class="text-center mt-5">
@@ -42,7 +42,6 @@
     :menssagem="menssagemAlerta"
   />
 </template>
-
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
@@ -133,46 +132,8 @@ const atualizarUsuario = async (dadosDoFormulario: any) => {
 </script>
 
 <style scoped>
-.line {
-  color: #0A67F1;
-  background-color: #0A67F1;
-  border: solid 1px;
-}
-
-.row > .d-flex {
-  display: flex;
-  flex-direction: column;
-}
-
-.custom-alert {
-  position: fixed;   
-  top: 1rem;     
-  right: 1rem;       
-  z-index: 9999;    
-  max-width: 400px; 
-  padding: 0.75rem 1.25rem;
-  word-wrap: break-word;  
-  word-break: break-word; 
-  white-space: normal;    
-  transition: opacity 0.5s ease-in-out;
-}
-
-.custom-alert.fade {
-  opacity: 0;
-  visibility: hidden; 
-}
-
-.custom-alert.show {
-  opacity: 1;
-  visibility: visible;
-}
-
-@media (max-width: 767px) {
-  .row > .d-flex {
-    flex-direction: column;
-  }
-  .card-perfil {
-    min-height: auto; 
-  }
+.container-perfil {
+  height: 75vh;
+  overflow: hidden; 
 }
 </style>

@@ -70,49 +70,5 @@ const cadastrarUsuario = async (dadosDoFormulario: any) => {
 </script>
 
 <style scoped>
-.card-title {
-  color:#075bda !important;
-}
 
-.custom-card {
-  cursor: pointer;
-  transition: box-shadow 0.3s ease, transform 0.2s ease;
-}
-.custom-card:hover {
-  border:solid 1px #1b68db;
-  box-shadow: 0 4px 12px rgba(172, 184, 202, 0.3);
-  transform: translateY(-3px);
-}
-
-.conteudo-principal {
-  width:99% !important;
-}
-
-.line {
-  color:#0A67F1;
-  background-color:#0A67F1;
-  border:solid 1px;
-}
-
-.custom-alert {
-  position: fixed; 
-  top: 5%; 
-  right: 2%; 
-  z-index: 9999;
-  min-width: 5%;
-  transition: opacity 0.5s ease-in-out; 
-}
-.custom-alert.fade {
-  opacity: 0;
-  visibility: hidden; 
-}
-
-.custom-alert.show {
-  opacity: 1;
-  visibility: visible;
-}
-
-.btn-close {
-  transform: scale(0.7); 
-}
 </style>

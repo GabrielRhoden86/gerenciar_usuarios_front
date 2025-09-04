@@ -7,23 +7,23 @@
         <hr class='line'>
       
       <div class="d-flex justify-content-center" >
-        <div class="d-flex col-lg-11 col-md-12 justify-content-around row g-3">      
+        <div class="d-flex col-lg-12 col-md-12 justify-content-around row g-3">      
           <Cards
-          class="col-md-4 col-lg-3"
+          class="col-md-5 col-lg-4"
           titulo="Lista de usuários" 
           @click="goUsuarios"
           subtitulo="Lista de todos os usuários do sistema"  
           icone="bi bi-people text-primary"
             />
           <Cards
-            class="col-md-4 col-lg-3"
+            class="col-md-5 col-lg-4"
             titulo="Meu Perfil"
             @click="goToPerfil"
             subtitulo="Editar meus dados  "
             icone="bi bi-person text-primary"
             />
           <Cards
-            class="col-md-4 col-lg-3"
+            class="col-md-5 col-lg-4"
             titulo="Cadastro"
             @click="goCadastro"
             :disabled="loadingCadastro || !permissaoCarregada"
@@ -114,7 +114,7 @@ const goCadastro = async () => {
  }
  .custom-card {
   cursor: pointer;
-    transition: all 0.3s ease;
+  transition: all 0.3s ease;
   transition: box-shadow 0.3s ease, transform 0.2s ease;
 }
  .custom-card:hover {
@@ -129,29 +129,5 @@ const goCadastro = async () => {
   height: 100vh !important;
  }
 
- .custom-alert {
-  position: fixed; 
-  top: 2%; 
-  right: 2%; 
-  z-index: 9999;
-  min-width: 5%;
-  transition: opacity 0.5s ease-in-out; 
-}
-.custom-alert.fade {
-  opacity: 0;
-  visibility: hidden; 
-}
-
-.custom-alert.show {
-  opacity: 1;
-  visibility: visible;
-}
-
- .line{
-  color:#0A67F1;
-  background-color:#0A67F1 ;
-  border:solid 1px;
- }
- 
 </style>
     

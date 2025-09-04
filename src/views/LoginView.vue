@@ -27,11 +27,6 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.line {
-  color: #0A67F1;
-  background-color: #0A67F1;
-  border: solid 1px;
-}
 
 .bg-body-tertiary {
   margin-bottom: 10%;

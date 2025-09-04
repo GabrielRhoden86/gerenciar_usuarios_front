@@ -1,15 +1,14 @@
 <template>
-  <div class="wrapper d-flex vh-100 principal-app">
+  <div class="wrapper d-flex">
     <MenuLateral v-if="isMenuOpen" class="menu-lateral" />
     <div class="content flex-grow-1 d-flex flex-column" title="Oculta menu">
       <div class="p-2 border-bottom bg-light d-flex justify-content-start">
         <button @click="toggleMenu" class="btn btn-outline-primary menu-toggle-btn">
-          <i class="bi bi-list menu-icon"></i>
+         <i class="bi bi-list menu-icon"></i>
         </button>
       </div>
-
       <div class="p-4 flex-grow-1 overflow-auto d-flex justify-content-center">
-        <router-view />
+       <router-view />
       </div>
     </div>
   </div>
@@ -33,16 +32,41 @@ onMounted(() => {
 });
 </script>
 
-<style scoped>
+<style >
 .wrapper {
   overflow: hidden;
 }
+
 .content {
   overflow: auto;
 }
+
 .principal-app {
   min-height: 100vh;
   background-color: #EEEEEE;
+}
+
+.custom-alert {
+  position: fixed;   
+  top: 1rem;     
+  right: 1rem;       
+  z-index: 9999;    
+  max-width: 400px; 
+  padding: 0.75rem 1.25rem;
+  word-wrap: break-word;  
+  word-break: break-word; 
+  white-space: normal;    
+  transition: opacity 0.5s ease-in-out;
+}
+
+.custom-alert.fade {
+  opacity: 0;
+  visibility: hidden; 
+}
+
+.custom-alert.show {
+  opacity: 1;
+  visibility: visible;
 }
 
 @media (max-width: 768px) {
@@ -56,11 +80,22 @@ onMounted(() => {
     background-color: #fff;
     box-shadow: 2px 0 5px rgba(0,0,0,0.1);
     transition: transform 0.3s ease-in-out;
-    transform: translateX(-100%); /* oculto */
-  }
-  .content {
-    flex-grow: 1;
-    margin-left: 0; 
+    transform: translateX(-100%); 
   }
 }
+
+body{
+  background-color: #EEEEEE !important;
+}
+ .conteudo-principal {
+  width:99% !important;
+  height: 100vh !important;
+}
+
+.line{
+  color:#0A67F1;
+  background-color:#0A67F1 ;
+  border:solid 1px;
+}
+
 </style>

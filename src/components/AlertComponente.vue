@@ -3,7 +3,8 @@
     <span >
       {{ menssagem }} 
     </span>
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    <button type="button" class="btn-close btn-close-sm p-2" data-bs-dismiss="alert" aria-label="Close"></button>
+
   </div>
 </template>
 
@@ -29,3 +30,22 @@ defineProps({
   },
 });
 </script>
+
+<style>
+  .custom-alert {
+  position: fixed;   
+  top: 1rem;     
+  right: 1rem;       
+  z-index: 9999;    
+  max-width: 480px; 
+  padding: 0.75rem 1.25rem;
+  word-wrap: break-word;  
+  word-break: break-word; 
+  white-space: normal;    
+  transition: opacity 0.5s ease-in-out;
+}
+.btn-close-sm {
+  transform: scale(0.7);
+}
+  
+</style>

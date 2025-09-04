@@ -41,9 +41,15 @@ const usuariosStore = useUsuariosStore();
 const router = useRouter();
 const idUser =  ref<number>(0);
 
-const handleLogout = () => {
-  authStore.logout();
-  router.push({ name: 'login' });
+
+const handleLogout = async () => {
+  try {
+    await authStore.logout();
+  } catch (error) {
+    console.error("Erro no logout:", error);
+  } finally {
+    router.push({ name: 'login' });
+  }
 };
 
 onMounted(async () => {

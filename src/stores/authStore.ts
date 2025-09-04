@@ -33,17 +33,18 @@ export const useAuthStore = defineStore('auth', () => {
   }
 
   async function logout(): Promise<void> {
-    if (token.value) {
-      try {
-        await authService.logout();
-      } catch (err) {
-        console.error('Falha ao deslogar do servidor:', err);
+    try {
+      if (token.value) {
+        await authService.logout(); 
       }
+    } catch (err) {
+      console.error('Falha ao deslogar do servidor:', err);
+    } finally {
+      token.value = null;
+      user.value = null;
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
     }
-    token.value = null;
-    user.value = null;
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
   }
 
   return {

@@ -104,8 +104,7 @@ body{
 }
  .conteudo-principal {
   width:99% !important;
-  /* height: 170vh !important; */
-  /* overflow: hidden; */
+  height: 170vh !important; 
 }
 
 .line{

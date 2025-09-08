@@ -25,17 +25,15 @@ import { useWindowSize } from '@vueuse/core';
 const { width } = useWindowSize();
 const isMenuOpen = ref(true);
 
-const toggleMenu = (): void => {
-  isMenuOpen.value = !isMenuOpen.value;
-
-};
-
 onMounted(() => {
   if (width.value < 768) {
        isMenuOpen.value = false;
    }
-
 });
+
+const toggleMenu = (): void => {
+  isMenuOpen.value = !isMenuOpen.value;
+};
 </script>
 
 <style >
@@ -106,6 +104,8 @@ body{
 }
  .conteudo-principal {
   width:99% !important;
+  height: 170vh !important;
+  overflow: hidden;
 }
 
 .line{

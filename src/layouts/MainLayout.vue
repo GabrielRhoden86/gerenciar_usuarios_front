@@ -1,9 +1,9 @@
 <template>
   <div class="wrapper d-flex">
     <MenuLateral 
-     v-if="isMenuOpen"
-     class="menu-lateral" 
-     @closeMenu="toggleMenu"
+      v-if="isMenuOpen"
+      class="menu-lateral" 
+      @closeMenu="toggleMenu"
      />
     <div class="content flex-grow-1 d-flex flex-column" title="Oculta menu">
       <div class="p-2 border-bottom bg-light d-flex justify-content-start">
@@ -80,7 +80,7 @@ onMounted(() => {
     position: absolute;
     z-index: 1000;
     width: 250px;
-    height: 100%;
+    height: 220vh !important;
     left: 0;
     top: 0;
     background-color: #fff;
@@ -92,6 +92,10 @@ onMounted(() => {
    color:white;
    margin-bottom: 10px !important;
   }
+  .conteudo-principal {
+   width:99% !important;
+   height: 220vh !important;
+}
 }
 .menu-toggle-btn {
   position: relative;
@@ -101,6 +105,7 @@ body{
   background-color: #EEEEEE !important;
 }
  .conteudo-principal {
+  height: 150vh;
   width:99% !important;
   overflow: hidden; 
 }
@@ -110,5 +115,4 @@ body{
   background-color:#0A67F1 ;
   border:solid 1px;
 }
-
 </style>

@@ -107,7 +107,6 @@ body{
  .conteudo-principal {
   height: 150vh;
   width:99% !important;
-  overflow: hidden; 
 }
 
 .line{

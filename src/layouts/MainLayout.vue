@@ -102,7 +102,6 @@ body{
 }
  .conteudo-principal {
   width:99% !important;
-  overflow: hidden; 
 }
 
 .line{

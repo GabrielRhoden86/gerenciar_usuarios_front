@@ -124,10 +124,7 @@ const goCadastro = async () => {
   box-shadow: 0 4px 12px rgba(10, 103, 241, 0.3);
   transform: translateY(-3px);
 }
- .conteudo-principal{
-  width:99% !important;
-  height: 100vh !important;
- }
+
 
 </style>
     

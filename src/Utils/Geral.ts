@@ -17,7 +17,7 @@ export const exibirAlerta = (
       ? 'Operação realizada com sucesso!'
       : 'Ocorreu um erro.';
   }
-
+  
   setTimeout(() => {
     showAlert.value = false;
     mensagemAlerta.value = '';

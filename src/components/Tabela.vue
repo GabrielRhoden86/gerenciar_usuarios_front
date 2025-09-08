@@ -180,26 +180,5 @@ const goToPerfil = async (id: number) => {
   .table{
     font-size:13.5px;
   }
-/* .custom-alert {
-  position: fixed;   
-  top: 1rem;     
-  right: 1rem;       
-  z-index: 9999;    
-  max-width: 400px; 
-  padding: 0.75rem 1.25rem;
-  word-wrap: break-word;  
-  word-break: break-word; 
-  white-space: normal;    
-  transition: opacity 0.5s ease-in-out;
-}
 
-.custom-alert.fade {
-  opacity: 0;
-  visibility: hidden; 
-}
-
-.custom-alert.show {
-  opacity: 1;
-  visibility: visible;
-} */
 </style>

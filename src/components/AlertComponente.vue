@@ -3,8 +3,11 @@
     <span >
       {{ menssagem }} 
     </span>
-    <button type="button" class="btn-close btn-close-sm p-2" data-bs-dismiss="alert" aria-label="Close"></button>
-
+    <button type="button" 
+      class="btn-close btn-close-sm position-absolute p-2" 
+      data-bs-dismiss="alert" 
+      aria-label="Close">
+     </button>
   </div>
 </template>
 
@@ -45,7 +48,10 @@ defineProps({
   transition: opacity 0.5s ease-in-out;
 }
 .btn-close-sm {
-  transform: scale(0.7);
+  transform: scale(0.6);
+  margin-bottom:15px;
 }
-  
+*{
+  /* border:solid red 1px; */
+}
 </style>

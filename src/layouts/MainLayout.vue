@@ -1,9 +1,13 @@
 <template>
   <div class="wrapper d-flex">
-    <MenuLateral v-if="isMenuOpen" class="menu-lateral" />
+    <MenuLateral 
+     v-if="isMenuOpen"
+     class="menu-lateral" 
+     @closeMenu="toggleMenu"
+     />
     <div class="content flex-grow-1 d-flex flex-column" title="Oculta menu">
       <div class="p-2 border-bottom bg-light d-flex justify-content-start">
-        <button @click="toggleMenu" class="btn btn-outline-primary menu-toggle-btn">
+        <button @click="toggleMenu" class="btn menu-toggle-btn"> 
          <i class="bi bi-list menu-icon"></i>
         </button>
       </div>
@@ -23,12 +27,14 @@ const isMenuOpen = ref(true);
 
 const toggleMenu = (): void => {
   isMenuOpen.value = !isMenuOpen.value;
+
 };
 
 onMounted(() => {
   if (width.value < 768) {
-    isMenuOpen.value = false;
-  }
+       isMenuOpen.value = false;
+   }
+
 });
 </script>
 
@@ -80,18 +86,23 @@ onMounted(() => {
     background-color: #fff;
     box-shadow: 2px 0 5px rgba(0,0,0,0.1);
     transition: transform 0.3s ease-in-out;
-    transform: translateX(-100%); 
+  }
+
+  .menu-toggle-btn {
+   color:white;
+   margin-bottom: 10px !important;
   }
 }
-
+.menu-toggle-btn {
+  position: relative;
+  z-index: 1100; 
+}
 body{
   background-color: #EEEEEE !important;
 }
  .conteudo-principal {
   width:99% !important;
-  height: 100vh !important;
   overflow: hidden; 
-
 }
 
 .line{

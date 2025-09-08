@@ -6,7 +6,7 @@
         <p>Editar perfil de usuários do sistema</p>
         <hr class="line">
 
-        <div class="row g-2  justify-content-around bg-white mt-1 rounded-2 container-perfil">
+        <div class="row g-2 justify-content-around bg-white  rounded-2">
           <div class="col-md-7 col-lg-5 mt-2 d-flex">
             <FormularioGeral
               class="flex-fill border-0"
@@ -20,9 +20,12 @@
             />
           </div>
 
-          <div class="col-md-10 col-lg-6 d-flex mt-2 mt-lg-0 card-perfil-container">
-            <div class="flex-fill">
-              <CardPerfil v-if="!isLoading && usuario" :usuario="usuario" class="card-perfil mt-3" />
+          <div class="col-md-10 col-lg-6 d-flex mt-3 mt-lg-0">
+            <div class="flex-fill mt-3">
+              <CardPerfil 
+                v-if="!isLoading && usuario"
+                :usuario="usuario" 
+                />
               <div v-else class="text-center mt-5">
                 <div class="spinner-border text-primary" role="status"></div>
                 <p class="mt-2">Carregando dados do usuário...</p>
@@ -132,8 +135,10 @@ const atualizarUsuario = async (dadosDoFormulario: any) => {
 </script>
 
 <style scoped>
-.container-perfil {
-  height: 75vh;
-  overflow: hidden; 
+
+@media (max-width: 991px) {
+ .bg-body-tertiary{
+  height: 195vh !important;
+ }
 }
 </style>

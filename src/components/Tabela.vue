@@ -5,6 +5,7 @@
         class="custom-alert mw-300"
         :menssagem="menssagemAlerta"
       />
+    <div class="table-responsive">
     <table class="table table-hover align-middle mb-0 bg-white">
       <thead class="bg-light">
         <tr>
@@ -86,7 +87,7 @@
         </tr>
       </tbody>
     </table>
-
+</div>
 </template>
 
 <script setup lang="ts">

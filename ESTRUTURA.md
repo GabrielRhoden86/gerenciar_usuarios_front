@@ -40,7 +40,7 @@ export const useUsuarioService = {
 A store é responsável por armazenar e manipular os dados reativos.  
 Exemplo de uso dentro de store:
 
-```ts
+---
 import { ref } from 'vue';
 import { useUsuarioService } from '@/services/useUsuarioService';
 import type { PaginationResponse, UserItem } from '@/types';
@@ -78,8 +78,7 @@ const fetchUsuarios = async (page = 1, filtros = {}) => {
 
 - Captura erros do router com `router.onError`.
 
-```ts
-
+---
 ## Leia Também:
 
 [Como utilizar aplicação](README.md)

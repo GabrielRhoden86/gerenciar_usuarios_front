@@ -2,7 +2,7 @@
 
 O primeiro acesso deve ser feito com as credenciais abaixo:
 
-**Login:** [gerenciado-app.netlify.app/](gerenciado-app.netlify.app/)  
+**Login:** [gerenciado-app.netlify.app/](https://gerenciado-app.netlify.app/)  
 **Email:** admin@exemplo.com  
 **Senha:** senha123  
 
@@ -24,22 +24,20 @@ O primeiro acesso deve ser feito com as credenciais abaixo:
 ## Funcionalidades Principais
 
 1️⃣ **Página Inicial**  
-Acesso às principais funcionalidades do sistema.  
+Acesso às principais funcionalidades do sistema: listar, editar e criar novos usuários
 
 2️⃣ **Listagem de Usuários**  
-Visualize todos os usuários. É possível editar ou excluir, respeitando as regras de permissão.  
+Clicando em "usuários" visualize todos os usuários onde é possível editar ou excluir (de acordo com as regras de permissão)
 
-### 3️⃣  Cadastro de Usuários
+3️⃣ **Cadastro de Usuários**
 O administrador pode cadastrar novos usuários, sejam eles padrão ou administradores.  
-Novos usuários também terão acesso ao cadastro de outros usuários.  
-
-> Após o cadastro do novo usuário, é enviada uma **senha provisória** para o e-mail informado.
+Novos usuários(administradores) também terão acesso ao cadastro de outros usuários.  
 
 4️⃣ **Senha Provisória**  
 Ao cadastrar um novo usuário, uma senha provisória será enviada por email.
 
 5️⃣ **Edição de Usuários**  
-Ao clicar em "Editar" na tabela de usuários, o registro correspondente é aberto, permitindo alterações.  
+Ao clicar no icone "Editar" na tabela de usuários, o registro correspondente é aberto, permitindo alterações.  
 
 6️⃣ **Exclusão de Usuários**  
 Ao clicar em "Excluir", o usuário selecionado será removido do sistema.  
@@ -52,7 +50,6 @@ Ao clicar em "Sair", o usuário será deslogado do sistema.
 [Leia Também: Estrutura](ESTRUTURA.md)
 
 # Instalação do App
-
 Para instalar o aplicativo, siga as instruções detalhadas no arquivo:
 
 [Guia de Instalação](docs/INSTALAÇÃO.md)

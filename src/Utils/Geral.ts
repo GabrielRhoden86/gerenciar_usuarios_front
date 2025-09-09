@@ -5,7 +5,7 @@ export const exibirAlerta = (
   alertType: Ref<string>,
   mensagemAlerta: Ref<string>,
   type: 'success' | 'danger' = 'success',
-  tempo: number = 3000,
+  tempo: number = 4000,
   mensagemPersonalizada?: string
 ) => {
   alertType.value = type;

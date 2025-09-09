@@ -60,7 +60,7 @@ const fetchUsuarios = async (page = 1, filtros = {}) => {
 };
 
 
-## 🌐 Configuração de Rotas (Vue Router)
+## 🌐 Configuração de Rotas (Vue Router) index.ts
 
 - Cria o roteamento da aplicação com `createRouter` e `createWebHistory`.
 - Define as rotas principais:

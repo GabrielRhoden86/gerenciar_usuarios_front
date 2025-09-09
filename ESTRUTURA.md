@@ -1,4 +1,4 @@
-# 📦 Dependências Principais
+## 📦 Dependências Principais
 
 - **typescript (~5.8.3)**: linguagem que adiciona tipagem ao JavaScript, oferecendo maior segurança.
 - **axios (^1.11.0)**: biblioteca para realizar requisições HTTP, usada nos Services para consumir a API.
@@ -6,7 +6,7 @@
 - **bootstrap-icons (^1.13.1)**: conjunto de ícones compatível com Bootstrap.
 - **vue-router (^4.5.x)**: gerenciador de rotas do Vue 3, permitindo navegação entre páginas da aplicação.
 
-# 📦 Pinia + Service + Store
+## 📦 Pinia + Service + Store
 
 Separação de responsábilidade:
 Este projeto demonstra como usar **Pinia** no Vue 3 para gerenciar estado reativo, consumindo uma API através de **Services**.
@@ -77,3 +77,14 @@ const fetchUsuarios = async (page = 1, filtros = {}) => {
   - Se a rota requer autenticação (`requiresAuth`) e o usuário não tem token, redireciona para `/login`.
 
 - Captura erros do router com `router.onError`.
+
+```ts
+
+## Leia Também:
+
+[Como utilizar aplicação](README.md)
+
+## Instalação do App
+Para instalar o aplicativo, siga as instruções detalhadas no arquivo:
+
+[Guia de Instalação](docs/INSTALAÇÃO.md)

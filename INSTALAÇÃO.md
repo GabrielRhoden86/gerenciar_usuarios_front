@@ -51,4 +51,14 @@ VITE_API_URL=https://gerenciador-usuarios.onrender.com/api
 ▶️ Executar o servidor de desenvolvimento
 
 npm run dev
-##
+
+```bash
+
+## Leia Também: 
+
+[Estrutura do projeto ](ESTRUTURA.md)
+
+## Instalação do App
+Para instalar o aplicativo, siga as instruções detalhadas no arquivo:
+
+[Guia de utilização do aplicativo](docs/README.md)

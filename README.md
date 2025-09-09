@@ -1,13 +1,10 @@
 # Instruções de Utilização da Aplicação
 
-O primeiro acesso deve ser feito com as credenciais abaixo:
+O primeiro acesso (administrador) deve ser feito com as credenciais abaixo:
 
 **Login:** [gerenciado-app.netlify.app/](https://gerenciado-app.netlify.app/)  
 **Email:** admin@exemplo.com  
 **Senha:** senha123  
-
-> **Observação:** Como administrador, você poderá cadastrar outros usuários em:  
-> Cadastro na página inicial
 
 ---
 
@@ -45,11 +42,11 @@ Ao clicar em "Excluir", o usuário selecionado será removido do sistema.
 7️⃣ **Logout**  
 Ao clicar em "Sair", o usuário será deslogado do sistema.  
 
-# Leia Também: Estrutura
+## Leia Também: 
 
-[Leia Também: Estrutura](ESTRUTURA.md)
+[Estrutura do projeto](ESTRUTURA.md)
 
-# Instalação do App
+## Instalação do App
 Para instalar o aplicativo, siga as instruções detalhadas no arquivo:
 
 [Guia de Instalação](docs/INSTALAÇÃO.md)

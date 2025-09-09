@@ -3,18 +3,17 @@
 Este projeto utiliza [Vite](https://vitejs.dev/) como bundler para desenvolvimento rápido e build otimizado.  
 
 ---
-
 ## 📥 Clonar o repositório
 
 ```bash
 git clone https://github.com/GabrielRhoden86/gerenciar_usuarios_front.git
 cd gerenciar_usuarios_front
 ```
-🚀 Instalação
-1. Pré-requisitos
+🚀 Instalar Pacotes
 
-- **npm install**
-
+```bash
+   npm install
+```
 - **typescript (~5.8.3)**  
   Linguagem que adiciona tipagem ao JavaScript, oferecendo maior segurança.  
   
@@ -62,9 +61,9 @@ VITE_API_URL=https://gerenciador-usuarios.onrender.com/api
 
 ## Leia Também: 
 
-[Estrutura do projeto ](docs/ESTRUTURA.md)
+[Estrutura do projeto ](ESTRUTURA.md)
 
 ## Instalação do App
 Para instalar o aplicativo, siga as instruções detalhadas no arquivo:
 
-[Guia de utilização do aplicativo](docs/README.md)
+[Guia de utilização do aplicativo](README.md)

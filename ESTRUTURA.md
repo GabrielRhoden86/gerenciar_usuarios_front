@@ -87,4 +87,4 @@ const fetchUsuarios = async (page = 1, filtros = {}) => {
 ## Instalação do App
 Para instalar o aplicativo, siga as instruções detalhadas no arquivo:
 
-[Guia de Instalação](docs/INSTALAÇÃO.md)
+[Guia de Instalação](INSTALAÇÃO.md)

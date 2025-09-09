@@ -44,9 +44,11 @@ Ao clicar em "Sair", o usuário será deslogado do sistema.
 
 ## Leia Também: 
 
+## Estrutura:
 [Estrutura do projeto](ESTRUTURA.md)
+Detalhes da estrutura do projeto
 
-## Instalação do App
+## Instalação do App:
 Para instalar o aplicativo, siga as instruções detalhadas no arquivo:
 
-[Guia de Instalação](docs/INSTALAÇÃO.md)
+[Guia de Instalação](INSTALAÇÃO.md)

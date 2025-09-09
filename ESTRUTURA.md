@@ -34,13 +34,14 @@ export const useUsuarioService = {
     return response.data;
   }
 };
+```
 
 ## 🛠️ Store (Pinia)
 
 A store é responsável por armazenar e manipular os dados reativos.  
 Exemplo de uso dentro de store:
 
----
+```ts
 import { ref } from 'vue';
 import { useUsuarioService } from '@/services/useUsuarioService';
 import type { PaginationResponse, UserItem } from '@/types';
@@ -58,27 +59,27 @@ const fetchUsuarios = async (page = 1, filtros = {}) => {
     return null;
   }
 };
-
+```
 
 ## 🌐 Configuração de Rotas (Vue Router) index.ts
 
 - Cria o roteamento da aplicação com `createRouter` e `createWebHistory`.
 - Define as rotas principais:
 
-| Rota        | Componente           | Meta                         |
-|------------|----------------------|-----------------------------|
-| `/`        | HomeView.vue          | `requiresAuth: true`        |
-| `/login`   | LoginView.vue         | -                           |
-| `/usuarios`| UsuariosView.vue      | `requiresAuth: true`        |
-| `/cadastro`| CadastroView.vue      | `requiresAuth: true`        |
-| `/perfil/:id` | PerfilView.vue      | `requiresAuth: true`        |
+```ts
+| Rota         | Componente            | Meta                        |
+|------------  |-----------------------|-----------------------------|
+| `/`          | HomeView.vue          | `requiresAuth: true`        |
+| `/login`     | LoginView.vue         | -                           |
+| `/usuarios`  | UsuariosView.vue      | `requiresAuth: true`        |
+| `/cadastro`  | CadastroView.vue      | `requiresAuth: true`        |
+| `/perfil/:id`| PerfilView.vue        | `requiresAuth: true`        |
+```
 
 - Adiciona **verificação de autenticação**:
-  - Se a rota requer autenticação (`requiresAuth`) e o usuário não tem token, redireciona para `/login`.
-
+- Se a rota requer autenticação (`requiresAuth`) e o usuário não tem token, redireciona para `/login`.
 - Captura erros do router com `router.onError`.
 
----
 ## Leia Também:
 
 [Como utilizar aplicação](README.md)

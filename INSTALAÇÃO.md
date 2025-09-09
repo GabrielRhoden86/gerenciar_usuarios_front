@@ -29,11 +29,15 @@ cd gerenciar_usuarios_front
 ```bash
    npm install axios@^1.11.0
 ```
+
 - **bootstrap (^5.3.7)**
    Framework CSS para estilização.
+```bash
    npm install bootstrap@^5.3.7
+```
 
 - **bootstrap-icons (^1.13.1)** 
+   Lib de Icones bootstrap
 ```bash
    npm install bootstrap-icons@^1.13.1
 ```
@@ -47,10 +51,10 @@ cd gerenciar_usuarios_front
 
 Crie um arquivo chamado .env na raiz do projeto com o seguinte conteúdo:
 
-# Ambiente local
+## Ambiente local
 VITE_API_URL=http://localhost:8000/api
 
-# Ambiente em nuvem
+## Ambiente em nuvem
 VITE_API_URL=https://gerenciador-usuarios.onrender.com/api
 
 ▶️ Executar o servidor de desenvolvimento

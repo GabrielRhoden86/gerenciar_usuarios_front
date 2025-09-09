@@ -65,9 +65,10 @@ VITE_API_URL=https://gerenciador-usuarios.onrender.com/api
 
 ## Leia Também: 
 
+## Estrutura:
 [Estrutura do projeto ](ESTRUTURA.md)
 
-## Instalação do App
+## Instalação do App:
 Para instalar o aplicativo, siga as instruções detalhadas no arquivo:
 
 [Guia de utilização do aplicativo](README.md)

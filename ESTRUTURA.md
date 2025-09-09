@@ -79,7 +79,7 @@ const fetchUsuarios = async (page = 1, filtros = {}) => {
 - Captura erros do router com `router.onError`.
 
 ```ts
-<!--
+
 ## Leia Também:
 
 [Como utilizar aplicação](README.md)
@@ -88,4 +88,3 @@ const fetchUsuarios = async (page = 1, filtros = {}) => {
 Para instalar o aplicativo, siga as instruções detalhadas no arquivo:
 
 [Guia de Instalação](docs/INSTALAÇÃO.md)
--->

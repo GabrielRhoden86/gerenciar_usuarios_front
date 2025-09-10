@@ -117,7 +117,7 @@ const headers = computed(() =>
 );
 
 const carregarPermissao = async () => {
-  permissao.value = auth.user?.permissao;
+  permissao.value = auth.userPermissao;
 };
 
 const fetchDadoUsuarios = async (page = 1) => {

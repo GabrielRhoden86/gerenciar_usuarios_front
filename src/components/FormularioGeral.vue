@@ -94,9 +94,8 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, defineEmits, defineProps, watch, onMounted, ref } from 'vue';
-import { useUsuariosStore } from '@/stores/usuarioStore';
-const usuariosStore = useUsuariosStore();
+import { reactive, defineEmits, defineProps, watch, ref  } from 'vue';
+import type { PropType } from 'vue';
 
 const props = defineProps({
   titulo: String,
@@ -104,7 +103,7 @@ const props = defineProps({
   icone: String,
   acao: String,
   isLoading: Boolean,
-  permissao:Number
+  permissao: Number as PropType<number | null>
 });
 
 const roleAlterada = ref(false); 

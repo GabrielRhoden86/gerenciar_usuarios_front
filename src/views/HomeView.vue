@@ -56,7 +56,8 @@ import Cards from "@/components/Cards.vue";
 import { onMounted, ref } from 'vue';
 import AlertComponente from "@/components/AlertComponente.vue";
 import { exibirAlerta } from '@/Utils/Geral';
-import { useAuthStore } from '@/stores/authStore';
+import { useAuthStore } from '@/stores/authStore'
+
 
 const router = useRouter();
 const showAlert = ref(false);
@@ -64,12 +65,13 @@ const menssagemAlerta = ref<string>('')
 const alertType = ref('success'); 
 const loadingCadastro = ref(false);
 const permissao = ref<number | null>(null);
-const idUser =  ref<number>(0);
+const idUser =  ref<number | null>(0);
 const auth = useAuthStore();
 
+
 onMounted(async () => {
-  idUser.value = auth.user?.id
-  permissao.value = auth.user?.permissao;
+  idUser.value = auth.userId;
+  permissao.value = auth.userPermissao;
 });
 
 const goUsuarios = () => {

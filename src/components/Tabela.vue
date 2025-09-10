@@ -98,21 +98,18 @@ import type { UserItem } from "@/interfaces/UserItem";
 import { formatarData } from '@/Utils/Geral';
 import { formatRole } from '@/Utils/Geral';
 import { useRouter } from 'vue-router';
-import { useUsuariosStore } from '@/stores/usuarioStore';
 import { exibirAlerta } from '@/Utils/Geral';
 import AlertComponente from "@/components/AlertComponente.vue";
 import { useAuthStore } from '@/stores/authStore';
 
 const loadingPerfilId = ref<number | null>(null);
 const loadingExcluirId = ref<number | null>(null);
-const permissaoCarregada  = ref(false);
 const emit = defineEmits<{
   (e: "excluir", id: number): void;
   (e: "page-changed", page: number): void;
 }>();
 const router = useRouter();
 const permissao = ref<number | null>(0);
-const usuariosStore = useUsuariosStore();
 const showAlert = ref(false);
 const menssagemAlerta = ref<string>('')
 const alertType = ref('success'); 
@@ -131,8 +128,8 @@ const props = defineProps({
 });
 
 onMounted(async () => {
-  permissao.value = auth.user?.permissao;
-  idUser.value = auth.user?.id;
+  idUser.value = auth.userId;
+  permissao.value = auth.userPermissao;
 });
 
 const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));

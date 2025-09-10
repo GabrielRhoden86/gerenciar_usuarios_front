@@ -46,7 +46,7 @@ const permissao = ref<number | null>(0);
 const auth = useAuthStore();
 
 onMounted(async () => {
-  permissao.value = auth.user?.permissao;
+  permissao.value = auth.userPermissao;
 });
 
 const cadastrarUsuario = async (dadosDoFormulario: any) => {

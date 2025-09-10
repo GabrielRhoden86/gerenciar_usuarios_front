@@ -51,10 +51,8 @@
 import { useAuthStore } from '@/stores/authStore';
 import { useRouter } from 'vue-router';
 import { onMounted, ref } from 'vue';
-import { useUsuariosStore } from '@/stores/usuarioStore';
 
 const authStore = useAuthStore();
-const usuariosStore = useUsuariosStore();
 const router = useRouter();
 const idUser =  ref<number>(0);
 const loading = ref<boolean>(false);
@@ -73,7 +71,7 @@ const handleLogout = async () => {
 };
 
 onMounted(async () => {
-  idUser.value = auth.user?.id;
+  idUser.value = auth.userId;
 });
 
 const goToPerfil = () => {

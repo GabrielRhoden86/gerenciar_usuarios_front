@@ -3,10 +3,11 @@ import { defineStore } from 'pinia';
 import { ref, computed } from 'vue';
 import { authService } from '@/services/authService';
 import router from '@/router';
+
 interface User {
-  id: number;
-  name: string;
-  permissao: number;
+  id?: number;
+  name?: string;
+  permissao?: number;
 }
 
 export const useAuthStore = defineStore('auth', () => {
@@ -15,16 +16,24 @@ export const useAuthStore = defineStore('auth', () => {
 
   const isAuthenticated = computed(() => !!token.value);
 
-  const loadFromStorage = () => {
-  const savedToken = localStorage.getItem('token');
-  const savedUser = localStorage.getItem('user');
+  const userId = computed(() => user.value?.id ?? 0);
+  const userPermissao = computed(() => user.value?.permissao ?? null);
 
-  if (savedToken) token.value = savedToken;
-  if (savedUser) user.value = JSON.parse(savedUser);
+  const loadFromStorage = () => {
+    const savedToken = localStorage.getItem('token');
+    const savedUser = localStorage.getItem('user');
+
+    if (savedToken) token.value = savedToken;
+
+    try {
+      if (savedUser) user.value = JSON.parse(savedUser);
+    } catch (e) {
+      console.error('Erro ao carregar usuário do localStorage:', e);
+      user.value = null;
+    }
   };
 
   async function login(email: string, password: string) {
-
     const result = await authService.login(email, password);
     if (result.access_token && result.user) {
       token.value = result.access_token;
@@ -38,25 +47,26 @@ export const useAuthStore = defineStore('auth', () => {
     }
   }
 
-const logout = async () => {
-  try {
-    await authService.logout(); 
-  } catch (e) {
-    console.error('Erro ao deslogar no backend:', e);
-  } finally {
-    token.value = null;
-    user.value = null;
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
-    router.push({ name: 'login' });
-  }
-};
-
+  const logout = async () => {
+    try {
+      await authService.logout(); 
+    } catch (e) {
+      console.error('Erro ao deslogar no backend:', e);
+    } finally {
+      token.value = null;
+      user.value = null;
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      router.push({ name: 'login' });
+    }
+  };
 
   return {
     user,
     token,
     isAuthenticated,
+    userId,
+    userPermissao,
     login,
     logout,
     loadFromStorage

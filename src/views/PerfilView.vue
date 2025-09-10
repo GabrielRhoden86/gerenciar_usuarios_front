@@ -77,7 +77,7 @@ const route = useRoute();
 const auth = useAuthStore();
 
 const carregarPermissao = async () => {
-  permissao.value = auth.user?.permissao; 
+  permissao.value = auth.userPermissao;
 };
 
 const carregarUsuarioPorId = async (id: number) => {

@@ -101,6 +101,7 @@ import { useRouter } from 'vue-router';
 import { useUsuariosStore } from '@/stores/usuarioStore';
 import { exibirAlerta } from '@/Utils/Geral';
 import AlertComponente from "@/components/AlertComponente.vue";
+import { useAuthStore } from '@/stores/authStore';
 
 const loadingPerfilId = ref<number | null>(null);
 const loadingExcluirId = ref<number | null>(null);
@@ -116,6 +117,7 @@ const showAlert = ref(false);
 const menssagemAlerta = ref<string>('')
 const alertType = ref('success'); 
 const idUser = ref<number | null>(null);
+const auth = useAuthStore();
 
 const props = defineProps({
   headers: {
@@ -129,8 +131,8 @@ const props = defineProps({
 });
 
 onMounted(async () => {
-  permissao.value = await usuariosStore.verificaPermissao();
-  idUser.value = await usuariosStore.verificaId();
+  permissao.value = auth.user?.permissao;
+  idUser.value = auth.user?.id;
 });
 
 const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
@@ -148,11 +150,6 @@ const goToPerfil = async (id: number) => {
   loadingPerfilId.value = id;
   await delay(1);
   try {
-    if (permissao.value === null) {
-        permissao.value = await usuariosStore.verificaPermissao();
-        permissaoCarregada.value = true;
-    }
-
     if (permissao.value === 1 || idUser.value === id) {
       router.push({
         name: 'perfil',

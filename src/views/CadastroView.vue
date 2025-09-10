@@ -35,6 +35,7 @@ import FormularioGeral from "@/components/FormularioGeral.vue";
 import AlertComponente from "@/components/AlertComponente.vue";
 import { useUsuariosStore } from '@/stores/usuarioStore';
 import { exibirAlerta } from '@/Utils/Geral';
+import { useAuthStore } from '@/stores/authStore';
 
 const mensagemAlerta = ref<string>('');
 const usuariosStore = useUsuariosStore();
@@ -42,9 +43,10 @@ const isLoading = ref<boolean>(false);
 const showAlert = ref(false);
 const alertType = ref('success'); 
 const permissao = ref<number | null>(0);
+const auth = useAuthStore();
 
 onMounted(async () => {
-  permissao.value = await usuariosStore.verificaPermissao();
+  permissao.value = auth.user?.permissao;
 });
 
 const cadastrarUsuario = async (dadosDoFormulario: any) => {
@@ -60,7 +62,6 @@ const cadastrarUsuario = async (dadosDoFormulario: any) => {
     const errosValidacao = error.response?.data?.errors || {};
     const mensagens = Object.values(errosValidacao).flat();
     const mensagem = mensagens.join(" | ") || error.message || "Erro desconhecido";
-
     mensagemAlerta.value = mensagem;
     exibirAlerta(showAlert, alertType, mensagemAlerta, 'danger');
   } finally {

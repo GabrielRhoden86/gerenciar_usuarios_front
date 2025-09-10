@@ -58,21 +58,22 @@ const usuariosStore = useUsuariosStore();
 const router = useRouter();
 const idUser =  ref<number>(0);
 const loading = ref<boolean>(false);
+const auth = useAuthStore();
 
 const handleLogout = async () => {
   loading.value = true;
   try {
     await authStore.logout();
+    router.push({ name: 'login' }); 
   } catch (error) {
     console.error("Erro no logout:", error);
   } finally {
-    loading.value = false;
-    router.push({ name: 'login' });
+    loading.value = false; 
   }
 };
 
 onMounted(async () => {
-  idUser.value = await usuariosStore.verificaId();
+  idUser.value = auth.user?.id;
 });
 
 const goToPerfil = () => {

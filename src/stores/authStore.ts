@@ -1,57 +1,64 @@
+// src/stores/authStore.ts
 import { defineStore } from 'pinia';
-import { ref } from 'vue';
-import { authService } from "@/services/authService";
-import type { AuthResponse } from '@/interfaces/AuthResponse';
-import { getJsonFromLocalStorage  } from '@/Utils/Geral';
-
+import { ref, computed } from 'vue';
+import { authService } from '@/services/authService';
+import router from '@/router';
+interface User {
+  id: number;
+  name: string;
+  permissao: number;
+}
 
 export const useAuthStore = defineStore('auth', () => {
-  const token = ref<string | null>(localStorage.getItem('token') || null);
-  const user = ref<AuthResponse['user'] | null>(getJsonFromLocalStorage('user'));
-  const loading = ref<boolean>(false) 
+  const user = ref<User | null>(null);
+  const token = ref<string | null>(null);
 
-  async function login(email: string, password: string): Promise<AuthResponse> {
-    loading.value = true;
-    try {
-      const response = await authService.login(email, password);
-      const access_token = response.access_token ?? null;
-      const user_data = response.user;
+  const isAuthenticated = computed(() => !!token.value);
 
-      token.value = access_token;
-      user.value = user_data;
+  const loadFromStorage = () => {
+  const savedToken = localStorage.getItem('token');
+  const savedUser = localStorage.getItem('user');
 
-      localStorage.setItem('token', access_token ?? '');
-      localStorage.setItem('user', JSON.stringify(user_data));
+  if (savedToken) token.value = savedToken;
+  if (savedUser) user.value = JSON.parse(savedUser);
+  };
 
-      return response;
-    } catch (err) {
-      console.error('Erro ao logar:', err);
-      throw err;
-    } finally {
-      loading.value = false;
+  async function login(email: string, password: string) {
+
+    const result = await authService.login(email, password);
+    if (result.access_token && result.user) {
+      token.value = result.access_token;
+      user.value = {
+        id: (result.user as any).id,
+        name: result.user.name ?? '',
+        permissao: result.user.permissao ?? 0
+      };
+      localStorage.setItem('token', token.value);
+      localStorage.setItem('user', JSON.stringify(user.value));
     }
   }
 
-  async function logout(): Promise<void> {
-    try {
-      if (token.value) {
-        await authService.logout(); 
-      }
-    } catch (err) {
-      console.error('Falha ao deslogar do servidor:', err);
-    } finally {
-      token.value = null;
-      user.value = null;
-      localStorage.removeItem('token');
-      localStorage.removeItem('user');
-    }
+const logout = async () => {
+  try {
+    await authService.logout(); 
+  } catch (e) {
+    console.error('Erro ao deslogar no backend:', e);
+  } finally {
+    token.value = null;
+    user.value = null;
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    router.push({ name: 'login' });
   }
+};
+
 
   return {
-    token,
     user,
-    loading,
+    token,
+    isAuthenticated,
     login,
-    logout
+    logout,
+    loadFromStorage
   };
 });

@@ -1,5 +1,5 @@
 <template>
-  <div  v-if="permissao !== null" class="col-md-11 col-lg-9 col-xl-7 offset-xl-1 mt-2 form-geral min-vh-100" >
+  <div  v-if="props.permissao !== null" class="col-md-11 col-lg-9 col-xl-7 offset-xl-1 mt-2 form-geral min-vh-100" >
     <form class="p-4 shadow-sm rounded bg-white" @submit.prevent="submitForm">
       <header class="mb-4 d-flex align-items-center justify-content-center">
         <i :class="icone" class="fs-2"></i>
@@ -36,7 +36,7 @@
         />
       </div>
 
-      <div v-show="permissao === 1">
+      <div v-show="props.permissao === 1">
         <div class="form-check mb-3">
           <input 
             class="form-check-input" 
@@ -66,7 +66,7 @@
             :required="props.acao !== 'editar'" 
           />
           <label class="form-check-label" for="usuario">
-            <span class="fw-semibold">👤 Usuário Padrão</span><br />
+            <span class="fw-semibold">👤 Usuário Padrão </span><br />
             <small class="text-muted">Acesso restrito.</small>
           </label>
         </div>
@@ -96,7 +96,6 @@
 <script setup lang="ts">
 import { reactive, defineEmits, defineProps, watch, onMounted, ref } from 'vue';
 import { useUsuariosStore } from '@/stores/usuarioStore';
-
 const usuariosStore = useUsuariosStore();
 
 const props = defineProps({
@@ -104,10 +103,10 @@ const props = defineProps({
   name: String,
   icone: String,
   acao: String,
-  isLoading: Boolean
+  isLoading: Boolean,
+  permissao:Number
 });
 
-const permissao = ref<number | null>(null);
 const roleAlterada = ref(false); 
 
 const emits = defineEmits(['submit-form']);
@@ -122,9 +121,7 @@ watch(() => form.name, (newValue) => {
   form.name = newValue.replace(/[^a-zA-ZÀ-ÿ\s]/g, '');
 });
 
-onMounted(async () => {
-  permissao.value = await usuariosStore.verificaPermissao();
-});
+
 const submitForm = () => {
   if (!form.name && !form.email && !form.role_id && !form.password) return;
 

@@ -69,6 +69,7 @@ import { useUsuariosStore } from '@/stores/usuarioStore';
 import { exibirAlerta } from '@/Utils/Geral';
 import type { TableHeader } from "@/interfaces/TableHeader";
 import type { UserItem } from "@/interfaces/UserItem";
+import { useAuthStore } from '@/stores/authStore';
 
 const usuariosStore = useUsuariosStore();
 const resultItems = ref<UserItem[]>([]);
@@ -80,6 +81,7 @@ const showAlert = ref(false);
 const alertType = ref('success'); 
 const isLoading = ref(true);
 const menssagemAlerta = ref<string>('');
+const auth = useAuthStore();
 
 const pagination = ref({
   current_page: 1,
@@ -115,7 +117,7 @@ const headers = computed(() =>
 );
 
 const carregarPermissao = async () => {
-  permissao.value = await usuariosStore.verificaPermissao();
+  permissao.value = auth.user?.permissao;
 };
 
 const fetchDadoUsuarios = async (page = 1) => {

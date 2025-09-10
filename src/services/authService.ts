@@ -13,6 +13,7 @@ interface AuthResponse {
 }
 
 export const authService = {
+  
   async login(email: string, password: string): Promise<AuthResponse> {
     const payload: AuthPayload = { email, password };
     const response = await apiClient.post<AuthResponse>('/login', payload);
@@ -23,8 +24,4 @@ export const authService = {
     await apiClient.post('/logout');
   },
 
-  async me(): Promise<AuthResponse['user']> {
-    const response = await apiClient.get<AuthResponse>('/me');
-    return response.data.user;
-  },
 };

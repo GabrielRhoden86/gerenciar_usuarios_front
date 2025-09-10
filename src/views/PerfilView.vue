@@ -55,6 +55,7 @@ import { useUsuariosStore } from '@/stores/usuarioStore';
 import { exibirAlerta } from '@/Utils/Geral';
 import { useRoute } from 'vue-router';
 import type { UserItemPayload } from '@/interfaces/UserItemPayload';
+import { useAuthStore } from '@/stores/authStore';
 
 interface Usuario {
   name: string;
@@ -73,9 +74,10 @@ const usuario = ref<Usuario | null>(null);
 const userId = ref<number | null>(null);
 const menssagemAlerta = ref<string>('');
 const route = useRoute();
+const auth = useAuthStore();
 
 const carregarPermissao = async () => {
-  permissao.value = await usuariosStore.verificaPermissao();
+  permissao.value = auth.user?.permissao; 
 };
 
 const carregarUsuarioPorId = async (id: number) => {
@@ -93,7 +95,6 @@ const carregarUsuarioPorId = async (id: number) => {
 
 onMounted(async () => {
   await carregarPermissao();
-
   const idParam = Number(route.params.id);
   if (!isNaN(idParam)) {
     await carregarUsuarioPorId(idParam);

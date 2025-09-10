@@ -11,7 +11,7 @@ export function useUsuariosStore() {
   const atualizarUsuarios = async (id: number, payload: any) => {
    error.value = null;
     try {              
-      const response = await useUsuarioService.atualizarUsuarioService(id, payload);
+      const response = await useUsuarioService.atualizar(id, payload);
       return response;
     } catch (err) {
       console.error('Erro ao atualizar usuário:', err);
@@ -23,7 +23,7 @@ export function useUsuariosStore() {
   const fetchUsuarios = async (page = 1, filtros = {}) => {
     error.value = null;
     try {
-      const response: PaginationResponse<UserItem> = await useUsuarioService.usuarioService(page, filtros);
+      const response: PaginationResponse<UserItem> = await useUsuarioService.listar(page, filtros);
       return response;
     } catch (err) {
       console.error('Erro ao buscar usuários:', err);
@@ -34,14 +34,14 @@ export function useUsuariosStore() {
 
   const cadastrarUsuarios = async (name: string, email: string, role_id: number) => {
     error.value = null;
-    const response = await useUsuarioService.cadastrarUsuarioService(name, email, role_id);
+    const response = await useUsuarioService.cadastrar(name, email, role_id);
     return response;
   };
 
   const excluirUsuario  = async (id: number) => {
     error.value = null;
     try {
-      const response = await useUsuarioService.excluirUsuarioService(id);
+      const response = await useUsuarioService.excluir(id);
       return response;
     } catch (err) {
       console.error('Erro ao deletar usuário:', err);
@@ -53,7 +53,7 @@ export function useUsuariosStore() {
    const buscaUsuarioId  = async (id: number) => {
     error.value = null;
     try {
-      const response = await useUsuarioService.buscaUsuarioService(id);
+      const response = await useUsuarioService.buscar(id);
       return response;
     } catch (err) {
       console.error('Erro ao deletar usuário:', err);
@@ -62,41 +62,14 @@ export function useUsuariosStore() {
     }
   };
 
-  const verificaPermissao = async () => {
-      const userString = localStorage.getItem("user");
-      if (userString) {
-        try {
-          const user = JSON.parse(userString);
-          const permissaoUser = await useUsuarioService.buscaUsuarioService(user.id);
-          permissao.value = permissaoUser.role_id; 
-          return permissaoUser.role_id;
-        } catch (error) {
-          console.error("Erro ao parsear user:", error);
-          permissao.value = null;
-          return null;
-        }
-      }
-      permissao.value = null;
-      return null;
-  };
-
-  const verificaId = async () => {
-    const userString = localStorage.getItem("user");
-    if (!userString) return null;
-    const user = JSON.parse(userString);
-    return user.id;
-  };
-
   return {
     permissao,
     usuarios,
-    verificaId,
     error,
     fetchUsuarios,
     cadastrarUsuarios,
     atualizarUsuarios,
     excluirUsuario,
     buscaUsuarioId,
-    verificaPermissao
   };
 }

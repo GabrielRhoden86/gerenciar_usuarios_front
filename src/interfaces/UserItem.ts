@@ -7,5 +7,4 @@ export interface UserItem {
   password:string;
   created_at: string; 
   updated_at: string; 
-
 }
